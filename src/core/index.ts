@@ -30,3 +30,37 @@ export function classNames(...expressions: any[]) {
       .filter(className => isNotEmpty(className))
       .join(' ');
 }
+
+export function showModal(selector: string, onShow?: () => void, onHide?: () => void) {
+  const dialogEl = document.querySelector(selector);
+  onShow && dialogEl.addEventListener('shown.bs.modal', onShow);
+  onHide && dialogEl.addEventListener('hide.bs.modal', onHide);
+  new bootstrap.Modal(selector).show();
+}
+
+export function hideModal(selector: string, onHide?: () => void) {
+  const dialogEl = document.querySelector(selector);
+  onHide && dialogEl.addEventListener('hide.bs.modal', onHide);
+  bootstrap.Modal.getInstance(dialogEl)?.hide();
+}
+
+export const SCROLLBAR_WIDTH = getScrollWidth();
+function getScrollWidth() {
+  // Creating invisible container
+  const outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+  document.body.appendChild(outer);
+
+  // Creating inner element and placing it in the container
+  const inner = document.createElement('div');
+  outer.appendChild(inner);
+
+  // Calculating difference between container's full width and the child width
+  const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+  // Removing temporary elements from the DOM
+  outer.parentNode.removeChild(outer);
+
+  return scrollbarWidth;
+}
