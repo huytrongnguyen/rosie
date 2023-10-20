@@ -3,4 +3,7 @@ import './lang/number';
 import './lang/date';
 import './lang/array';
 
-export * as Rosie from './core';
+export * from './core';
+export * from './components';
+
+export * as Rosie from './util';

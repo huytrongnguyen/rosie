@@ -15,6 +15,14 @@ body, input, textarea, select, button {
   -moz-osx-font-smoothing: grayscale;
 }
 
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
+.btn-primary, .btn-outline-primary:hover, .btn-check:checked + .btn-outline-primary {
+  color: $white !important;
+}
+
 // Breadcrumb
 
 .breadcrumb {
