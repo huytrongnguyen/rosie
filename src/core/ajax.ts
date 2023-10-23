@@ -21,7 +21,7 @@ export const Ajax = {
       res = await fetch(url, config);
       return res.json() as T;
     } catch {
-      return res.text as T;
+      return res.text() as T;
     }
   },
 }

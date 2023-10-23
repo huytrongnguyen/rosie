@@ -19,6 +19,11 @@ body, input, textarea, select, button {
 //
 // For each of Bootstrap's buttons, define text, background, and border color.
 
+.btn-outline-secondary {
+  border-color: $border-color !important;
+  color: $body-color;
+}
+
 .btn-primary, .btn-outline-primary:hover, .btn-check:checked + .btn-outline-primary {
   color: $white !important;
 }
@@ -73,4 +78,15 @@ body, input, textarea, select, button {
 .list-group-item {
   background-color: transparent;
   &.disabled { background-color: transparent !important; }
+}
+
+// Dropdowns
+//
+// Dropdown menu container and contents.
+
+.dropdown-item:not(.active) {
+  &:hover {
+    color: $white;
+    background-color: $component-hover-bg;
+  }
 }

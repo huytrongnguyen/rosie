@@ -8,22 +8,22 @@ type DialogProps = {
   dialogClass?: string,
   bodyClass?: string,
   disableCloseButton?: boolean,
-  fitScreen?: boolean,
+  // fitScreen?: boolean,
   height?: string | number,
   children: React.ReactNode,
 }
 
 export function Dialog(props: DialogProps) {
-  const { id = 'dialog', title = 'Dialog', className = '', bodyClass = '', dialogClass = '', disableCloseButton, fitScreen, children } = props;
+  const { id = 'dialog', title = 'Dialog', className = '', bodyClass = '', dialogClass = '', disableCloseButton, children } = props;
 
   return <section className={`modal fade ${className}`} id={id} data-bs-backdrop="static" tabIndex={-1} role="dialog">
     <div className={`modal-dialog modal-dialog-centered modal-dialog-scrollable ${dialogClass}`} role="document">
-      <div className={classNames('modal-content', { fullscreen: fitScreen })} style={{maxHeight: props.height ?? '100%'}}>
+      <div className={classNames('modal-content')} style={{maxHeight: props.height ?? '100%'}}>
         <div className="modal-header">
           <h5 className="modal-title">{title}</h5>
           {!disableCloseButton && <button type="button" className="btn-close" data-bs-dismiss="modal" />}
         </div>
-        <div className={classNames('modal-body', bodyClass, { fullscreen: fitScreen })}>
+        <div className={classNames('modal-body', bodyClass)}>
           {children}
         </div>
       </div>

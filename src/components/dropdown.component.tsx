@@ -66,8 +66,8 @@ export function Dropdown(props: DropdownProps) {
           if (props.itemRenderer) {
             return <Fragment key={opt[valueField]}>{props.itemRenderer(opt[displayField], opt, index)}</Fragment>
           }
-          return <div key={opt[valueField]} onClick={() => select(opt)}
-                      className={classNames('dropdown-item cursor-pointer', { active: isSelected(opt) })}>
+          return <div key={opt[valueField]} onClick={() => select(opt)} role="button"
+                      className={classNames('dropdown-item', { active: isSelected(opt) })}>
             {props.renderer ? props.renderer(opt[displayField], opt, index) : opt[displayField]}
           </div>
         })}
