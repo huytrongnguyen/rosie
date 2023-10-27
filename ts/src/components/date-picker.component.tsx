@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { classNames, guid, isDate } from 'src/util';
+import { classNames, guid, isDate } from '../util';
 
 type DatePickerComponentProps = {
   dateFormat?: string,
@@ -35,7 +35,7 @@ export function DatePickerComponent(props: DatePickerComponentProps) {
   return <div id={datePickerId} className="dropdown">
     <input type="text" className="form-control form-control-sm text-center dropdown-toggle"
         data-bs-toggle="dropdown" data-bs-auto-close="outside"
-        value={dateStr} onChange={e => setDateStr(e.target.value)} onKeyPress={e => e.key === 'Enter' && onChangeTextBox()} />
+        value={dateStr} onChange={e => setDateStr(e.target.value)} onKeyUp={e => e.key === 'Enter' && onChangeTextBox()} />
     <div className="dropdown-menu dropdown-menu-end p-0">
       <DatePickerPortal value={date} onChange={onChange} />
     </div>
@@ -48,7 +48,7 @@ type DatePickerPortalProps = {
 }
 
 export function DatePickerPortal(props: DatePickerPortalProps) {
-  const [viewDate, setViewDate] = useState(null as Date),
+  const [viewDate, setViewDate] = useState(null as unknown as Date),
         [calendar, setCalendar] = useState([] as number[][]);
 
   useEffect(() => {

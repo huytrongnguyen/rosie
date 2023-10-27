@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { classNames, showModal } from 'src/util';
+import { classNames, showModal } from '../util';
 
 type DialogProps = {
   id?: string,
@@ -36,7 +36,7 @@ export function useDialog(id: string) {
 
   useEffect(() => {
     if (isShown) {
-      showModal(id, null, () => { setState(false) });
+      showModal(id, undefined, () => { setState(false) });
     }
   }, [isShown]);
 

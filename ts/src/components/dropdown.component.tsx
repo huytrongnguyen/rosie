@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement, Fragment } from 'react';
-import { classNames } from 'src/util';
+import { classNames } from '../util';
 
 type DropdownProps = {
   options: any[],

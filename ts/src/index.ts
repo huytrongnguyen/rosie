@@ -6,4 +6,5 @@ import './lang/array';
 export * from './core';
 export * from './components';
 
-export * as Rosie from './util';
+import * as _Rosie from './util';
+export const Rosie = { ..._Rosie };

@@ -108,7 +108,6 @@ Date.prototype.plus = function(this: Date, amountToAdd: number, unit = 'day') {
     case 'minute': return new Date(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes() + amountToAdd, 0, 0);
     case 'second': return new Date(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds() + amountToAdd, 0);
     case 'millisecond': return new Date(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes(), this.getSeconds(), this.getMilliseconds() + amountToAdd);
-    default: return null;
+    default: return this;
   }
 }
-

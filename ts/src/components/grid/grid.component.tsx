@@ -1,5 +1,5 @@
-import { useState, useEffect, ReactElement, Children } from 'react';
-import { SCROLLBAR_WIDTH, classNames, guid } from 'src/util';
+import { useState, useEffect, Children } from 'react';
+import { SCROLLBAR_WIDTH, classNames, guid } from '../../util';
 import { GridColumnProps, GridProps } from './types';
 import { GridCell } from './grid-cell.component';
 
@@ -25,7 +25,7 @@ export function Grid(props: GridProps) {
   useEffect(() => { setData(props.data ?? []) }, [props.data])
 
   useEffect(() => {
-    const columns = Children.toArray(props.children).map((child: ReactElement) => child.props as GridColumnProps);
+    const columns = Children.toArray(props.children).map((child: any) => child.props as GridColumnProps);
     setColumns(columns);
   }, [props.children])
 

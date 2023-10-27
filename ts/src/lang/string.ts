@@ -19,5 +19,5 @@ String.prototype.decodeQS = function<T>(this: string) {
     const param = paramStr.split('=');
     queryParams[param[0]] = param[1];
     return queryParams;
-  }, {} as T);
+  }, {} as any) as T;
 }

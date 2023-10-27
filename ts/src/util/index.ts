@@ -1,4 +1,4 @@
-import bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
+import { Modal } from 'bootstrap';
 import { Dictionary } from '../core/types';
 
 export const isString = (value: any) => typeof value === 'string';
@@ -33,15 +33,15 @@ export function classNames(...expressions: any[]) {
 
 export function showModal(selector: string, onShow?: () => void, onHide?: () => void) {
   const dialogEl = document.querySelector(selector);
-  onShow && dialogEl.addEventListener('shown.bs.modal', onShow);
-  onHide && dialogEl.addEventListener('hide.bs.modal', onHide);
-  new bootstrap.Modal(selector).show();
+  onShow && dialogEl?.addEventListener('shown.bs.modal', onShow);
+  onHide && dialogEl?.addEventListener('hide.bs.modal', onHide);
+  new Modal(selector).show();
 }
 
 export function hideModal(selector: string, onHide?: () => void) {
   const dialogEl = document.querySelector(selector);
-  onHide && dialogEl.addEventListener('hide.bs.modal', onHide);
-  bootstrap.Modal.getInstance(dialogEl)?.hide();
+  onHide && dialogEl?.addEventListener('hide.bs.modal', onHide);
+  dialogEl && Modal.getInstance(dialogEl)?.hide();
 }
 
 export const SCROLLBAR_WIDTH = getScrollWidth();
@@ -60,7 +60,7 @@ function getScrollWidth() {
   const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
 
   // Removing temporary elements from the DOM
-  outer.parentNode.removeChild(outer);
+  outer.parentNode?.removeChild(outer);
 
   return scrollbarWidth;
 }

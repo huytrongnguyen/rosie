@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { classNames } from 'src/util';
+import { classNames } from '../../util';
 import { GridColumnProps } from './types';
 
 
