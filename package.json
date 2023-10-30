@@ -1,6 +1,7 @@
 {
   "name": "rosie",
   "version": "0.0.3",
+  "description": "JavaScript library that build on top of React and Bootstrap",
   "author": "Lionel Nguyen <huynguyen8505@gmail.com> (https://github.com/huytrongnguyen)",
   "license": "MIT",
   "repository": "https://github.com/huytrongnguyen/rosie",
@@ -14,7 +15,7 @@
     }
   },
   "files": [
-    "dist/js",
+    "dist",
     "LICENSE",
     "CHANGELOG.md",
     "README.md"
