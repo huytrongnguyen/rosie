@@ -1,6 +1,6 @@
 {
   "name": "rosie",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Lionel Nguyen <huynguyen8505@gmail.com> (https://github.com/huytrongnguyen)",
   "license": "MIT",
   "repository": "https://github.com/huytrongnguyen/rosie",
@@ -21,13 +21,17 @@
   ],
   "scripts": {
     "build": "yarn css && yarn js",
-    "js": "parcel build --no-cache --no-autoinstall --no-content-hash",
-    "css": "sass --style=compressed --no-source-map scss:dist/css"
+    "js": "tsc",
+    "css": "yarn css-compile && yarn css-fonts",
+    "css-compile": "sass --style=compressed --no-source-map scss:dist/css",
+    "css-fonts": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.4.2",
     "@popperjs/core": "2.11.8",
-    "bootstrap": "5.3.2",
+    "bootstrap": "5.3.2"
+  },
+  "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
@@ -36,10 +40,7 @@
     "@types/jest": "29.5.6",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
-    "@parcel/transformer-typescript-types": "2.10.1",
-    "@parcel/packager-ts": "2.10.1",
     "jest": "29.7.0",
-    "parcel": "2.10.1",
     "sass": "1.69.5",
     "ts-jest": "29.1.1",
     "typescript": "5.2.2"

@@ -4,7 +4,6 @@ import './lang/date';
 import './lang/array';
 
 export * from './core';
-export * from './components';
 
 import * as _Rosie from './util';
 export const Rosie = { ..._Rosie };
