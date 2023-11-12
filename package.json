@@ -1,6 +1,6 @@
 {
   "name": "rosie-ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JavaScript library that build on top of React 18.2 and Bootstrap 5, helping you build data-intensive, cross-platform web apps for desktops, tablets, and smartphones.",
   "author": "Lionel Nguyen <huynguyen8505@gmail.com> (https://github.com/huytrongnguyen)",
   "license": "MIT",

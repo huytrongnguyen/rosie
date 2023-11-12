@@ -21,10 +21,13 @@ export const Ajax = {
       throw new Error(JSON.stringify({ code: res.status, message: res.statusText, innerError: await res.text() }))
     }
 
+    const responseText = await res.text();
+
     try {
-      return await res.json();
-    } catch {
-      return await res.text() as T;
+      return JSON.parse(responseText);
+    } catch (reason) {
+      console.warn(`API response is not JSON. Falling back to plain text.`, reason);
+      return responseText as T;
     }
   },
 }
