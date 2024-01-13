@@ -1,8 +1,11 @@
+import { AxiosError, Method } from 'axios';
+
+export type HttpMethod = Method;
+export type AjaxError = AxiosError;
+
 export interface Dictionary<T> {
   [index: string]: T;
 }
-
-export type HttpMethod = 'get' | 'post' | 'put' | 'delete';
 
 export type HttpParams = {
   pathParams?: Dictionary<any>,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { classNames, showModal } from '../util';
+import { classNames, showModal } from '../core/utils';
 
 type DialogProps = {
   id?: string,

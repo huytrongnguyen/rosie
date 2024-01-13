@@ -5,7 +5,7 @@ interface Array<T> {
   // clone(): T[],
   // distinct(): T[],
   // defaultIfEmpty(defaultValue: T[]): T[],
-  // mergeDictionary<TResult = any>(): TResult,
+  mergeDictionary<TResult = any>(): TResult,
 
   // where(predicate: (value: T, index: number, array: T[]) => boolean): T[],
   // first(predicate?: (value: T, index: number, array: T[]) => boolean): T,
@@ -37,7 +37,7 @@ Array.prototype.skip = function<T>(this: T[], n = 1) { return this.slice(n, this
 // Array.prototype.clone = function<T>(this: T[]) { return this.map(x => ({ ...x })); }
 // Array.prototype.distinct = function<T>(this: T[]) { return this.filter((value, index, array) => array.indexOf(value) === index); }
 // Array.prototype.defaultIfEmpty = function<T>(this: T[], defaultValue: T[]) { return this.length > 0 ? this : defaultValue; }
-// Array.prototype.mergeDictionary = function<T, TResult = any>(this: T[]) { return Object.assign({}, ...this) as TResult; }
+Array.prototype.mergeDictionary = function<T, TResult = any>(this: T[]) { return Object.assign({}, ...this) as TResult; }
 
 // Array.prototype.where = function<T>(this: T[], predicate: (value: T, index: number, array: T[]) => boolean) { return this.filter(predicate); }
 

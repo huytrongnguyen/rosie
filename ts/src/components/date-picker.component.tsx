@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { classNames, guid, isDate } from '../util';
+import { classNames, guid, isDate } from '../core/utils';
 
 type DatePickerComponentProps = {
   dateFormat?: string,

@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { classNames } from '../../util';
+import { classNames } from '../../core/utils';
 import { GridColumnProps } from './types';
 
 

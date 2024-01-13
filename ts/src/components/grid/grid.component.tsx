@@ -1,5 +1,5 @@
 import { useState, useEffect, Children } from 'react';
-import { SCROLLBAR_WIDTH, classNames, guid } from '../../util';
+import { SCROLLBAR_WIDTH, classNames, guid } from '../../core/utils';
 import { GridColumnProps, GridProps } from './types';
 import { GridCell } from './grid-cell.component';
 

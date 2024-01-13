@@ -1,7 +1,25 @@
-# `rosie`
+# Rosie UI
+
+## Next
+
+## 0.1.1
+> 2024-01-13
+
+- New Features
+  - #2 Add Observable object
+  - Add `TextField` component
+- Improvements
+  - Change to use `axios` for AJAX instead of `fetch`
+
+## 0.1.0
+> 2024-01-07
+
+- Restructure codebase
 
 ## 0.0.4
 > 2023-11-12
+
+- #1 TypeError: Failed to execute 'text' on 'Response': body stream already read
 
 ## 0.0.3
 > 2023-10-30
