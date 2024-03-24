@@ -3,7 +3,7 @@ import { Modal } from 'bootstrap';
 import toastr from 'toastr';
 import { format as d3Format } from 'd3';
 
-import { Dictionary } from './types';
+import { Dictionary } from './core/types';
 
 //region ===== Configuration =====
 toastr.options.closeButton = true;
@@ -89,7 +89,7 @@ export function exportToCsv(fileName: string, data: any[], headers?: Dictionary<
   if (!data) return;
 
   if (!headers) {
-    headers = Object.keys(data[0]).map(x => ({ [x]: x })).mergeDictionary();
+    headers = Object.keys(data[0]).groupBy(x => x, g => g.first()) as Dictionary<string>;
   }
 
   const columnNames = Object.keys(headers as any),

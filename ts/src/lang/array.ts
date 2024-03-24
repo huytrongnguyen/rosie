@@ -1,22 +1,22 @@
 interface Array<T> {
-  take(n?: number): T[],
+  take(n?: number, skip?: number): T[],
   takeRight(n?: number): T[],
   skip(n?: number): T[],
   // clone(): T[],
   // distinct(): T[],
   // defaultIfEmpty(defaultValue: T[]): T[],
-  mergeDictionary<TResult = any>(): TResult,
 
-  // where(predicate: (value: T, index: number, array: T[]) => boolean): T[],
-  // first(predicate?: (value: T, index: number, array: T[]) => boolean): T,
-  // last(predicate?: (value: T, index: number, array: T[]) => boolean): T,
+  where(predicate: (value: T, index: number, array: T[]) => boolean): T[],
+  first(predicate?: (value: T, index: number, array: T[]) => boolean): T,
+  last(predicate?: (value: T, index: number, array: T[]) => boolean): T,
 
+
+  groupBy<TResult = T[]>(keySelector: string | number | ((item: T, index: number, array: T[]) => string), elementSelector?: (value: T[], key: string) => TResult): { [key:string]: TResult | T[] }
+
+  sumBy(iteratee: string | number | ((item: T) => string)): number,
   // orderBy(keySelector: string | number, orders?: 'asc' | 'desc'): T[],
-  // sumBy(iteratee: string | number | ((item: T) => string)): number,
 
-  // toDictionary<TResult = any>(keySelector: string | number | ((item: T, index: number, array: T[]) => string), elementSelector?: (value: T[], key: string) => TResult): { [key:string]: TResult }
 
-  // groupBy<TResult = any>(this: T[], keySelectors: string[], elementSelector: (value: T[], keySet: { [key:string]: any }) => { [key:string]: any }): TResult[],
 
   // joinWith<TInner = any, TResult = T & TInner>(inner: TInner[], joinSelector: string[], joinType?: 'inner' | 'left' | 'right' | 'full'): TResult[],
   // groupJoin<TInner = any, TKey = any, TResult = T & TInner>(
@@ -30,19 +30,17 @@ interface Array<T> {
   // select<TResult = any>(...fieldNames: string[]): TResult[],
 }
 
-Array.prototype.take = function<T>(this: T[], n = 1) { return this.slice(0, Math.max(n, 0)); }
+Array.prototype.take = function<T>(this: T[], n = 1, skip = 0) { return this.slice(skip, Math.max(skip + n, 0)); }
 Array.prototype.takeRight = function<T>(this: T[], n = 1) { return this.slice(Math.max(this.length - n, 0), this.length); }
 Array.prototype.skip = function<T>(this: T[], n = 1) { return this.slice(n, this.length); }
 
 // Array.prototype.clone = function<T>(this: T[]) { return this.map(x => ({ ...x })); }
 // Array.prototype.distinct = function<T>(this: T[]) { return this.filter((value, index, array) => array.indexOf(value) === index); }
 // Array.prototype.defaultIfEmpty = function<T>(this: T[], defaultValue: T[]) { return this.length > 0 ? this : defaultValue; }
-Array.prototype.mergeDictionary = function<T, TResult = any>(this: T[]) { return Object.assign({}, ...this) as TResult; }
 
-// Array.prototype.where = function<T>(this: T[], predicate: (value: T, index: number, array: T[]) => boolean) { return this.filter(predicate); }
-
-// Array.prototype.first = function<T>(this: T[], predicate?: (value: T, index: number, array: T[]) => boolean) { return !predicate ? this[0] : this.find(predicate); }
-// Array.prototype.last = function<T>(this: T[], predicate?: (value: T, index: number, array: T[]) => boolean) { return !predicate ? this[this.length - 1] : this.filter(predicate).reverse()[0]; }
+Array.prototype.where = function<T>(this: T[], predicate: (value: T, index: number, array: T[]) => boolean) { return this.filter(predicate); }
+Array.prototype.first = function<T>(this: T[], predicate?: (value: T, index: number, array: T[]) => boolean) { return !predicate ? this[0] : this.find(predicate); }
+Array.prototype.last = function<T>(this: T[], predicate?: (value: T, index: number, array: T[]) => boolean) { return !predicate ? this[this.length - 1] : this.findLast(predicate); }
 
 // Array.prototype.orderBy = function<T>(this: T[], keySelector: string | number, orders: 'asc' | 'desc' = 'asc') {
 //   return this.sort((a, b) => {
@@ -53,37 +51,28 @@ Array.prototype.mergeDictionary = function<T, TResult = any>(this: T[]) { return
 //   })
 // }
 
-// Array.prototype.sumBy = function<T>(this: T[], iteratee: string | number | ((item: T) => string)) {
-//   return this.reduce((result, item) => {
-//     return result + (((typeof iteratee === 'string' || typeof iteratee === 'number') ? item?.[iteratee] ?? 0 : iteratee(item)) ?? 0);
-//   }, 0);
-// }
+Array.prototype.groupBy = function<T, TResult = T[]>(this: T[], keySelector: string | number | ((item: T, index: number, array: T[]) => string), elementSelector?: (value: T[], key: string) => TResult) {
+  const groupByKey = this.reduce((result, item, index, array) => {
+    const key: string = (typeof keySelector === 'string' || typeof keySelector === 'number') ? (item as any)[keySelector] : keySelector(item, index, array);
+    !result[key] && (result[key] = []);
+    result[key].push(item);
+    return result;
+  }, {} as { [key:string]: T[] });
 
-// Array.prototype.toDictionary = function<T, TResult = any>(this: T[], keySelector: string | number | ((item: T, index: number, array: T[]) => string), elementSelector?: (value: T[], key: string) => TResult) {
-//   const result = this.reduce((result, item, index, array) => {
-//     const key: string = (typeof keySelector === 'string' || typeof keySelector === 'number') ? item[keySelector] : keySelector(item, index, array);
-//     !result[key] && (result[key] = []);
-//     result[key].push(item);
-//     return result;
-//   }, {});
+  if (!elementSelector) return groupByKey;
 
-//   if (!elementSelector) return result;
+  const result: { [key:string]: TResult } = {};
+  for (let key in groupByKey) {
+    result[key] = elementSelector(groupByKey[key], key);
+  }
+  return result;
+}
 
-//   for (let key in result) {
-//     result[key] = elementSelector(result[key], key);
-//   }
-//   return result;
-// }
-
-// Array.prototype.groupBy = function<T, TResult = any>(this: T[], keySelectors: string[], elementSelector: (value: T[], keySet: { [key:string]: any }) => { [key:string]: any }) {
-//   const NUL = '\0',
-//         groupByKey = this.toDictionary(x => keySelectors.map(key => x[key]).join(NUL));
-
-//   return Object.entries(groupByKey).map(([combineKey, values]) => {
-//     const keySet = combineKey.split(NUL).map((x, i) => ({ [keySelectors[i]]: x })).mergeDictionary();
-//     return Object.assign({}, keySet, elementSelector(values, keySet)) as TResult;
-//   })
-// }
+Array.prototype.sumBy = function<T>(this: T[], keySelector: string | number | ((item: T) => string)) {
+  return this.reduce((result, item) => {
+    return result + (((typeof keySelector === 'string' || typeof keySelector === 'number') ? ((item as any)[keySelector] ?? 0) : (keySelector(item)) ?? 0));
+  }, 0);
+}
 
 // Array.prototype.joinWith = function<T, TInner = any, TResult = T & TInner>(this: T[], inner: TInner[], joinSelector: string[], joinType: 'inner' | 'left' | 'right' | 'full' = 'inner'): TResult[] {
 //   return this.groupJoin(

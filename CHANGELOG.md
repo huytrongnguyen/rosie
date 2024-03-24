@@ -2,7 +2,10 @@
 
 ## Next
 
-## 0.1.1
+- New Features
+  - #6 Add DataModel, DataStore object
+
+## 0.1.3
 > 2024-01-13
 
 - New Features
@@ -10,11 +13,6 @@
   - Add `TextField` component
 - Improvements
   - Change to use `axios` for AJAX instead of `fetch`
-
-## 0.1.0
-> 2024-01-07
-
-- Restructure codebase
 
 ## 0.0.4
 > 2023-11-12

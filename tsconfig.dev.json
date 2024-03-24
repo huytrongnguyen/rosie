@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "lib": [ "dom", "esnext" ],
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "outDir": "../gebase/node_modules/rosie-ui/dist/js",
+    "removeComments": true,
+    "declaration": true,
+    "strict": true,
+    "inlineSourceMap": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true
+  },
+  "include": ["ts/src"],
+  "exclude": ["node_modules", "ts/test"]
+}
