@@ -6,7 +6,6 @@ type DialogProps = {
   className?: string,
   title?: string,
   dialogClass?: string,
-  bodyClass?: string,
   disableCloseButton?: boolean,
   // fitScreen?: boolean,
   height?: string | number,
@@ -14,7 +13,7 @@ type DialogProps = {
 }
 
 export function Dialog(props: DialogProps) {
-  const { id = 'dialog', title = 'Dialog', className = '', bodyClass = '', dialogClass = '', disableCloseButton, children } = props;
+  const { id = 'dialog', title = 'Dialog', className = '', dialogClass = '', disableCloseButton, children } = props;
 
   return <section className={`modal fade ${className}`} id={id} data-bs-backdrop="static" tabIndex={-1} role="dialog">
     <div className={`modal-dialog modal-dialog-centered modal-dialog-scrollable ${dialogClass}`} role="document">
@@ -23,9 +22,7 @@ export function Dialog(props: DialogProps) {
           <h5 className="modal-title">{title}</h5>
           {!disableCloseButton && <button type="button" className="btn-close" data-bs-dismiss="modal" />}
         </div>
-        <div className={classNames('modal-body', bodyClass)}>
-          {children}
-        </div>
+        {children}
       </div>
     </div>
   </section>

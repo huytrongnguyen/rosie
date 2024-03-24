@@ -1,52 +1,70 @@
 import { useState, useEffect, Children } from 'react';
-import { SCROLLBAR_WIDTH, classNames, guid } from '../../core/utils';
+import { Rosie, DataModel } from '../../core';
 import { GridColumnProps, GridProps } from './types';
 import { GridCell } from './grid-cell.component';
+import { PagingToolbar } from '../paging-toolbar.component';
+import { GridRow } from './grid-row.component';
 
 export function GridColumn(_: GridColumnProps) { return null; }
 
 export function Grid(props: GridProps) {
-  const [gridId] = useState(guid('rosie-grid-')),
+  const [gridId] = useState(Rosie.guid('rosie-grid-')),
         [columns, setColumns] = useState([] as GridColumnProps[]),
-        [data, setData] = useState<any[]>([]);
+        [currentPage, setCurrentPage] = useState(1),
+        [allSelected, setAllSelected] = useState(false),
+        [data, setData] = useState<DataModel<any>[]>([]);
 
-  // useEffect(() => {
-  //   const store$ = props.store?.subscribe(value => setData(value || []));
+  useEffect(() => {
+    const store$ = props.store?.subscribe(value => setData(value || []));
 
-  //   const scroll$ = Ext.query(`#${gridId} .rosie-grid-body-container`).on('scroll', (event) => {
-  //     const body = Ext.query(event.target);
-  //     body.siblings('.rosie-grid-header-container').scrollLeft(body.scrollLeft());
-  //     Ext.query(`#${gridId} .rosie-grid-locked .rosie-grid-body-container`).scrollTop(body.scrollTop());
-  //   });
+    const scroll$ = Rosie.query(`#${gridId} .rosie-grid-body`).on('scroll', (event: Event) => {
+      const body = Rosie.query(event.target);
+      body.siblings('.rosie-grid-header').scrollLeft(body.scrollLeft() as number);
+    });
 
-  //   return () => { store$?.unsubscribe(); scroll$.off('scroll'); }
-  // }, [])
+    return () => { store$?.unsubscribe(); scroll$.off('scroll'); }
+  }, [])
 
-  useEffect(() => { setData(props.data ?? []) }, [props.data])
+  useEffect(() => { !props.store && setData((props.data ?? []).map(DataModel.create)) }, [props.data])
 
   useEffect(() => {
     const columns = Children.toArray(props.children).map((child: any) => child.props as GridColumnProps);
     setColumns(columns);
   }, [props.children])
 
-  return <div id={gridId} className={classNames('rosie-grid rosie-grid-bordered rosie-grid-striped rosie-grid-hover d-flex flex-row fullscreen', props.className)}>
+  useEffect(() => { data.forEach(record => { record.selected = allSelected; }) }, [allSelected])
+
+  function getDisplayRows() {
+    if (!props.pagingToolbar) return data;
+
+    const { pageSize = 25 } = props.pagingToolbar;
+    return data.take(pageSize, pageSize * (currentPage - 1));
+  }
+
+  return <div id={gridId} className={Rosie.classNames('rosie-grid rosie-grid-bordered rosie-grid-striped rosie-grid-hover d-flex flex-row', { fullscreen: props.fitScreen || props.fitHeight }, props.className)}>
     <div className="rosie-grid-viewport d-flex flex-column fullscreen">
-      <div className={classNames('rosie-grid-header d-flex flex-column fw-bold bg-light')}>
+      <div className={Rosie.classNames('rosie-grid-header overflow-hidden fw-bold bg-light d-flex', { 'flex-column': props.fitScreen || props.fitWidth })}>
         <div className="rosie-grid-row d-flex flex-row">
-          {columns.map((col: GridColumnProps, index) => <GridCell key={index} {...col} value={col.headerName ?? col.field} />)}
-          <div style={{width:SCROLLBAR_WIDTH}} />
+          {props.checkboxSelection && <div className="rosie-grid-cell p-2">
+          <div className="form-check mb-0"><input className="form-check-input" type="checkbox" checked={allSelected} onChange={() => setAllSelected(!allSelected)} /></div>
+          </div>}
+          {columns.map((col: GridColumnProps, index) => <GridCell header key={index} {...col} />)}
+          <div style={{width:Rosie.SCROLLBAR_WIDTH}} />
         </div>
       </div>
-      <div className={classNames('rosie-grid-body d-flex flex-column fullscreen overflow-auto-x overflow-scroll-y')}>
+      <div className={Rosie.classNames('rosie-grid-body fullscreen overflow-x-auto d-flex', { 'flex-column': props.fitScreen || props.fitWidth, 'overflow-y-scroll': !props.fitWidth })}>
         <div>
           {(!data || !data.length) && <div className="p-2">No record found.</div>}
-          {data?.length > 0 && data.map((item, rowIndex) => {
-            return <div key={rowIndex} className="rosie-grid-row d-flex flex-row">
-              {columns.map((col: GridColumnProps, colIndex) => <GridCell key={colIndex} {...col} value={item[col.field]} rowIndex={rowIndex} colIndex={colIndex} />)}
-            </div>
+          {data?.length > 0 && getDisplayRows().map((record, rowIndex) => {
+            return <GridRow key={rowIndex} record={record} rowIndex={rowIndex} columns={columns} checkboxSelection={props.checkboxSelection} onSelectionChange={props.onSelectionChange} />
           })}
         </div>
       </div>
+      {props.pagingToolbar && <div className="rosie-grid-footer bg-light border-top d-flex flex-row p-2">
+        <div className="ms-auto">
+          <PagingToolbar data={data} onChange={setCurrentPage} />
+        </div>
+      </div>}
     </div>
   </div>
 }

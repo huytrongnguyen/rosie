@@ -3,7 +3,7 @@ import { Modal } from 'bootstrap';
 import toastr from 'toastr';
 import { format as d3Format } from 'd3';
 
-import { Dictionary } from './core/types';
+import { Dictionary } from './types';
 
 //region ===== Configuration =====
 toastr.options.closeButton = true;

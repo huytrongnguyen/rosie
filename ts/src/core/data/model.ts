@@ -5,8 +5,6 @@ import { ProxyConfig, ajaxRequest } from './proxy';
 export class DataModel<T> extends Subject<T> {
   constructor(public config?: ProxyConfig) { super(); }
 
-  get<TField = any>(fieldName: string) { return this.value?.[fieldName as keyof T] as TField; }
-
   loadData(data: T) { data && super.next(data); return this; }
 
   load(params?: HttpParams, onError?: (_reason: AjaxError) => T, onComplete?: () => void) {
@@ -22,4 +20,10 @@ export class DataModel<T> extends Subject<T> {
     record.loadData(data);
     return record;
   }
+
+  get<TField = any>(fieldName: string) { return this.value?.[fieldName as keyof T] as TField; }
+
+  on(eventName: string) {}
+
+  private _selected = false; get selected() { return this._selected; } set selected(value: boolean) { this._selected = value; }
 }
