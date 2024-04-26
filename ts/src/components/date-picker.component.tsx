@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { classNames, guid, isDate } from '../core/utils';
+import { Rosie } from '../core';
 
 type DatePickerComponentProps = {
   dateFormat?: string,
@@ -9,7 +9,7 @@ type DatePickerComponentProps = {
 }
 
 export function DatePickerComponent(props: DatePickerComponentProps) {
-  const [datePickerId] = useState(guid('datepicker-')),
+  const [datePickerId] = useState(Rosie.guid('datepicker-')),
         [dateFormat] = useState(props.dateFormat || 'yyyy-MM-dd'),
         [date, setDate] = useState(props.value),
         [dateStr, setDateStr] = useState(date?.format(dateFormat) ?? '');
@@ -19,7 +19,7 @@ export function DatePickerComponent(props: DatePickerComponentProps) {
 
   function onChangeTextBox() {
     const newDate = dateStr.parseDate();
-    if (isDate(newDate)) {
+    if (Rosie.isDate(newDate)) {
       setDate(newDate);
       onChange(newDate);
     }
@@ -132,7 +132,7 @@ export function DatePickerPortal(props: DatePickerPortalProps) {
       {calendar.map((week, weekIdx) => <div key={weekIdx} className="d-flex flex-row">
         {week.map((day, dayIdx) => {
           const selected = day > 0 && props.value.equals(new Date(viewDate.getFullYear(), viewDate.getMonth(), day)),
-                className = classNames(
+                className = Rosie.classNames(
                   'rosie-datepicker-cell rosie-datepicker-hover border-0 btn btn-sm',
                   {
                     'text-muted': day < 0,

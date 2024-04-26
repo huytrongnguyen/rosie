@@ -80,13 +80,23 @@ body, input, textarea, select, button {
   &.disabled { background-color: transparent !important; }
 }
 
-// Dropdowns
+// Typography
 //
-// Dropdown menu container and contents.
+// Font, line-height, and color for body text, headings, and more.
 
-.dropdown-item:not(.active) {
-  &:hover {
-    color: $white;
-    background-color: $component-hover-bg;
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: $value !important;
+  }
+}
+
+@each $color in ('primary', 'secondary', 'success', 'info') {
+  .text-bg-#{$color} {
+    color: $white !important;
+  }
+  .btn-outline-#{$color} {
+    &.active, &:hover {
+      color: $white;
+    }
   }
 }

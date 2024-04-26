@@ -1,16 +1,5 @@
-import $ from 'jquery/dist/jquery.slim';
 import { Modal } from 'bootstrap';
-import toastr from 'toastr';
-import { format as d3Format } from 'd3';
-
-import { Dictionary } from './types';
-
-//region ===== Configuration =====
-toastr.options.closeButton = true;
-toastr.options.preventDuplicates = true;
-toastr.options.positionClass = 'toast-bottom-right';
-toastr.options.timeOut = 5000;
-//endregion
+import { Dictionary } from '../mixin';
 
 export const isString = (value: any) => typeof value === 'string';
 export const isNumber = (value: any) => typeof value === 'number';
@@ -23,14 +12,8 @@ export const isNotEmpty = (value: any) => !isEmpty(value);
 
 export const guid = (prefix: string = '', suffix: string = '') => `${prefix}${(Math.random() * (1<<30)).toString(16).replace('.', '')}${suffix}`;
 
-export const query = (selectors: any) => $(selectors);
-export const beforeProcessing = () => query('#app-splash-screen').show();
-export const afterProcessing = () => query('#app-splash-screen').hide();
-
-export const alertInfo = toastr.info;
-export const alertSuccess = toastr.success;
-export const alertWarning = toastr.warning;
-export const alertError = toastr.error;
+export const beforeProcessing = () => { document.querySelector<HTMLElement>('#app-splash-screen').style.display = 'block'; }
+export const afterProcessing = () => { document.querySelector<HTMLElement>('#app-splash-screen').style.display = 'none'; }
 
 export function classNames(...expressions: any[]) {
   return expressions
@@ -85,29 +68,11 @@ function getScrollWidth() {
   return scrollbarWidth;
 }
 
-export function exportToCsv(fileName: string, data: any[], headers?: Dictionary<string>, delimiter = ',', lineDelimiter = '\r\n') {
-  if (!data) return;
-
-  if (!headers) {
-    headers = Object.keys(data[0]).groupBy(x => x, g => g.first()) as Dictionary<string>;
-  }
-
-  const columnNames = Object.keys(headers as any),
-        header = `${columnNames.map(name => `"${headers?.[name]}"`).join(delimiter)}${lineDelimiter}`,
-        content = data.map(row => columnNames.map(name => `"${row[name] ?? ''}"`).join(delimiter)),
-        csvContent = header + content.join(lineDelimiter);
-
-    const link = document.createElement('a');
-    link.setAttribute('href', URL.createObjectURL(new Blob([csvContent],{type: 'text/csv;charset=utf-8;'})));
-    link.setAttribute('download', fileName || 'export.csv');
-    document.body.appendChild(link); // Required for FF
-    link.click();
-    document.body.removeChild(link);
-}
-
-export const Number = {
-  // https://github.com/d3/d3-format#locale_format
-  // [​[fill]align][sign][symbol][0][width][,][.precision][~][type]
-  pattern: (specifier: string = ',.2~f') => d3Format(specifier),
-  format: (value: number | { valueOf(): number } = 0, pattern: string = ',.2~f') => d3Format(pattern)(value ?? 0),
+export function exportFile(content: string, fileName: string, type = 'text/csv;charset=utf-8;') {
+  const link = document.createElement('a');
+  link.setAttribute('href', URL.createObjectURL(new Blob([content], {type})));
+  link.setAttribute('download', fileName);
+  document.body.appendChild(link); // Required for FF
+  link.click();
+  document.body.removeChild(link);
 }

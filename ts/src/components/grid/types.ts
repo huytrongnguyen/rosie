@@ -1,5 +1,5 @@
 import { PropsWithChildren, HTMLAttributes, ReactElement } from 'react';
-import { DataModel, DataStore } from '../../core';
+import { DataModel, DataStore } from '../../data';
 
 export interface GridProps extends PropsWithChildren<any> {
   data?: any[],

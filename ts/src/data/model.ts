@@ -1,9 +1,12 @@
-import { AjaxError, HttpParams } from '../types';
-import { Subject } from '../observable';
+import { AjaxError, HttpParams, Subject } from '../mixin';
 import { ProxyConfig, ajaxRequest } from './proxy';
 
 export class DataModel<T> extends Subject<T> {
   constructor(public config?: ProxyConfig) { super(); }
+
+  selected = false;
+
+  get<TField = any>(fieldName: string) { return this.value?.[fieldName as keyof T] as TField; }
 
   loadData(data: T) { data && super.next(data); return this; }
 
@@ -20,10 +23,4 @@ export class DataModel<T> extends Subject<T> {
     record.loadData(data);
     return record;
   }
-
-  get<TField = any>(fieldName: string) { return this.value?.[fieldName as keyof T] as TField; }
-
-  on(eventName: string) {}
-
-  private _selected = false; get selected() { return this._selected; } set selected(value: boolean) { this._selected = value; }
 }

@@ -1,5 +1,4 @@
-import { AjaxError, HttpParams } from '../types';
-import { Subject } from '../observable';
+import { AjaxError, HttpParams, Subject } from '../mixin';
 import { ProxyConfig, ajaxRequest } from './proxy';
 import { DataModel } from './model';
 

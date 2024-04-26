@@ -19,9 +19,6 @@ export class Subscription<T> {
 }
 
 export class Subject<T> {
-  observers: Observer<T>[] = [];
-  protected value: T = null as T; getData(): T { return this.value; }
-
   subscribe(next: (value: T) => void, error?: (reason: any) => void, complete?: () => void) {
     const subscriber = { next, error, complete };
     this.observers.push(subscriber);
@@ -33,6 +30,13 @@ export class Subject<T> {
 
   next(value: T) {
     this.value = value;
-    this.observers.forEach(observer => observer.next && observer.next(value));
+    this.refresh();
   }
+
+  refresh() {
+    this.observers.forEach(observer => observer.next && observer.next(this.value));
+  }
+
+  value: T = null as T;
+  observers: Observer<T>[] = [];
 }

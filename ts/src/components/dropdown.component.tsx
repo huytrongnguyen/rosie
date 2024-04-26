@@ -1,5 +1,5 @@
 import { useState, useEffect, ReactElement, Fragment } from 'react';
-import { classNames } from '../core/utils';
+import { Rosie } from '../core';
 
 type DropdownProps = {
   options: any[],
@@ -51,23 +51,23 @@ export function Dropdown(props: DropdownProps) {
     props.onChange && props.onChange(opts);
   }
 
-  return <div className={classNames('dropdown', props.className)}>
-    <span className={classNames('dropdown-toggle cursor-pointer', props.buttonClass)} style={props.buttonStyle} data-bs-toggle="dropdown">
+  return <div className={Rosie.classNames('dropdown', props.className)}>
+    <span className={Rosie.classNames('dropdown-toggle cursor-pointer', props.buttonClass)} style={props.buttonStyle} data-bs-toggle="dropdown">
       {displayText()}
     </span>
-    <div className={classNames('dropdown-menu p-0', { 'dropdown-menu-right': props.rightAligned })}>
+    <div className={Rosie.classNames('dropdown-menu p-0', { 'dropdown-menu-right': props.rightAligned })}>
       {props.searchBox && <div className="p-1 border-bottom">
         <input type="text" className="form-control form-control-sm" name="searchFilter" placeholder="Search..."
             value={searchFilter} onChange={event => setSearchFilter(event.target.value)} />
       </div>}
-      <div className={classNames({ 'dropdown-item-list': !entireList })}>
+      <div className={Rosie.classNames({ 'dropdown-item-list': !entireList })}>
         {options.map((opt, index) => {
           if (searchFilter && !opt[displayField].toLowerCase().startsWith(searchFilter.toLowerCase())) return null;
           if (props.itemRenderer) {
             return <Fragment key={opt[valueField]}>{props.itemRenderer(opt[displayField], opt, index)}</Fragment>
           }
           return <div key={opt[valueField]} onClick={() => select(opt)} role="button"
-                      className={classNames('dropdown-item', { active: isSelected(opt) })}>
+                      className={Rosie.classNames('dropdown-item', { active: isSelected(opt) })}>
             {props.renderer ? props.renderer(opt[displayField], opt, index) : opt[displayField]}
           </div>
         })}

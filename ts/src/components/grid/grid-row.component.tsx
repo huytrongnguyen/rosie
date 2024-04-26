@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DataModel } from '../../core';
+import { DataModel } from '../../data';
 import { GridColumnProps } from './types';
 import { GridCell } from './grid-cell.component';
 

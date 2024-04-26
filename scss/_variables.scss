@@ -1,34 +1,15 @@
 // Color system
 
-$white:       #fff;
-$shade-00:    #2d2f34;
-$shade-05:    #3f434a;
-$shade-30:    #c5c5c5;
-$shade-50:    #f1f2f4;
-$shade-100:   #fdfdfd;
+$gray-600:    #777;
+$gray-900:    #333;
 
-$blue:        #6aa5db;
-$red:         #e55353;
-$yellow:      #ffc000;
-$green:       #9cc96b;
-$purple:      #d1a5ff;
-$pink:        #e97b98;
-
-$primary:       $pink;
-$secondary:     $shade-30;
-$success:       $green;
-$info:          $blue;
-$warning:       $yellow;
-$danger:        $red;
-$light:         $shade-50;
-$dark:          $shade-00;
-
-// Body
-//
-// Settings for the `<body>` element.
-
-$body-color: $shade-05;
-$body-bg:    $shade-100;
+$blue:        #3aa3e3;
+$red:         #dc3545;
+$yellow:      #ffc107;
+$orange:      #ff7f00;
+$green:       #22c283;
+$purple:      #8e53e3;
+$pink:        #ea4c89;
 
 // Components
 //
@@ -39,7 +20,6 @@ $border-color: rgba(0, 0, 0, 0.125);
 // Typography
 //
 // Font, line-height, and color for body text, headings, and more.
-
 $font-size-base: .875rem;
 $font-weight-base: 300;
 
@@ -49,9 +29,3 @@ $breadcrumb-padding-y: .25rem;
 $breadcrumb-padding-x: .5rem;
 $breadcrumb-margin-bottom: 0;
 $breadcrumb-height: 40px;
-
-// Components
-//
-// Define common padding and border radius sizes and more.
-
-$component-hover-bg: #ed95ac;

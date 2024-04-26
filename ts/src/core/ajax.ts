@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { AjaxSettings } from './types';
+import { AjaxSettings } from '../mixin';
 
 export const Ajax = {
   request: async <T = any>(settings: AjaxSettings) => {

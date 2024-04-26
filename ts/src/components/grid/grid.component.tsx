@@ -1,11 +1,12 @@
 import { useState, useEffect, Children } from 'react';
-import { Rosie, DataModel } from '../../core';
-import { GridColumnProps, GridProps } from './types';
-import { GridCell } from './grid-cell.component';
+import { Rosie } from '../../core';
+import { DataModel } from '../../data';
 import { PagingToolbar } from '../paging-toolbar.component';
+import { GridColumnProps, GridProps } from './types';
 import { GridRow } from './grid-row.component';
+import { GridCell } from './grid-cell.component';
 
-export function GridColumn(_: GridColumnProps) { return null; }
+export function GridColumn(_: GridColumnProps): any { return null; }
 
 export function Grid(props: GridProps) {
   const [gridId] = useState(Rosie.guid('rosie-grid-')),
@@ -17,12 +18,12 @@ export function Grid(props: GridProps) {
   useEffect(() => {
     const store$ = props.store?.subscribe(value => setData(value || []));
 
-    const scroll$ = Rosie.query(`#${gridId} .rosie-grid-body`).on('scroll', (event: Event) => {
-      const body = Rosie.query(event.target);
-      body.siblings('.rosie-grid-header').scrollLeft(body.scrollLeft() as number);
+    const body = document.querySelector(`#${gridId} .rosie-grid-body`);
+    body.addEventListener('scroll', (event: Event) => {
+      document.querySelector(`#${gridId} .rosie-grid-header`).scrollLeft = body.scrollLeft;
     });
 
-    return () => { store$?.unsubscribe(); scroll$.off('scroll'); }
+    return () => { store$?.unsubscribe(); }
   }, [])
 
   useEffect(() => { !props.store && setData((props.data ?? []).map(DataModel.create)) }, [props.data])

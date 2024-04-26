@@ -2,12 +2,17 @@
 
 ## Next
 
+## 0.1.4
+> 2024-04-26
+
 - New Features
   - #6 Add `DataModel`, `DataStore` object
 - Improvements
   - #9 Supports to select row by checkbox
+  - Restructure `ts`
+  - Refine `scss`
 - Bug Fixes
-  - #13 `GridCell` not update value when `DataModel` change bug
+  - #13 `GridCell` not update value when `DataModel` change
 
 ## 0.1.3
 > 2024-01-13
