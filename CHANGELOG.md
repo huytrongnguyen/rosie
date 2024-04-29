@@ -2,8 +2,8 @@
 
 ## Next
 
-## 0.1.4
-> 2024-04-26
+## 0.1.5
+> 2024-04-29
 
 - New Features
   - #6 Add `DataModel`, `DataStore` object
