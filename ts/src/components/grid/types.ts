@@ -5,9 +5,15 @@ export interface GridProps extends PropsWithChildren<any> {
   data?: any[],
   store?: DataStore<any>,
   checkboxSelection?: boolean,
-  onSelectionChange?: (record: DataModel<any>) => void,
   bbar?: (records: DataModel<any>[]) => ReactElement,
   pagingToolbar?: { pageSize?: number },
+}
+
+export type GridRowProps = {
+  record: DataModel<any>,
+  rowIndex: number,
+  columns: GridColumnProps[],
+  checkboxSelection?: boolean,
 }
 
 export interface GridColumnProps extends HTMLAttributes<HTMLDivElement> {

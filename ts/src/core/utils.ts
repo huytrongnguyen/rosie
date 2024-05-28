@@ -12,9 +12,6 @@ export const isNotEmpty = (value: any) => !isEmpty(value);
 
 export const guid = (prefix: string = '', suffix: string = '') => `${prefix}${(Math.random() * (1<<30)).toString(16).replace('.', '')}${suffix}`;
 
-export const beforeProcessing = () => { document.querySelector<HTMLElement>('#app-splash-screen').style.display = 'block'; }
-export const afterProcessing = () => { document.querySelector<HTMLElement>('#app-splash-screen').style.display = 'none'; }
-
 export function classNames(...expressions: any[]) {
   return expressions
       .filter(exp => isNotEmpty(exp))

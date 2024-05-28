@@ -6,7 +6,7 @@
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "baseUrl": ".",
-    "outDir": "../fanza-library/node_modules/rosie-ui/dist/js",
+    "outDir": "../gebase/node_modules/rosie-ui/dist/js",
     "removeComments": true,
     "declaration": true,
     "strict": true,

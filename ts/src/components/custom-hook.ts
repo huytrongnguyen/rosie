@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Rosie } from '../core';
-import { DataModel } from '../data';
+import { Subject } from '../mixin';
 
-export function useDataModel<T = any>(model: DataModel<T>): [T] {
-  const [data, setData] = useState({} as T);
+export function useSubject<T = any>(subject: Subject<T>): [T] {
+  const [data, setData] = useState(null as T);
 
   useEffect(() => {
-    const model$ = model.subscribe(value => {
-      Rosie.afterProcessing();
-      setData({...value});
+    const subject$ = subject.subscribe(value => {
+      setData(value);
     });
 
-    return () => { model$.unsubscribe(); }
+    return () => { subject$.unsubscribe(); }
   }, []);
 
   return [data];

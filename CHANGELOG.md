@@ -2,6 +2,18 @@
 
 ## Next
 
+## 0.1.7
+> 2024-05-28
+
+- New Features
+  - Add `useSubject` custom hook
+- Improvements
+  - #10 Should configure css class: rosie-grid-bordered rosie-grid-striped rosie-grid-hover
+  - #18 `Subject` enhancement
+  - #14 `DataModel` enhancement
+  - #16 `Grid` enhancement
+  - Add array extension method: `groupBy`, `sumBy`, `toDictionary`
+
 ## 0.1.6
 > 2024-04-29
 

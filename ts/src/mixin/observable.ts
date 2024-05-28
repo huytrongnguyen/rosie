@@ -1,3 +1,5 @@
+import { Dictionary } from './types';
+
 export interface Observer<T> {
   next: (value: T) => void,
   error?: (reason: any) => void,
@@ -37,6 +39,16 @@ export class Subject<T> {
     this.observers.forEach(observer => observer.next && observer.next(this.value));
   }
 
+  on(eventName: string, handler: (...extraParameters: any) => void) {
+    if (!this.events[eventName]) this.events[eventName] = [];
+    this.events?.[eventName]?.push(handler);
+  }
+
+  trigger(eventName: string, ...extraParameters: any) {
+    this.events?.[eventName]?.forEach(handler => handler(...extraParameters));
+  }
+
   value: T = null as T;
   observers: Observer<T>[] = [];
+  private events: Dictionary<Function[]> = {};
 }

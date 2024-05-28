@@ -1,6 +1,6 @@
 {
   "name": "rosie-ui",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "JavaScript library that build on top of React 18.2 and Bootstrap 5, helping you build data-intensive, cross-platform web apps for desktops, tablets, and smartphones.",
   "author": "Lionel Nguyen <huynguyen8505@gmail.com> (https://github.com/huytrongnguyen)",
   "license": "MIT",
@@ -29,10 +29,9 @@
     "css-fonts": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts dist",
     "build-dev": "yarn css-dev && yarn js-dev",
     "js-dev": "tsc --project tsconfig.dev.json",
-    "css-dev": "yarn css-compile-dev && yarn css-scss-dev && yarn css-fonts-dev",
-    "css-compile-dev": "sass --style=compressed --no-source-map scss:../fanza-library/node_modules/rosie-ui/dist/css",
-    "css-scss-dev": "cp -r scss ../fanza-library/node_modules/rosie-ui",
-    "css-fonts-dev": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts ../fanza-library/node_modules/rosie-ui/dist"
+    "css-dev": "yarn css-compile-dev && yarn css-scss-dev",
+    "css-compile-dev": "sass --style=compressed --no-source-map scss:../gebase/node_modules/rosie-ui/dist/css",
+    "css-scss-dev": "cp -r scss ../gebase/node_modules/rosie-ui"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.5.2",

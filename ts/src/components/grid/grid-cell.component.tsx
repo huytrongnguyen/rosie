@@ -11,21 +11,19 @@ interface GridCellProps extends GridColumnProps {
 }
 
 export function GridCell(props: GridCellProps) {
-  const { field, headerName, className, renderer, record, rowIndex, colIndex, header, ...others } = props,
-        cellCls = Rosie.classNames('rosie-grid-cell p-2', className),
-        [fieldValue, setFieldValue] = useState<any>(record?.get(field));
+  const { field, headerName, className, renderer, rowIndex, colIndex, header, ...others } = props,
+        cellCls = Rosie.classNames('rosie-grid-cell p-1', className);
 
   if (header) {
     return <div className={cellCls} {...others}>{headerName ?? field}</div>
   }
 
-  useEffect(() => {
-    const record$ = props.record?.subscribe(value => { setFieldValue(value?.[field]); });
-    return () => { record$?.unsubscribe(); }
-  }, [])
+  const [fieldValue, setFieldValue] = useState<any>(props.record?.get(field));
+
+  useEffect(() => { setFieldValue(props.record?.get(field)) }, [props.record])
 
   function getDisplayValue() {
-    if (renderer) return renderer(fieldValue, record, rowIndex, colIndex);
+    if (renderer) return renderer(fieldValue, props.record, rowIndex, colIndex);
     return fieldValue;
   }
 

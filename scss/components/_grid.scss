@@ -1,3 +1,5 @@
+@import '../variables';
+
 .rosie-grid {
   border-top: 1px solid $border-color;
   border-left: 1px solid $border-color;
@@ -19,11 +21,19 @@
 
   &.rosie-grid-hover {
     .rosie-grid-body {
-      .rosie-grid-row:hover { background-color: #efefef !important; }
+      .rosie-grid-row:hover:not(.selected) { background-color: #efefef !important; }
     }
   }
 
   .rosie-grid-header {
     .rosie-grid-row { border-bottom: 2px solid $border-color; }
+  }
+
+  .rosie-grid-body {
+    .rosie-grid-row {
+      &.selected {
+        background-color: #e0e0e0 !important;
+      }
+    }
   }
 }
