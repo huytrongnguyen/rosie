@@ -2,6 +2,10 @@
 
 ## Next
 
+## 0.1.9
+> 2024-05-30
+  - Correct type in `groupBy` extension method
+
 ## 0.1.8
 > 2024-05-28
 

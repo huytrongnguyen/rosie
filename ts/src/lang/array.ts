@@ -8,7 +8,7 @@ interface Array<T> {
 
   orderBy(keySelector: string | number, orders?: 'asc' | 'desc'): T[],
 
-  groupBy<T, TElement = T>(keySelector: string | number | ((item: T, index: number, array: T[]) => any), elementSelector?: (value: T[], key: string) => TElement): { key: any, elements: TElement[] }[],
+  groupBy<T, TElement = T[]>(keySelector: string | number | ((item: T, index: number, array: T[]) => any), elementSelector?: (value: T[], key: string) => TElement): { key: any, elements: TElement }[],
   sumBy(keySelector: string | number | ((item: T, index: number, array: T[]) => number)): number,
 
   toDictionary<T, TElement>(keySelector: string | number | ((item: T, index: number, array: T[]) => any), elementSelector?: (item: T, index: number, array: T[]) => TElement): { [key: string]: TElement }
@@ -30,7 +30,7 @@ Array.prototype.orderBy = function<T>(this: T[], keySelector: string | number, o
   })
 }
 
-Array.prototype.groupBy = function<T, TElement = T>(this: T[], keySelector: string | number | ((item: T, index: number, array: T[]) => any), elementSelector?: (value: T[], key: string) => TElement) {
+Array.prototype.groupBy = function<T, TElement = T[]>(this: T[], keySelector: string | number | ((item: T, index: number, array: T[]) => any), elementSelector?: (value: T[], key: string) => TElement) {
   const groupByKey = this.reduce((result, item: any, index, array) => {
     const key = (typeof keySelector === 'string' || typeof keySelector === 'number') ? item[keySelector] : keySelector(item, index, array);
     !result[key] && (result[key] = []);
@@ -44,7 +44,7 @@ Array.prototype.groupBy = function<T, TElement = T>(this: T[], keySelector: stri
     }
   }
 
-  const result: { key: any, elements: TElement[] }[] = [];
+  const result: { key: any, elements: TElement }[] = [];
 
   for (let key in groupByKey) {
     result.push({ key, elements: groupByKey[key] });
