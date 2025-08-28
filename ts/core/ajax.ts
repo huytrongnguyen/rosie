@@ -1,8 +1,25 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { AjaxSettings } from '../mixin';
+import axios, { AxiosError, AxiosRequestConfig, Method } from 'axios';
+import { Dictionary } from './types';
+
+export type HttpMethod = Method;
+
+export interface AjaxError extends AxiosError<any> { }
+
+export type HttpParams = {
+  pathParams?: Dictionary<any>,
+  queryParams?: Dictionary<any>,
+  body?: any,
+  headers?: Dictionary<any>,
+}
+
+export type AjaxSettings = {
+  url: string,
+  method?: HttpMethod,
+  params?: HttpParams,
+}
 
 export const Ajax = {
-  request: async <T = any>(settings: AjaxSettings) => {
+  request: async <T>(settings: AjaxSettings) => {
     const { method = 'get', params = {} } = settings;
     let { url } = settings;
 

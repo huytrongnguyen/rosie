@@ -1,4 +1,5 @@
-import { AjaxError, HttpParams, Subject } from '../mixin';
+import { HttpParams, AjaxError } from '../ajax';
+import { Subject } from '../observable';
 import { ProxyConfig, ajaxRequest } from './proxy';
 
 export class DataModel<T> extends Subject<T> {
@@ -16,13 +17,9 @@ export class DataModel<T> extends Subject<T> {
     return ajaxRequest<T>(this.config, params).catch(onError).finally(onComplete);
   }
 
-  private _selected = false;
-  public get selected() { return this._selected; }
-  public set selected(value: boolean) { this._selected = value; this.trigger('select'); }
-
-  static create<T = any>(data: T) {
-    const record = new DataModel<T>();
-    record.loadData(data);
-    return record;
-  }
+  // static create<T = any>(data: T) {
+  //   const record = new DataModel<T>();
+  //   record.loadData(data);
+  //   return record;
+  // }
 }

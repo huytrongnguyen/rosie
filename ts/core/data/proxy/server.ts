@@ -1,8 +1,7 @@
-import { HttpMethod, HttpParams } from '../mixin';
-import { Ajax } from '../core';
+import { Ajax, HttpMethod, HttpParams } from '../../ajax';
 
 export type ProxyConfig = {
-  proxy: { url: string, method?: HttpMethod, }
+  proxy: { url: string, method?: HttpMethod }
 }
 
 export async function ajaxRequest<T = any>(config?: ProxyConfig, params?: HttpParams): Promise<T> {
