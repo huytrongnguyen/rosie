@@ -2,6 +2,7 @@ type TemporalUnit = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'sec
 
 interface DateConstructor {
   currentDate(): Date,
+  parseDate(value: string): Date
   // difference(dateAfter: Date, dateBefore: Date, unit?: TemporalUnit): number,
   // differenceInCalendarWeeks(dateAfter: Date, dateBefore: Date, weekStartsOn?: number): number,
   // createTimeline(startDate: Date, endDate: Date, pattern: string): string[],
@@ -9,6 +10,11 @@ interface DateConstructor {
 
 Date.currentDate = function() {
   const value = new Date();
+  return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+}
+
+Date.parseDate = function(str: string) {
+  const value = new Date(str) ?? new Date();
   return new Date(value.getFullYear(), value.getMonth(), value.getDate());
 }
 
@@ -51,11 +57,11 @@ interface Date {
   // isBefore(other: Date): boolean,
   // isAfter(other: Date): boolean,
 
-  format(pattern: string): string,
+  format(pattern?: string): string,
 
-  // startOfMonth(): Date,
-  // endOfMonth(): Date,
-  // lengthOfMonth(): number,
+  startOfMonth(): Date,
+  endOfMonth(): Date,
+  lengthOfMonth(): number,
 
   // startOfWeek(weekStartsOn?: number): Date,
 
@@ -69,8 +75,8 @@ interface Date {
 // Date.prototype.isBefore = function(this: Date, other: Date) { return this?.getTime() < other?.getTime(); }
 // Date.prototype.isAfter = function(this: Date, other: Date) { return this?.getTime() > other?.getTime(); }
 
-Date.prototype.format = function(this: Date, pattern: string) {
-  return pattern
+Date.prototype.format = function(this: Date, pattern?: string) {
+  return (pattern ?? 'yyyy-MM-dd')
       .replace('yyyy', `${this.getFullYear()}`)
       .replace('MM', `${this.getMonth() + 1}`.padStart(2, '0'))
       .replace('dd', `${this.getDate()}`.padStart(2, '0'))
@@ -79,9 +85,9 @@ Date.prototype.format = function(this: Date, pattern: string) {
       .replace('ss', `${this.getSeconds()}`.padStart(2, '0'));
 }
 
-// Date.prototype.startOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth(), 1, 0, 0, 0, 0); }
-// Date.prototype.endOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth() + 1, 0, 0, 0, 0, 0); }
-// Date.prototype.lengthOfMonth = function(this: Date) { return this.endOfMonth().getDate(); }
+Date.prototype.startOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth(), 1); }
+Date.prototype.endOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth() + 1, 0); }
+Date.prototype.lengthOfMonth = function(this: Date) { return this.endOfMonth().getDate(); }
 
 // Date.prototype.startOfWeek = function(this: Date, weekStartsOn = 0) {
 //   const day = this.getDay(),

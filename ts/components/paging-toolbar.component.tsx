@@ -1,11 +1,11 @@
 import { Rosie } from '../core';
 
-export function PagingToolbar(props: { page?: number, size?: number, total?: number, items?: number }) {
-  const { page = 1, size = 100, total = 0, items = 0 } = props,
+export function PagingToolbar(props: { page?: number, size?: number, count?: number, total?: number }) {
+  const { page = 1, size = 100, count = 0, total = 0 } = props,
         totalPage = (total / size).floor() + ((total % size) > 0 ? 1 : 0);
 
   return <>
-    <div className="mt-1 me-auto">Display records {!items ? 0 : (page - 1) * size + 1} - {Math.min(page * size, (page - 1) * size + items)} of {total}</div>
+    <div className="mt-1 me-auto">Display records {!count ? 0 : (page - 1) * size + 1} - {Math.min(page * size, (page - 1) * size + count)} of {total}</div>
     <ul className="pagination pagination-sm mb-0">
       <li className={Rosie.classNames('page-item', { disabled: page <= 1 })}>
         <span className="page-link"><span className="fa fa-step-backward" /></span>

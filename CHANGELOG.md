@@ -1,6 +1,16 @@
-# Rosie UI
+# Changelog
 
 ## Next
+
+- New Features
+  - Add `PagingToolbar`
+  - Add `DatePicker`, `DateRangePicker`
+
+## 0.2.0
+> 2025-08-28
+
+- Breaking Changes
+  - Upgrade to React 19.1
 
 ## 0.1.9
 > 2024-05-30
