@@ -7,6 +7,10 @@ export interface GridProps extends PropsWithChildren<any> {
   // checkboxSelection?: boolean,
   // bbar?: (records: DataModel<any>[]) => ReactElement,
   // pagingToolbar?: { pageSize?: number },
+  fitScreen?: boolean,
+  fitWidth?: boolean,
+  fitHeight?: boolean,
+  pagingToolbar?: boolean,
 }
 
 export type GridRowProps = {
