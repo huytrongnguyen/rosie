@@ -1,27 +1,50 @@
+@use 'functions' as *;
+
 // Variables
 //
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
-// Color system
+// Color system (6)
 
-// $white:    #fff;
-// $gray-100: #f3f4f7;
+// scss-docs-start gray-color-variables
+$white:    #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+// $gray-400: #ced4da;
+// $gray-500: #adb5bd;
+// $gray-600: #6c757d;
+// $gray-700: #495057;
+// $gray-800: #343a40;
+// $gray-900: #212529;
+$black:    #000;
+// scss-docs-end gray-color-variables
 
-// $pink:    #e97b98;
+// scss-docs-start color-variables
+$blue:    #0d6efd;
+// $indigo:  #6610f2;
+// $purple:  #6f42c1;
+// $pink:    #d63384;
+// $red:     #dc3545;
+// $orange:  #fd7e14;
+// $yellow:  #ffc107;
+// $green:   #198754;
+// $teal:    #20c997;
+// $cyan:    #0dcaf0;
+$rosie:   #e97b98;
+// scss-docs-end color-variables
 
-// $primary:       $pink;
-
-// $gray-600:    #777;
-// $gray-900:    #333;
-
-// $blue:        #3aa3e3;
-// $red:         #dc3545;
-// $yellow:      #ffc107;
-// $orange:      #ff7f00;
-// $green:       #22c283;
-// $purple:      #7a6ff1;
-// $pink:        #ea4c89;
+// scss-docs-start theme-color-variables
+$primary:       $blue;
+// $secondary:     $gray-600;
+// $success:       $green;
+// $info:          $cyan;
+// $warning:       $yellow;
+// $danger:        $red;
+// $light:         $gray-100;
+// $dark:          $gray-900;
+// scss-docs-end theme-color-variables
 
 // Body (433)
 //
@@ -37,18 +60,40 @@
 
 // $link-hover-color: #ed95ac;
 
-// Components
-//
+// Components (528)
+
 // Define common padding and border radius sizes and more.
 
-// $border-color: rgba(0, 0, 0, 0.125);
+// scss-docs-start border-variables
+$border-width:                1px;
+$border-style:                solid;
+$border-color:                $gray-300;
+$border:                      $border-width $border-style $border-color;
+// scss-docs-end border-variables
 
-// Typography
+$component-active-color:      $white;
+$component-active-bg:         $primary;
+$component-hover-bg:          tint-color($component-active-bg, 20%);
+
+
+// Typography (600)
 //
 // Font, line-height, and color for body text, headings, and more.
+
 // $font-family-base: Effra, Roboto, Helvetica, Open-Sans, Arial, sans-serif;
-// $font-size-base: .875rem;
+$font-size-base:              1rem; // Assumes the browser default, typically `16px`
+$font-size-sm:                $font-size-base * .875;
+$font-size-lg:                $font-size-base * 1.25;
 // $font-weight-base: 300;
+
+// Navs (1156)
+
+$nav-link-padding-y:                .5rem;
+$nav-link-padding-x:                1rem;
+
+// Navbar (1187)
+
+$navbar-brand-font-size:            $font-size-lg;
 
 // Breadcrumb (1631)
 

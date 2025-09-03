@@ -1,11 +1,11 @@
 import { useState, useEffect, Children } from 'react';
+
 import { DataModel, Rosie } from '../../core';
-// import { PagingToolbar } from '../paging-toolbar.component';
-import { GridColumnProps, GridProps } from './types';
-// import { GridRow } from './grid-row.component';
-import { GridCell } from './grid-cell.component';
-import { GridRow } from './grid-row.component';
 import { PagingToolbar } from '../paging-toolbar.component';
+
+import { GridColumnProps, GridProps } from './types';
+import { GridRow } from './grid-row.component';
+import { GridCell } from './grid-cell.component';
 
 export function GridColumn(_: GridColumnProps): any { return null; }
 

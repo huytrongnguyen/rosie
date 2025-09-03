@@ -5,6 +5,8 @@
 - New Features
   - Add `PagingToolbar`
   - Add `DatePicker`, `DateRangePicker`
+- Bug Fixes
+  - Correct `rosie-grid` css
 
 ## 0.2.0
 > 2025-08-28
