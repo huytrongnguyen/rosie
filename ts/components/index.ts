@@ -3,3 +3,4 @@ export * from './dialog.component';
 export * from './paging-toolbar.component';
 export * from './grid';
 export * from './datepicker';
+export * from './query-builder';

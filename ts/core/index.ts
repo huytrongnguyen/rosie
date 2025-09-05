@@ -1,3 +1,4 @@
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './lang/string';
 import './lang/number';
 import './lang/date';

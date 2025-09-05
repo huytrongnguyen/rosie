@@ -16,6 +16,7 @@
   },
   "files": [
     "dist",
+    "scss",
     "LICENSE",
     "CHANGELOG.md",
     "README.md"

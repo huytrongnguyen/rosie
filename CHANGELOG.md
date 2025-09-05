@@ -3,8 +3,11 @@
 ## Next
 
 - New Features
-  - Add `PagingToolbar`
-  - Add `DatePicker`, `DateRangePicker`
+  - Add new components:
+    - `PagingToolbar`
+    - `DatePicker`, `DateRangePicker`
+    - `Dropdown`, `InputDropdown`
+    - `QueryOperation`
 - Bug Fixes
   - Correct `rosie-grid` css
 
