@@ -17,9 +17,9 @@ export class DataModel<T> extends Subject<T> {
     return ajaxRequest<T>(this.config, params).catch(onError).finally(onComplete);
   }
 
-  // static create<T = any>(data: T) {
-  //   const record = new DataModel<T>();
-  //   record.loadData(data);
-  //   return record;
-  // }
+  static create<T = any>(data: T) {
+    const record = new DataModel<T>();
+    record.loadData(data);
+    return record;
+  }
 }

@@ -29,7 +29,7 @@ export function Grid(props: GridProps) {
   //   return () => { store$?.unsubscribe(); }
   }, [])
 
-  // useEffect(() => { !props.store && setRawData((props.data ?? []).map(DataModel.create)) }, [props.data])
+  useEffect(() => { !props.store && setRecords((props.data ?? []).map(DataModel.create)) }, [props.data])
 
   useEffect(() => {
     const columns = Children.toArray(props.children).map((child: any) => child.props as GridColumnProps);
