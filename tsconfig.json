@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "target": "es5",
     "module": "esnext",
     "lib": [ "dom", "esnext" ],
-    "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "skipLibCheck": true,
     "baseUrl": ".",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "strict": true,
     "outDir": "dist/js",
     "removeComments": true,
-    "declaration": true,
-    "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
     "inlineSourceMap": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "skipLibCheck": true
   },
   "exclude": ["node_modules", "ts/test", "dist"]
 }
