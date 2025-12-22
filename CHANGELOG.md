@@ -8,8 +8,11 @@
     - `DatePicker`, `DateRangePicker`
     - `Dropdown`, `InputDropdown`
     - `QueryOperation`
+  - Load data to `Grid` via `store` property
 - Bug Fixes
   - Correct `rosie-grid` css
+- Breaking Changes
+  - Upgrade to React 19.2.3
 
 ## 0.2.0
 > 2025-08-28

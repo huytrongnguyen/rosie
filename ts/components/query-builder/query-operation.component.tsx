@@ -1,7 +1,6 @@
-import { newOperation } from 'rosie-ui';
 import { Dropdown } from '../dropdown.component';
 import { CriteriaFieldComponent } from './criteria-field.component';
-import { combineOperators, CriteriaField, QueryOperation } from './type';
+import { combineOperators, CriteriaField, newOperation, QueryOperation } from './type';
 
 type QueryOperationComponentProps = {
   operation: QueryOperation,

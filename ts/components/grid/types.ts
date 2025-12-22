@@ -1,9 +1,9 @@
 import { PropsWithChildren, HTMLAttributes, ReactElement } from 'react';
-import { DataModel } from '../../core';
+import { DataModel, DataStore } from '../../core';
 
 export interface GridProps extends PropsWithChildren<any> {
   // data?: any[],
-  // store?: DataStore<any>,
+  store?: DataStore<any>,
   // checkboxSelection?: boolean,
   // bbar?: (records: DataModel<any>[]) => ReactElement,
   // pagingToolbar?: { pageSize?: number },

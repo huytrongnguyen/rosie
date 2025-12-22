@@ -19,17 +19,17 @@ export function Grid(props: GridProps) {
         // [rawData, setRawData] = useState<DataModel<any>[]>([]);
 
   useEffect(() => {
-  //   const store$ = props.store?.subscribe(value => setRawData(value || []));
+    const store$ = props.store?.subscribe(value => setRecords(value || []));
 
     const body = document.querySelector(`#${gridId} .rosie-grid-body`);
     body.addEventListener('scroll', () => {
       document.querySelector(`#${gridId} .rosie-grid-header`).scrollLeft = body.scrollLeft;
     });
 
-  //   return () => { store$?.unsubscribe(); }
+    return () => { store$?.unsubscribe(); }
   }, [])
 
-  useEffect(() => { !props.store && setRecords((props.data ?? []).map(DataModel.create)) }, [props.data])
+  // useEffect(() => { !props.store && setRecords((props.data ?? []).map(DataModel.create)) }, [props.data])
 
   useEffect(() => {
     const columns = Children.toArray(props.children).map((child: any) => child.props as GridColumnProps);
@@ -55,16 +55,6 @@ export function Grid(props: GridProps) {
       <div className="rosie-grid-viewport d-flex flex-column fullscreen">
         <div className={Rosie.classNames('rosie-grid-header fw-bold bg-light overflow-hidden d-flex', { 'flex-column': props.fitScreen || props.fitWidth })}>
           <div className="rosie-grid-row d-flex flex-row">
-            {/* {props.checkboxSelection && <>
-              <div className="rosie-grid-cell p-1">
-                <div className="form-check mb-0">
-                  <input className="form-check-input" type="checkbox" checked={allSelected} onChange={() => setAllSelected(!allSelected)} />
-                </div>
-              </div>
-            </>} */}
-            {/* {props.checkboxSelection && <div className="rosie-grid-cell p-2">
-              <div className="form-check mb-0"><input className="form-check-input" type="checkbox" checked={allSelected} onChange={() => setAllSelected(!allSelected)} /></div>
-            </div>} */}
             {columns.map((col: GridColumnProps, index) => <GridCell header key={index} {...col} />)}
             <div style={{width:Rosie.SCROLLBAR_WIDTH}} />
           </div>
