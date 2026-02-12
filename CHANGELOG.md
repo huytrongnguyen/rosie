@@ -2,6 +2,9 @@
 
 ## Next
 
+## 0.3.0
+> 2026-02-12
+
 - New Features
   - Add new components:
     - `PagingToolbar`
@@ -12,7 +15,7 @@
 - Bug Fixes
   - Correct `rosie-grid` css
 - Breaking Changes
-  - Upgrade to React 19.2.3
+  - Upgrade to React 19.2.4
 
 ## 0.2.0
 > 2025-08-28
