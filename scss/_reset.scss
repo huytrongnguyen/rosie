@@ -15,6 +15,16 @@
 //   -moz-osx-font-smoothing: grayscale;
 // }
 
+// Links (449)
+//
+// Style anchor elements.
+
+.nav-link {
+  &:hover, &:focus {
+    background-color: $gray-200;
+  }
+}
+
 // Buttons (813)
 //
 // For each of Bootstrap's buttons, define text, background, and border color.
@@ -27,6 +37,25 @@
 // .btn-primary, .btn-outline-primary:hover, .btn-check:checked + .btn-outline-primary {
 //   color: $white !important;
 // }
+
+// Navs (1156)
+
+.nav-tabs {
+  .nav-link {
+    background-color: #eaeaea;
+    border-top-color: $border-color !important;
+    border-left-color: $border-color !important;
+    border-right-color: $border-color !important;
+
+    &:hover, &:focus {
+      background-color: #f2eeee;
+    }
+
+    &.active {
+      background-color: $white !important;
+    }
+  }
+}
 
 // Breadcrumb (1631)
 
