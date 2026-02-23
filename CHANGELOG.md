@@ -2,42 +2,63 @@
 
 ## Next
 
+**New Features**
+
+- Add new components:
+  - `Dropdown`, `InputDropdown`
+
+**Improvements**
+- Add `onCheckChange` to `Grid`
+- Supports `fitScreen` when `Dialog` contains `Grid`
+- Supports to `select`, `unselect`, `toggle` in `Model`
+- Supports to `addRecord` to `Store`
+- Supports to `triggerEvent` on `Subject`
+
 ## 0.3.0
 > 2026-02-12
 
-- New Features
-  - Add new components:
-    - `PagingToolbar`
-    - `DatePicker`, `DateRangePicker`
-    - `Dropdown`, `InputDropdown`
-    - `QueryOperation`
-  - Load data to `Grid` via `store` property
-- Bug Fixes
-  - Correct `rosie-grid` css
-- Breaking Changes
-  - Upgrade to React 19.2.4
+**New Features**
+
+- Add new components:
+  - `PagingToolbar`
+  - `DatePicker`, `DateRangePicker`
+  - `QueryOperation`
+- Load data to `Grid` via `store` property
+
+**Bug Fixes**
+
+- Correct `rosie-grid` css
+
+**Breaking Changes**
+
+- Upgrade to React 19.2.4
 
 ## 0.2.0
 > 2025-08-28
 
-- Breaking Changes
-  - Upgrade to React 19.1
+**Breaking Changes**
+
+- Upgrade to React 19.1
 
 ## 0.1.9
 > 2024-05-30
-  - Correct type in `groupBy` extension method
+
+- Correct type in `groupBy` extension method
 
 ## 0.1.8
 > 2024-05-28
 
-- New Features
-  - Add `useSubject` custom hook
-- Improvements
-  - #10 Should configure css class: rosie-grid-bordered rosie-grid-striped rosie-grid-hover
-  - #18 `Subject` enhancement
-  - #14 `DataModel` enhancement
-  - #16 `Grid` enhancement
-  - Add array extension method: `groupBy`, `sumBy`, `toDictionary`
+**New Features**
+
+- Add `useSubject` custom hook
+
+**Improvements**
+
+- #10 Should configure css class: rosie-grid-bordered rosie-grid-striped rosie-grid-hover
+- #18 `Subject` enhancement
+- #14 `DataModel` enhancement
+- #16 `Grid` enhancement
+- Add array extension method: `groupBy`, `sumBy`, `toDictionary`
 
 ## 0.1.6
 > 2024-04-29

@@ -4,7 +4,8 @@ import { DataModel, DataStore } from '../../core';
 export interface GridProps extends PropsWithChildren<any> {
   // data?: any[],
   store?: DataStore<any>,
-  // checkboxSelection?: boolean,
+  checkboxSelection?: boolean,
+  onCheckChange?: (value: any, selected: boolean) => void,
   // bbar?: (records: DataModel<any>[]) => ReactElement,
   // pagingToolbar?: { pageSize?: number },
   fitScreen?: boolean,
@@ -18,6 +19,7 @@ export type GridRowProps = {
   rowIndex: number,
   columns: GridColumnProps[],
   checkboxSelection?: boolean,
+  onCheckChange?: (value: any, selected: boolean) => void,
 }
 
 export interface GridColumnProps extends HTMLAttributes<HTMLDivElement> {

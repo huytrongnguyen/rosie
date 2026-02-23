@@ -1,3 +1,5 @@
+import { Dictionary } from "rosie-ui";
+
 export interface Observer<T> {
   next: (value: T) => void,
   error?: (reason: any) => void,
@@ -6,7 +8,12 @@ export interface Observer<T> {
 
 export class Subject<T> implements Observer<T> {
   observers: Observer<T>[] = [];
+  events: Dictionary<() => void> = {};
   value: T;
+
+  refresh() { this.next(this.value); }
+  on(eventName: string, fn: () => void) { this.events[eventName] = fn; }
+  triggerEvent(eventName: string) { this.events[eventName] && this.events[eventName](); }
 
   subscribe(next: (value: T) => void, error?: (reason: any) => void, complete?: () => void) {
     const subscriber = { next, error, complete };

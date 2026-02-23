@@ -63,7 +63,7 @@ export function Grid(props: GridProps) {
           <div>
             {(!records?.length) && <div className="border-top p-2">No record found.</div>}
             {(records?.length > 0) && records.map((record, rowIndex) => {
-              return <GridRow key={rowIndex} record={record} rowIndex={rowIndex} columns={columns} checkboxSelection={props.checkboxSelection} />
+              return <GridRow key={rowIndex} record={record} rowIndex={rowIndex} columns={columns} checkboxSelection={props.checkboxSelection} onCheckChange={props.onCheckChange} />
             })}
           </div>
         </div>

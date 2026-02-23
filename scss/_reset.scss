@@ -29,6 +29,12 @@
 //
 // For each of Bootstrap's buttons, define text, background, and border color.
 
+.btn {
+  &.show {
+    border-color: transparent;
+  }
+}
+
 .btn-outline-secondary {
   border-color: $border-color !important;
   color: $body-color;
@@ -94,6 +100,13 @@
     }
     &.active {
       font-weight: bold;
+    }
+
+    &.dropdown:before {
+      margin-top: 0;
+    }
+    &.dropdown:after {
+      margin-top: 0;
     }
   }
 }
