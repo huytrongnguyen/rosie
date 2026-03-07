@@ -51,7 +51,7 @@ export function Grid(props: GridProps) {
   // }, [rawData, currentPage])
 
   return <>
-    <div id={gridId} className={Rosie.classNames('rosie-grid rosie-grid-bordered rosie-grid-striped rosie-grid-hover d-flex flex-row', { fullscreen: props.fitScreen || props.fitHeight }, props.className)}>
+    <div id={gridId} className={Rosie.classNames('rosie-grid rosie-grid-bordered rosie-grid-hover d-flex flex-row', { fullscreen: props.fitScreen || props.fitHeight }, props.className)}>
       <div className="rosie-grid-viewport d-flex flex-column fullscreen">
         <div className={Rosie.classNames('rosie-grid-header fw-bold bg-light overflow-hidden d-flex', { 'flex-column': props.fitScreen || props.fitWidth })}>
           <div className="rosie-grid-row d-flex flex-row">
@@ -67,9 +67,9 @@ export function Grid(props: GridProps) {
             })}
           </div>
         </div>
-        {(!props.pagingToolbar) && <>
+        {(!props.pagingToolbar && records?.length > 0) && <>
           <div className="rosie-grid-footer bg-light border-top d-flex flex-row p-2">
-            <div className="ms-auto">Total records: {records?.length ?? 0}</div>
+            <div className="text-body-tertiary">{records.length} record{records.length > 1 ? 's' : ''}</div>
           </div>
         </>}
         {(props.pagingToolbar) && <>

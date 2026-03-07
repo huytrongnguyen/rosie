@@ -9,6 +9,6 @@ export function showModal(selector: string, onShow?: () => void, onHide?: () => 
 
 export function hideModal(selector: string, onHide?: () => void) {
   const dialogEl = document.querySelector(selector);
-  new Modal(dialogEl).hide();
+  Modal.getInstance(dialogEl)?.hide();
   onHide && dialogEl.addEventListener('hide.bs.modal', onHide);
 }

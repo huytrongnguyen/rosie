@@ -1,4 +1,4 @@
-import { Dictionary } from "rosie-ui";
+import { Dictionary } from './types';
 
 export interface Observer<T> {
   next: (value: T) => void,

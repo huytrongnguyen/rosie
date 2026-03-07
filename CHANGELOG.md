@@ -13,6 +13,8 @@
 - Supports to `select`, `unselect`, `toggle` in `Model`
 - Supports to `addRecord` to `Store`
 - Supports to `triggerEvent` on `Subject`
+- Update `Grid` footer, remove `rosie-grid-striped` class
+- Fix issue `Dialog` cannot be removed after `onSubmit`
 
 ## 0.3.0
 > 2026-02-12

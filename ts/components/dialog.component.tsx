@@ -40,6 +40,6 @@ export function useDialog(id: string) {
   return {
     isShown,
     show: () => setState(true),
-    hide: () => setState(false),
+    hide: () => Rosie.hideModal(id),
   };
 }

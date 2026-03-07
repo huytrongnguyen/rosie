@@ -63,6 +63,17 @@
   }
 }
 
+// Dropdowns (1233)
+//
+// Dropdown menu container and contents.
+
+.dropdown {
+  .dropdown-item-list {
+    max-height: 12rem;
+    overflow-y: auto;
+  }
+}
+
 // Breadcrumb (1631)
 
 .breadcrumb {
