@@ -1,9 +1,6 @@
 @import '../variables';
 
 .rosie-grid {
-  border-top: $border;
-  border-left: $border;
-
   &.rosie-grid-bordered {
     .rosie-grid-row {
       border-bottom: $border;
@@ -19,13 +16,13 @@
 
   &.rosie-grid-hover {
     .rosie-grid-body {
-      .rosie-grid-row:hover:not(.selected) { background-color: $gray-300 !important; }
+      .rosie-grid-row:hover:not(.selected) { background-color: $gray-100 !important; }
     }
   }
 
   .rosie-grid-header {
-    .rosie-grid-row { border-bottom: 2px $border-style $border-color; }
-    min-height: 2rem;
+    .rosie-grid-row { .rosie-grid-cell { border-right: none; } }
+    min-height: 30px;
   }
 
   .rosie-grid-body {

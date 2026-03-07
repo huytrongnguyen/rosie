@@ -53,7 +53,7 @@ export function Grid(props: GridProps) {
   return <>
     <div id={gridId} className={Rosie.classNames('rosie-grid rosie-grid-bordered rosie-grid-hover d-flex flex-row', { fullscreen: props.fitScreen || props.fitHeight }, props.className)}>
       <div className="rosie-grid-viewport d-flex flex-column fullscreen">
-        <div className={Rosie.classNames('rosie-grid-header fw-bold bg-light overflow-hidden d-flex', { 'flex-column': props.fitScreen || props.fitWidth })}>
+        <div className={Rosie.classNames('rosie-grid-header fw-bold overflow-hidden d-flex', { 'flex-column': props.fitScreen || props.fitWidth })}>
           <div className="rosie-grid-row d-flex flex-row">
             {columns.map((col: GridColumnProps, index) => <GridCell header key={index} {...col} />)}
             <div style={{width:Rosie.SCROLLBAR_WIDTH}} />
@@ -68,12 +68,12 @@ export function Grid(props: GridProps) {
           </div>
         </div>
         {(!props.pagingToolbar && records?.length > 0) && <>
-          <div className="rosie-grid-footer bg-light border-top d-flex flex-row p-2">
+          <div className="rosie-grid-footer border-top d-flex flex-row p-2">
             <div className="text-body-tertiary">{records.length} record{records.length > 1 ? 's' : ''}</div>
           </div>
         </>}
         {(props.pagingToolbar) && <>
-          <div className="rosie-grid-footer bg-light border-top d-flex flex-row p-2">
+          <div className="rosie-grid-footer border-top d-flex flex-row p-2">
             {props.pagingToolbar && <PagingToolbar />}
           </div>
         </>}

@@ -36,7 +36,7 @@ $rosie:   #e97b98;
 // scss-docs-end color-variables
 
 // scss-docs-start theme-color-variables
-$primary:       $blue;
+$primary:       $rosie;
 // $secondary:     $gray-600;
 // $success:       $green;
 // $info:          $cyan;
@@ -51,7 +51,6 @@ $primary:       $blue;
 // Settings for the `<body>` element.
 
 $body-color: #3f434a;
-// $body-bg:    #fdfdfd;
 // $body-tertiary-bg:          $gray-100;
 
 // Links (449)
@@ -72,6 +71,14 @@ $border-color:                $gray-300;
 $border:                      $border-width $border-style $border-color;
 // scss-docs-end border-variables
 
+// scss-docs-start border-radius-variables
+$border-radius:               .25rem;
+// scss-docs-end border-radius-variables
+
+// scss-docs-start box-shadow-variables
+$box-shadow:                  0 .125rem .5rem rgba($black, .08);
+// scss-docs-end box-shadow-variables
+
 $component-active-color:      $body-color;
 $component-active-bg:         $gray-300;
 $component-hover-bg:          tint-color($component-active-bg, 20%);
@@ -81,8 +88,8 @@ $component-hover-bg:          tint-color($component-active-bg, 20%);
 //
 // Font, line-height, and color for body text, headings, and more.
 
-// $font-family-base: Effra, Roboto, Helvetica, Open-Sans, Arial, sans-serif;
-$font-size-base:              1rem; // Assumes the browser default, typically `16px`
+$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-size-base:              0.875rem; // 14px
 $font-size-sm:                $font-size-base * .875;
 $font-size-lg:                $font-size-base * 1.25;
 // $font-weight-base: 300;
@@ -95,6 +102,13 @@ $nav-link-padding-x:                1rem;
 // Navbar (1187)
 
 $navbar-brand-font-size:            $font-size-lg;
+
+// Modals (1498)
+
+// scss-docs-start modal-variables
+$modal-content-box-shadow-xs:       0 .25rem 1.5rem rgba($black, .12);
+$modal-backdrop-opacity:            .3;
+// scss-docs-end modal-variables
 
 // Breadcrumb (1631)
 

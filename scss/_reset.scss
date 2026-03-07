@@ -30,6 +30,9 @@
 // For each of Bootstrap's buttons, define text, background, and border color.
 
 .btn {
+  font-size: .8125rem; // 13px
+  padding: .25rem .625rem;
+  font-weight: 500;
   &.show {
     border-color: transparent;
   }
@@ -40,9 +43,17 @@
   color: $body-color;
 }
 
-// .btn-primary, .btn-outline-primary:hover, .btn-check:checked + .btn-outline-primary {
-//   color: $white !important;
-// }
+.btn-primary, .btn-outline-primary:hover, .btn-check:checked + .btn-outline-primary {
+  color: $white !important;
+}
+
+// Forms (866)
+
+.form-control, .form-select {
+  font-size: .8125rem;
+  border-color: $border-color;
+  &:focus { border-color: $primary; }
+}
 
 // Navs (1156)
 
@@ -74,6 +85,15 @@
   }
 }
 
+// Modals (1498)
+
+.modal-content {
+  box-shadow: $modal-content-box-shadow-xs;
+}
+.modal-backdrop {
+  background-color: rgba(15, 15, 15, 0.4);
+}
+
 // Breadcrumb (1631)
 
 .breadcrumb {
@@ -93,7 +113,7 @@
     &:before {
       content: '';
       position: absolute;
-      margin-top: -7px;
+      margin-top: -10px;
       margin-left: 1px;
       left: 100%;
       border-top: calc($breadcrumb-height / 2) solid transparent;
@@ -103,7 +123,7 @@
     &:after {
       content: '';
       position: absolute;
-      margin-top: -7px;
+      margin-top: -10px;
       left: 100%;
       border-top: calc($breadcrumb-height / 2) solid transparent;
       border-bottom: calc($breadcrumb-height / 2) solid transparent;
@@ -114,10 +134,10 @@
     }
 
     &.dropdown:before {
-      margin-top: 0;
+      margin-top: -6px;
     }
     &.dropdown:after {
-      margin-top: 0;
+      margin-top: -6px;
     }
   }
 }
