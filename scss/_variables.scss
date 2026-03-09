@@ -50,7 +50,7 @@ $primary:       $rosie;
 //
 // Settings for the `<body>` element.
 
-$body-color: #3f434a;
+$body-color: #2c2c2b;
 // $body-tertiary-bg:          $gray-100;
 
 // Links (449)
@@ -88,7 +88,7 @@ $component-hover-bg:          tint-color($component-active-bg, 20%);
 //
 // Font, line-height, and color for body text, headings, and more.
 
-$font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+$font-family-base: Effra, Roboto, Helvetica, Open-Sans, Arial, sans-serif;
 $font-size-base:              0.875rem; // 14px
 $font-size-sm:                $font-size-base * .875;
 $font-size-lg:                $font-size-base * 1.25;

@@ -15,6 +15,7 @@
 - Supports to `triggerEvent` on `Subject`
 - Update `Grid` footer, remove `rosie-grid-striped` class
 - Fix issue `Dialog` cannot be removed after `onSubmit`
+- Add `groupBy`, `orderBy` to `/lang/array`
 
 ## 0.3.0
 > 2026-02-12
