@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from 'react';
+import { useState, useEffect, ReactElement, CSSProperties } from 'react';
 import { Rosie } from '../core';
 
 type DropdownProps = {
@@ -14,7 +14,11 @@ type DropdownProps = {
   rightAligned?: boolean,
   searchBox?: boolean,
   buttonClass?: string,
-  buttonStyle?: any,
+  buttonStyle?: CSSProperties,
+  menuClass?: string,
+  menuStyle?: CSSProperties,
+  itemClass?: string,
+  itemStyle?: CSSProperties,
   className?: string,
   renderer?: (value: any, record: any, index: number) => string | ReactElement,
 }
@@ -33,12 +37,15 @@ export function InputDropdown(props: DropdownProps) {
     valueField = 'value',
     multiple = false,
     defaultText = 'Select',
-    separator = ': ',
     smartButtonText = true,
     rightAligned = false,
     searchBox = true,
     buttonClass = '',
     buttonStyle = {},
+    menuClass = '',
+    menuStyle = {},
+    itemClass = '',
+    itemStyle = {},
   } = props;
 
   const [searchFilter, setSearchFilter] = useState(''),
@@ -53,8 +60,7 @@ export function InputDropdown(props: DropdownProps) {
       return defaultText;
     }
 
-    const names = selection.map(item => item?.[displayField] ?? '').join(',');
-    return `${defaultText}${separator}${names}`;
+    return selection.map(item => item?.[displayField] ?? '').join(',');
   }
 
   function isSelected(opt: any) {
@@ -78,15 +84,15 @@ export function InputDropdown(props: DropdownProps) {
     <button type="button" className={Rosie.classNames('btn dropdown-toggle', buttonClass)} style={buttonStyle} data-bs-toggle="dropdown">
       {displayText()}
     </button>
-    <div className={Rosie.classNames('dropdown-menu p-0', { 'dropdown-menu-right': rightAligned })}>
+    <div className={Rosie.classNames('dropdown-menu p-0', menuClass, { 'dropdown-menu-right': rightAligned })} style={menuStyle}>
       {searchBox && <div className="p-1 border-bottom">
         <input type="text" className="form-control form-control-sm" name="searchFilter" placeholder="Search..."
             value={searchFilter} onChange={event => setSearchFilter(event.target.value)} />
       </div>}
       <div className="dropdown-item-list">
         {options.map((opt, index) => {
-          if (searchFilter && !opt[displayField].toLowerCase().startsWith(searchFilter.toLowerCase())) return null;
-          return <div role="button" key={opt[valueField]} className={Rosie.classNames('dropdown-item', { active: isSelected(opt) })} onClick={() => select(opt)}>
+          if (searchFilter && !(opt[displayField] as string).toLowerCase().includes(searchFilter.toLowerCase())) return null;
+          return <div role="button" key={opt[valueField]} className={Rosie.classNames('dropdown-item', itemClass, { active: isSelected(opt) })} style={itemStyle} onClick={() => select(opt)}>
                 {props.renderer ? props.renderer(opt[displayField], opt, index) : opt[displayField]}
           </div>
         })}

@@ -9,7 +9,7 @@
 
 // scss-docs-start gray-color-variables
 $white:    #fff;
-$gray-100: #f3f4f7;
+$gray-100: #f1f1ef;
 $gray-200: #efefef;
 $gray-300: #e0e0e0;
 // $gray-400: #ced4da;
@@ -22,14 +22,14 @@ $black:    #000;
 // scss-docs-end gray-color-variables
 
 // scss-docs-start color-variables
-$blue:    #0d6efd;
+$blue:    #2383e2;
 // $indigo:  #6610f2;
-// $purple:  #6f42c1;
+$purple:  #6e4fcb;
 // $pink:    #d63384;
-// $red:     #dc3545;
+$red:     #c0392b;
 // $orange:  #fd7e14;
-// $yellow:  #ffc107;
-// $green:   #198754;
+$yellow:  #c87017;
+$green:   #0f7b6c;
 // $teal:    #20c997;
 // $cyan:    #0dcaf0;
 $rosie:   #e97b98;
@@ -37,12 +37,12 @@ $rosie:   #e97b98;
 
 // scss-docs-start theme-color-variables
 $primary:       $rosie;
-// $secondary:     $gray-600;
-// $success:       $green;
+$secondary:     $gray-100;
+$success:       $green;
 // $info:          $cyan;
-// $warning:       $yellow;
-// $danger:        $red;
-// $light:         $gray-100;
+$warning:       $yellow;
+$danger:        $red;
+$light:         $gray-100;
 // $dark:          $gray-900;
 // scss-docs-end theme-color-variables
 
@@ -50,7 +50,8 @@ $primary:       $rosie;
 //
 // Settings for the `<body>` element.
 
-$body-color: #2c2c2b;
+$body-color:                #37352f;
+// $body-bg:                   #f7f7f5;
 // $body-tertiary-bg:          $gray-100;
 
 // Links (449)
@@ -58,6 +59,7 @@ $body-color: #2c2c2b;
 // Style anchor elements.
 
 $link-color: $body-color;
+$link-decoration:                         none !default;
 // $link-hover-color: #ed95ac;
 
 // Components (528)
@@ -67,7 +69,7 @@ $link-color: $body-color;
 // scss-docs-start border-variables
 $border-width:                1px;
 $border-style:                solid;
-$border-color:                $gray-300;
+$border-color:                #e3e3e0;
 $border:                      $border-width $border-style $border-color;
 // scss-docs-end border-variables
 
@@ -92,7 +94,16 @@ $font-family-base: Effra, Roboto, Helvetica, Open-Sans, Arial, sans-serif;
 $font-size-base:              0.875rem; // 14px
 $font-size-sm:                $font-size-base * .875;
 $font-size-lg:                $font-size-base * 1.25;
-// $font-weight-base: 300;
+$font-weight-medium:          500 !default;
+$font-weight-base:            $font-weight-medium !default;
+
+// Buttons (813)
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+
+$btn-link-color:              $link-color;
+$btn-link-hover-color:        $primary;
+
 
 // Navs (1156)
 

@@ -31,3 +31,11 @@
     }
   }
 }
+
+.hidden-menu {
+  display: none;
+}
+
+.nav-link:hover, .card:hover {
+  .hidden-menu { display: block; }
+}
