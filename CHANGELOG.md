@@ -17,6 +17,11 @@
 - Fix issue `Dialog` cannot be removed after `onSubmit`
 - Add `groupBy`, `orderBy` to `/lang/array`
 
+**Breaking Changes**
+
+- Revamp `scss`
+  - Remove `FontAwesome`
+
 ## 0.3.0
 > 2026-02-12
 

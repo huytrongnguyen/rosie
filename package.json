@@ -24,13 +24,11 @@
   "scripts": {
     "build": "npm run fonts && npm run css && npm run js",
     "js": "tsc",
-    "css": "sass scss/index.scss dist/css/rosie.css --style=compressed --no-source-map",
-    "fonts": "cp -r node_modules/@fortawesome/fontawesome-free/webfonts dist"
+    "css": "sass scss/index.scss dist/css/rosie.css --style=compressed --no-source-map"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "7.2.0",
     "@popperjs/core": "2.11.8",
-    "axios": "1.13.5",
+    "axios": "1.14.0",
     "bootstrap": "5.3.8"
   },
   "peerDependencies": {
@@ -41,10 +39,7 @@
     "@types/bootstrap": "5.2.10",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "@types/jest": "30.0.0",
-    "jest": "30.2.0",
-    "sass": "1.97.3",
-    "ts-jest": "29.4.6",
-    "typescript": "5.9.3"
+    "sass": "1.98.0",
+    "typescript": "6.0.2"
   }
 }
