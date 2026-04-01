@@ -1,13 +1,16 @@
 // @use 'functions' as *;
 
-// // Variables
-// //
-// // Variables should follow the `$component-state-property-size` formula for
-// // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..700;1,300..700&display=swap');
 
-// // Color system (6)
 
-// // scss-docs-start gray-color-variables
+// Variables
+//
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Color system (6)
+
+// scss-docs-start gray-color-variables
 // $white:    #fff;
 // $gray-100: #f1f1ef;
 // $gray-200: #efefef;
@@ -17,42 +20,45 @@
 // // $gray-600: #6c757d;
 // // $gray-700: #495057;
 // // $gray-800: #343a40;
-// // $gray-900: #212529;
+// $gray-900: #212529;
 // $black:    #000;
-// // scss-docs-end gray-color-variables
+// scss-docs-end gray-color-variables
 
-// // scss-docs-start color-variables
-// $blue:    #2383e2;
-// // $indigo:  #6610f2;
-// $purple:  #6e4fcb;
+// scss-docs-start color-variables
+$lavender: #9B79C8;
+$green:    #7CCFB2;
+$cyan:     #7FB3F0;
+$yellow:   #F3BF7A;
+$red:      #E79FB2;
+
 // // $pink:    #d63384;
-// $red:     #c0392b;
+
 // // $orange:  #fd7e14;
-// $yellow:  #c87017;
-// $green:   #0f7b6c;
+
+
 // // $teal:    #20c997;
-// // $cyan:    #0dcaf0;
+
 // $rosie:   #e97b98;
 // // scss-docs-end color-variables
 
-// // scss-docs-start theme-color-variables
-// $primary:       $rosie;
+// scss-docs-start theme-color-variables
+$primary:       $lavender;
 // $secondary:     $gray-100;
 // $success:       $green;
-// // $info:          $cyan;
+// $info:          $cyan;
 // $warning:       $yellow;
 // $danger:        $red;
 // $light:         $gray-100;
-// // $dark:          $gray-900;
-// // scss-docs-end theme-color-variables
+// $dark:          $gray-900;
+// scss-docs-end theme-color-variables
 
-// // Body (433)
-// //
-// // Settings for the `<body>` element.
+// Body (433)
+//
+// Settings for the `<body>` element.
 
-// $body-color:                #37352f;
-// // $body-bg:                   #f7f7f5;
-// // $body-tertiary-bg:          $gray-100;
+$body-color:                #1F2937;
+$body-bg:                   #F8FAFC;
+// $body-tertiary-bg:          $gray-100;
 
 // // Links (449)
 // //
@@ -62,9 +68,9 @@
 // $link-decoration:                         none !default;
 // // $link-hover-color: #ed95ac;
 
-// // Components (528)
-
-// // Define common padding and border radius sizes and more.
+// Components (528)
+//
+// Define common padding and border radius sizes and more.
 
 // // scss-docs-start border-variables
 // $border-width:                1px;
@@ -85,12 +91,13 @@
 // $component-active-bg:         $gray-300;
 // $component-hover-bg:          tint-color($component-active-bg, 20%);
 
-// $font-family-base: Effra, Roboto, Helvetica, Open-Sans, Arial, sans-serif;
-// $font-size-base:              0.875rem; // 14px
-// $font-size-sm:                $font-size-base * .875;
-// $font-size-lg:                $font-size-base * 1.25;
-// $font-weight-medium:          500 !default;
-// $font-weight-base:            $font-weight-medium !default;
+// Typography (600)
+//
+// Font, line-height, and color for body text, headings, and more.
+
+$font-family-base:      'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-monospace: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+$font-size-base:        0.875rem; // 14px
 
 // // Buttons (813)
 // //
