@@ -1,0 +1,23 @@
+@use '../variables' as *;
+
+.icon-link {
+  display: inline-flex;
+  gap: .375rem;
+  align-items: center;
+  text-decoration-color: rgba(var(--rosie-link-color-rgb), .5);
+  text-underline-offset: .25em;
+  backface-visibility: hidden;
+
+  > .bi {
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    transition: .2s ease-in-out transform;
+  }
+}
+
+.icon-link-hover:hover > .bi,
+.icon-link-hover:focus-visible > .bi {
+  transform: translate3d(.25em, 0, 0);
+}

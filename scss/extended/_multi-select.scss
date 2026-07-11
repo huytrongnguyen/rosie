@@ -1,0 +1,97 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-multi-select {
+  --rosie-multi-select-padding-y: #{$input-padding-y};
+  --rosie-multi-select-padding-x: #{$input-padding-x};
+  --rosie-multi-select-bg: #{$input-bg};
+  --rosie-multi-select-border-color: #{$input-border-color};
+  --rosie-multi-select-border-radius: #{$input-border-radius};
+  --rosie-multi-select-focus-border-color: #{$input-focus-border-color};
+  --rosie-multi-select-tag-bg: #{$rose-50};
+  --rosie-multi-select-tag-color: #{$rose-700};
+  --rosie-multi-select-tag-padding-y: .125rem;
+  --rosie-multi-select-tag-padding-x: .375rem;
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .25rem;
+  min-height: $input-height;
+  padding: var(--rosie-multi-select-padding-y) var(--rosie-multi-select-padding-x);
+  background-color: var(--rosie-multi-select-bg);
+  border: 1px solid var(--rosie-multi-select-border-color);
+  @include border-radius(var(--rosie-multi-select-border-radius));
+  cursor: text;
+
+  &:focus-within {
+    border-color: var(--rosie-multi-select-focus-border-color);
+    box-shadow: 0 0 0 .25rem rgba($primary, .15);
+    outline: 0;
+  }
+
+  .rosie-multi-select-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: var(--rosie-multi-select-tag-padding-y) var(--rosie-multi-select-tag-padding-x);
+    font-size: $font-size-sm;
+    line-height: 1;
+    color: var(--rosie-multi-select-tag-color);
+    background-color: var(--rosie-multi-select-tag-bg);
+    @include border-radius($border-radius-sm);
+
+    .rosie-multi-select-tag-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      padding: 0;
+      color: inherit;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      opacity: .65;
+      &:hover { opacity: 1; }
+    }
+  }
+
+  .rosie-multi-select-input {
+    flex: 1;
+    min-width: 60px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    outline: 0;
+
+    &::placeholder { color: $input-placeholder-color; }
+  }
+}
+
+.rosie-multi-select-menu {
+  position: absolute;
+  z-index: $zindex-dropdown;
+  width: 100%;
+  max-height: 240px;
+  margin-top: .25rem;
+  overflow-y: auto;
+  background: $white;
+  border: 1px solid $border-color;
+  @include border-radius($border-radius);
+  box-shadow: $box-shadow-lg;
+
+  .rosie-multi-select-option {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .375rem .75rem;
+    cursor: pointer;
+    color: $body-color;
+
+    &:hover { background-color: $neutral-50; }
+    &.is-selected { color: $rose-700; background-color: $rose-50; }
+    &.is-disabled  { color: $neutral-400; cursor: not-allowed; }
+  }
+}

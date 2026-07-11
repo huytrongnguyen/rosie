@@ -1,100 +1,76 @@
 # Rosie UI
 
-Rosie UI is a JavaScript library that build on top of [React 19.2](https://react.dev/) and [Bootstrap 5.3](https://getbootstrap.com), helping you build data-intensive, cross-platform web apps for desktops, tablets, and smartphones.
+Rosie UI is a pastel, token-based design system for building data-intensive, cross-platform web apps for desktops, tablets, and smartphones.
 
-## Getting Started
+It ships as an ESM package that works out of the box with every modern bundler (Vite, webpack, esbuild, Rollup, Parcel). This release exposes the **styles** and a small set of **core scripts**; React components are in progress and will land in a later version.
 
-- Create a project folder and set up npm
-- Install `esbuild`, `sass`
-- Install `rosie-ui`, `react`, `react-dom`
-- Install additional dependencies
+- Bootstrap-compatible class names — existing Bootstrap markup migrates with no class changes.
+- A `--rosie-*` CSS custom-property token system (primitive → semantic tiers), light theme, primary `#e97b98`.
+- No runtime dependency on Bootstrap.
 
-### Project Structure
+## Install
 
-```
-your-project/
-├── node_modules/
-│   ├── bootstrap
-│   │   └── dist
-│   │       └── js
-│   │           └── bootstrap.bundle.min.js
-│   └── rosie-ui
-│       ├── dist
-│       │   ├── css
-│       │   ├── js
-│       │   └── webfonts
-│       └── scss
-│           └── _variables.scss
-├── dist/
-│   ├── app.css
-│   ├── app.js
-│   └── index.html
-├── src/
-│   ├── app
-│   │   ├── views
-│   │   │   ├── _app.view.scss
-│   │   │   └── app.view.tsx
-│   │   ├── app.scss
-│   │   └── app.tsx
-├── package.json
-└── tsconfig.json
+```bash
+npm install rosie-ui
 ```
 
-#### `index.html`
+React `19.2.4` is a peer dependency (pinned exactly — each React version is treated as distinct):
 
-```html
-<!doctype html>
-<html lang="en">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello, world!</title>
-  <link rel="stylesheet" href="app.css" />
-</head>
-<body>
-  <div id="react-root"></div>
-  <script src="app.js"></script>
-</body>
-</html>
+```bash
+npm install react@19.2.4 react-dom@19.2.4
 ```
 
-#### `app.scss`
+## Usage
+
+### Styles
+
+Import the compiled CSS once at your app entry:
+
+```ts
+import 'rosie-ui/css';
+```
+
+Or compile the SCSS yourself and override tokens:
 
 ```scss
-@forward '../../node_modules/rosie-ui/dist/css/rosie.css';
-
-@forward 'views/app.view';
+@use 'rosie-ui/scss' with (
+  $primary: #e97b98
+);
 ```
 
-#### `app.tsx`
+Then use the Bootstrap-compatible class names in your markup:
 
-While the Bootstrap CSS can be used with any framework, the Bootstrap JavaScript is not fully compatible with JavaScript frameworks like React, Vue, and Angular which assume full knowledge of the DOM. Both Bootstrap and the framework may attempt to mutate the same DOM element, resulting in bugs like dropdowns that are stuck in the “open” position.
-
-```tsx
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-
-import { createRoot } from 'react-dom/client';
-
-import { AppView } from './views/app.view';
-
-createRoot(document.getElementById('react-root') as HTMLElement).render(<AppView />);
+```html
+<button class="btn btn-primary">Save</button>
+<div class="card"><div class="card-body">…</div></div>
 ```
 
-#### `scripts` in `package.json`
+See `kitchen-sink.html` for every component rendered.
 
-```json
-{
-  // ...
-  "scripts": {
-    "start": "esbuild src/app/app.tsx --bundle --outfile=dist/app.js --loader:.tsx=tsx --format=iife --watch",
-    "build": "npm run build-css && npm run build-js",
-    "build-css": "sass src/app/app.scss disc/app.css --style=compressed --no-source-map",
-    "build-js": "esbuild src/app/app.tsx --bundle --outfile=dist/app.js --loader:.tsx=tsx --format=iife",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  // ...
-}
+### Core scripts
+
+The `Rosie` namespace bundles the core utilities and language extensions:
+
+```ts
+import { Rosie } from 'rosie-ui';
+```
+
+## Subpath exports
+
+| Import | What |
+| --- | --- |
+| `rosie-ui` | Core scripts (ESM) + types |
+| `rosie-ui/css` | Compiled stylesheet |
+| `rosie-ui/scss` | SCSS entry (for token overrides) |
+| `rosie-ui/scss/*` | Individual SCSS partials |
+
+## Development
+
+```bash
+npm install
+npm run build      # css + js
+npm run css        # styles only → dist/css/rosie.css
+npm run js         # scripts only → dist/js (tsc)
 ```
 
 ## License

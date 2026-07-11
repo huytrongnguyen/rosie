@@ -1,0 +1,52 @@
+@use 'variables' as *;
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinner-grow {
+  0% { transform: scale(0); }
+  50% { opacity: 1; transform: none; }
+}
+
+.spinner-border,
+.spinner-grow {
+  --rosie-spinner-width: #{$spinner-width};
+  --rosie-spinner-height: #{$spinner-height};
+  --rosie-spinner-vertical-align: #{$spinner-vertical-align};
+  --rosie-spinner-border-width: #{$spinner-border-width};
+  --rosie-spinner-animation-speed: #{$spinner-animation-speed};
+  --rosie-spinner-animation-name: spinner-border;
+
+  display: inline-block;
+  width: var(--rosie-spinner-width);
+  height: var(--rosie-spinner-height);
+  vertical-align: var(--rosie-spinner-vertical-align);
+  border-radius: 50%;
+  animation: var(--rosie-spinner-animation-speed) linear infinite var(--rosie-spinner-animation-name);
+}
+
+.spinner-border {
+  border: var(--rosie-spinner-border-width) solid currentcolor;
+  border-right-color: transparent;
+}
+
+.spinner-grow {
+  background-color: currentcolor;
+  opacity: 0;
+  --rosie-spinner-animation-name: spinner-grow;
+}
+
+.spinner-border-sm,
+.spinner-grow-sm {
+  --rosie-spinner-width: #{$spinner-width-sm};
+  --rosie-spinner-height: #{$spinner-height-sm};
+  --rosie-spinner-border-width: #{$spinner-border-width-sm};
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner-border,
+  .spinner-grow {
+    --rosie-spinner-animation-speed: 1.5s;
+  }
+}

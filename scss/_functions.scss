@@ -1,16 +1,112 @@
-// scss-docs-start color-functions
-// Tint a color: mix a color with white
-@function tint-color($color, $weight) {
-  @return mix(white, $color, $weight);
+// Rosie SCSS — functions
+// Modern Dart Sass (no @import). No auto color math: rosie hand-tunes pastels.
+
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+
+// ---------------------------------------------------------------------------
+// Map helpers
+// ---------------------------------------------------------------------------
+
+@function map-loop($map, $func, $args...) {
+  $_map: ();
+  @each $key, $value in $map {
+    $_args: list.join(($value,), $args);
+    $_map: map.merge($_map, ($key: meta.call(meta.get-function($func), $_args...)));
+  }
+  @return $_map;
 }
 
-// Shade a color: mix a color with black
-@function shade-color($color, $weight) {
-  @return mix(black, $color, $weight);
+// ---------------------------------------------------------------------------
+// Color helpers
+// ---------------------------------------------------------------------------
+
+// to-rgb($color) — extracts "r, g, b" so consumers can do
+// rgba(var(--rosie-primary-rgb), .1) without recompiling.
+@function to-rgb($value) {
+  @return color.channel($value, 'red', $space: rgb),
+          color.channel($value, 'green', $space: rgb),
+          color.channel($value, 'blue', $space: rgb);
 }
 
-// Shade the color if the weight is positive, else tint it
-@function shift-color($color, $weight) {
-  @return if($weight > 0, shade-color($color, $weight), tint-color($color, -$weight));
+@function rgba-css-var($identifier, $target) {
+  @if $identifier == 'body' and $target == 'bg' {
+    @return rgba(var(--rosie-#{$identifier}-bg-rgb), 1);
+  }
+  @if $identifier == 'body' and $target == 'text' {
+    @return rgba(var(--rosie-#{$identifier}-color-rgb), 1);
+  }
+  @return rgba(var(--rosie-#{$identifier}-rgb), 1);
 }
-// scss-docs-end color-functions
+
+// ---------------------------------------------------------------------------
+// Sizing helpers
+// ---------------------------------------------------------------------------
+
+@function divide($dividend, $divisor, $precision: 10) {
+  @return math.div($dividend, $divisor);
+}
+
+// CSS calc()-aware addition/subtraction so SCSS-time math composes with CSS units.
+@function add($value1, $value2, $return-calc: true) {
+  @if $value1 == null { @return $value2; }
+  @if $value2 == null { @return $value1; }
+
+  @if meta.type-of($value1) == number and meta.type-of($value2) == number and math.compatible($value1, $value2) {
+    @return $value1 + $value2;
+  }
+
+  @if $return-calc == true {
+    @return calc(#{$value1} + #{$value2});
+  }
+  @return $value1 + string.unquote(' + ') + $value2;
+}
+
+@function subtract($value1, $value2, $return-calc: true) {
+  @if $value1 == null and $value2 == null { @return null; }
+  @if $value1 == null { @return -$value2; }
+  @if $value2 == null { @return $value1; }
+
+  @if meta.type-of($value1) == number and meta.type-of($value2) == number and math.compatible($value1, $value2) {
+    @return $value1 - $value2;
+  }
+
+  @if meta.type-of($value2) != number {
+    $value2: unquote('(') + $value2 + unquote(')');
+  }
+
+  @if $return-calc == true {
+    @return calc(#{$value1} - #{$value2});
+  }
+  @return $value1 + unquote(' - ') + $value2;
+}
+
+@function negativify-map($map) {
+  $result: ();
+  @each $key, $value in $map {
+    @if $key != 0 {
+      $result: map.merge($result, ('n' + $key: (-$value)));
+    }
+  }
+  @return $result;
+}
+
+// ---------------------------------------------------------------------------
+// Validation helpers
+// ---------------------------------------------------------------------------
+
+@function valid-radius($radius) {
+  $return: ();
+  @each $value in $radius {
+    @if meta.type-of($value) == number {
+      $return: list.append($return, math.max($value, 0));
+    } @else {
+      $return: list.append($return, $value);
+    }
+  }
+  @return $return;
+}

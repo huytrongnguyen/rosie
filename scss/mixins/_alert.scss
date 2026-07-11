@@ -1,0 +1,8 @@
+@mixin alert-variant($background, $border, $color) {
+  --rosie-alert-color: #{$color};
+  --rosie-alert-bg: #{$background};
+  --rosie-alert-border-color: #{$border};
+  --rosie-alert-link-color: #{$color};
+
+  .alert-link { color: var(--rosie-alert-link-color); }
+}

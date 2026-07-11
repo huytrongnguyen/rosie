@@ -1,7 +1,51 @@
-@import 'variables';
+// Rosie SCSS — the single entry point.
+// Bootstrap-compatible class names. Light-theme only. Pastel palette (rose #e97b98).
 
-@import 'reboot';
+// 0. Web fonts (must precede other CSS rules)
+@use 'fonts';
 
-@import 'mixin';
-@import 'utilities';
-// @import 'components';
+// 1. Configuration (no CSS output)
+@use 'functions';
+@use 'variables';
+@use 'mixins';
+
+// 2. Layout & content
+@use 'root';
+@use 'reboot';
+@use 'type';
+@use 'images';
+@use 'containers';
+@use 'grid';
+@use 'tables';
+@use 'forms';
+@use 'buttons';
+@use 'transitions';
+
+// 3. Components
+@use 'dropdown';
+@use 'button-group';
+@use 'nav';
+@use 'navbar';
+@use 'card';
+@use 'accordion';
+@use 'breadcrumb';
+@use 'pagination';
+@use 'badge';
+@use 'alert';
+@use 'progress';
+@use 'list-group';
+@use 'toasts';
+@use 'modal';
+@use 'tooltip';
+@use 'popover';
+@use 'spinners';
+@use 'offcanvas';
+
+// 4. Helpers
+@use 'helpers';
+
+// 5. Extended (CoreUI Pro + Notion-flavored)
+@use 'extended';
+
+// 6. Utilities (last so they win specificity)
+@use 'utilities-api';

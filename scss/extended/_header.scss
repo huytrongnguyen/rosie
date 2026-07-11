@@ -1,0 +1,71 @@
+@use '../variables' as *;
+
+.rosie-header {
+  --rosie-header-bg: #{$white};
+  --rosie-header-color: #{$body-color};
+  --rosie-header-height: 3.5rem;
+  --rosie-header-padding-x: 1rem;
+  --rosie-header-border-color: #{$border-color};
+
+  display: flex;
+  align-items: center;
+  height: var(--rosie-header-height);
+  padding: 0 var(--rosie-header-padding-x);
+  color: var(--rosie-header-color);
+  background-color: var(--rosie-header-bg);
+  border-bottom: 1px solid var(--rosie-header-border-color);
+}
+
+.rosie-header-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-right: 1rem;
+  font-weight: $font-weight-semibold;
+  text-decoration: none;
+  color: inherit;
+}
+
+.rosie-header-nav {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rosie-header-nav-item {
+  display: flex;
+  align-items: center;
+}
+
+.rosie-header-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .375rem .625rem;
+  font-size: $font-size-sm;
+  color: $body-color;
+  text-decoration: none;
+  background: transparent;
+  border-radius: $border-radius-sm;
+
+  &:hover { background-color: $neutral-50; }
+  &.is-active { color: $rose-700; }
+}
+
+.rosie-header-toggler {
+  padding: .375rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: inherit;
+}
+
+.rosie-header-divider {
+  align-self: stretch;
+  width: 1px;
+  margin: .5rem .25rem;
+  background: var(--rosie-header-border-color);
+}

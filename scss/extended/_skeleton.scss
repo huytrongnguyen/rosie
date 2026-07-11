@@ -1,0 +1,40 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+@keyframes rosie-skeleton-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.rosie-skeleton {
+  display: block;
+  width: 100%;
+  height: 1rem;
+  background: linear-gradient(90deg, $neutral-100 0%, $neutral-50 50%, $neutral-100 100%);
+  background-size: 200% 100%;
+  animation: rosie-skeleton-shimmer 1.4s ease-in-out infinite;
+  @include border-radius($border-radius-sm);
+}
+
+.rosie-skeleton-text {
+  height: .75rem;
+  margin: .25rem 0;
+}
+
+.rosie-skeleton-circle {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.rosie-skeleton-card {
+  height: 8rem;
+  @include border-radius($border-radius);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rosie-skeleton {
+    animation: none;
+    background: $neutral-100;
+  }
+}

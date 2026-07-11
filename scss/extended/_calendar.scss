@@ -1,0 +1,81 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-calendar {
+  --rosie-calendar-bg: #{$white};
+  --rosie-calendar-border-color: #{$border-color};
+  --rosie-calendar-day-bg: #{$white};
+  --rosie-calendar-day-hover-bg: #{$neutral-50};
+  --rosie-calendar-day-today-bg: #{$rose-50};
+  --rosie-calendar-day-today-border: #{$rose-300};
+
+  display: flex;
+  flex-direction: column;
+  background-color: var(--rosie-calendar-bg);
+  border: 1px solid var(--rosie-calendar-border-color);
+  @include border-radius($border-radius-lg);
+  overflow: hidden;
+}
+
+.rosie-calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--rosie-calendar-border-color);
+}
+
+.rosie-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--rosie-calendar-border-color);
+}
+
+.rosie-calendar-weekday {
+  padding: .375rem;
+  font-size: .6875rem;
+  font-weight: $font-weight-semibold;
+  color: $body-secondary-color;
+  text-align: center;
+  text-transform: uppercase;
+  background: $neutral-25;
+  border-right: 1px solid var(--rosie-calendar-border-color);
+  border-bottom: 1px solid var(--rosie-calendar-border-color);
+
+  &:last-child { border-right: 0; }
+}
+
+.rosie-calendar-day {
+  min-height: 5rem;
+  padding: .375rem;
+  background: var(--rosie-calendar-day-bg);
+  border-right: 1px solid var(--rosie-calendar-border-color);
+  border-bottom: 1px solid var(--rosie-calendar-border-color);
+  cursor: pointer;
+  transition: background-color .15s ease;
+
+  &:hover { background-color: var(--rosie-calendar-day-hover-bg); }
+
+  &.is-today { background-color: var(--rosie-calendar-day-today-bg); border: 1px solid var(--rosie-calendar-day-today-border); }
+  &.is-out-month .rosie-calendar-day-num { color: $neutral-300; }
+}
+
+.rosie-calendar-day-num {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $body-color;
+}
+
+.rosie-calendar-event {
+  display: block;
+  margin-top: .25rem;
+  padding: 1px .25rem;
+  font-size: .625rem;
+  color: $rose-700;
+  background-color: $rose-50;
+  border-radius: 2px;
+  border-left: 2px solid $rose-500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

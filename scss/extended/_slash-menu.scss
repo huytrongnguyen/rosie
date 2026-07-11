@@ -1,0 +1,69 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-slash-menu {
+  --rosie-slash-menu-bg: #{$white};
+  --rosie-slash-menu-border-color: #{$border-color};
+  --rosie-slash-menu-width: 300px;
+
+  position: absolute;
+  z-index: $zindex-popover;
+  width: var(--rosie-slash-menu-width);
+  max-height: 320px;
+  padding: .25rem;
+  overflow-y: auto;
+  background-color: var(--rosie-slash-menu-bg);
+  border: 1px solid var(--rosie-slash-menu-border-color);
+  @include border-radius($border-radius-lg);
+  box-shadow: $box-shadow-lg;
+}
+
+.rosie-slash-menu-section {
+  padding: .375rem .5rem .25rem;
+  font-size: .6875rem;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: $body-secondary-color;
+}
+
+.rosie-slash-menu-item {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  padding: .375rem .5rem;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  color: $body-color;
+
+  &:hover, &.is-active {
+    background-color: $rose-50;
+    color: $rose-700;
+  }
+
+  .rosie-slash-menu-icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $neutral-50;
+    border-radius: $border-radius-sm;
+    color: $body-secondary-color;
+  }
+
+  .rosie-slash-menu-label {
+    flex: 1;
+    font-size: $font-size-sm;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .rosie-slash-menu-description {
+    display: block;
+    font-size: .6875rem;
+    color: $body-secondary-color;
+  }
+}

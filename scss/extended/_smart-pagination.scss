@@ -1,0 +1,44 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-smart-pagination {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+
+  .rosie-smart-page-size {
+    margin-right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    font-size: $font-size-sm;
+    color: $body-secondary-color;
+
+    .form-select-sm { width: auto; }
+  }
+
+  .rosie-smart-page-info {
+    margin: 0 1rem;
+    font-size: $font-size-sm;
+    color: $body-secondary-color;
+    white-space: nowrap;
+  }
+
+  .rosie-smart-page-jump {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    margin-left: 1rem;
+    font-size: $font-size-sm;
+    color: $body-secondary-color;
+
+    input {
+      width: 3rem;
+      padding: .125rem .375rem;
+      font-size: $font-size-sm;
+      text-align: center;
+      border: 1px solid $border-color;
+      @include border-radius($border-radius-sm);
+    }
+  }
+}

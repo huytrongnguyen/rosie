@@ -1,0 +1,129 @@
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+
+.card {
+  --rosie-card-spacer-y: #{$card-spacer-y};
+  --rosie-card-spacer-x: #{$card-spacer-x};
+  --rosie-card-title-spacer-y: #{$card-title-spacer-y};
+  --rosie-card-title-color: #{$card-title-color};
+  --rosie-card-subtitle-color: #{$card-subtitle-color};
+  --rosie-card-border-width: #{$card-border-width};
+  --rosie-card-border-color: #{$card-border-color};
+  --rosie-card-border-radius: #{$card-border-radius};
+  --rosie-card-box-shadow: #{$card-box-shadow};
+  --rosie-card-inner-border-radius: #{$card-inner-border-radius};
+  --rosie-card-cap-padding-y: #{$card-cap-padding-y};
+  --rosie-card-cap-padding-x: #{$card-cap-padding-x};
+  --rosie-card-cap-bg: #{$card-cap-bg};
+  --rosie-card-cap-color: #{$card-cap-color};
+  --rosie-card-height: #{$card-height};
+  --rosie-card-color: #{$card-color};
+  --rosie-card-bg: #{$card-bg};
+  --rosie-card-img-overlay-padding: #{$card-img-overlay-padding};
+  --rosie-card-group-margin: #{$card-group-margin};
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: var(--rosie-card-height);
+  word-wrap: break-word;
+  background-color: var(--rosie-card-bg);
+  background-clip: border-box;
+  border: var(--rosie-card-border-width) solid var(--rosie-card-border-color);
+  @include border-radius(var(--rosie-card-border-radius));
+  box-shadow: var(--rosie-card-box-shadow);
+
+  > hr { margin-right: 0; margin-left: 0; }
+
+  > .list-group {
+    border-top: inherit;
+    border-bottom: inherit;
+
+    &:first-child { border-top-width: 0; @include border-top-radius(var(--rosie-card-inner-border-radius)); }
+    &:last-child  { border-bottom-width: 0; @include border-bottom-radius(var(--rosie-card-inner-border-radius)); }
+  }
+
+  > .card-header + .list-group,
+  > .list-group + .card-footer {
+    border-top: 0;
+  }
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: var(--rosie-card-spacer-y) var(--rosie-card-spacer-x);
+  color: var(--rosie-card-color);
+}
+
+.card-title {
+  margin-bottom: var(--rosie-card-title-spacer-y);
+  color: var(--rosie-card-title-color);
+}
+
+.card-subtitle {
+  margin-top: calc(-.5 * var(--rosie-card-title-spacer-y));
+  margin-bottom: 0;
+  color: var(--rosie-card-subtitle-color);
+}
+
+.card-text:last-child { margin-bottom: 0; }
+
+.card-link {
+  &:hover { text-decoration: none; }
+  + .card-link { margin-left: var(--rosie-card-spacer-x); }
+}
+
+.card-header {
+  padding: var(--rosie-card-cap-padding-y) var(--rosie-card-cap-padding-x);
+  margin-bottom: 0;
+  color: var(--rosie-card-cap-color);
+  background-color: var(--rosie-card-cap-bg);
+  border-bottom: var(--rosie-card-border-width) solid var(--rosie-card-border-color);
+
+  &:first-child { @include border-radius(var(--rosie-card-inner-border-radius) var(--rosie-card-inner-border-radius) 0 0); }
+}
+
+.card-footer {
+  padding: var(--rosie-card-cap-padding-y) var(--rosie-card-cap-padding-x);
+  color: var(--rosie-card-cap-color);
+  background-color: var(--rosie-card-cap-bg);
+  border-top: var(--rosie-card-border-width) solid var(--rosie-card-border-color);
+
+  &:last-child { @include border-radius(0 0 var(--rosie-card-inner-border-radius) var(--rosie-card-inner-border-radius)); }
+}
+
+.card-header-tabs {
+  margin-right: calc(-.5 * var(--rosie-card-cap-padding-x));
+  margin-bottom: calc(-1 * var(--rosie-card-cap-padding-y));
+  margin-left: calc(-.5 * var(--rosie-card-cap-padding-x));
+  border-bottom: 0;
+  --rosie-nav-tabs-link-active-bg: var(--rosie-card-bg);
+
+  .nav-link.active { background-color: var(--rosie-card-bg); border-bottom-color: var(--rosie-card-bg); }
+}
+
+.card-header-pills {
+  margin-right: calc(-.5 * var(--rosie-card-cap-padding-x));
+  margin-left: calc(-.5 * var(--rosie-card-cap-padding-x));
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  padding: var(--rosie-card-img-overlay-padding);
+  @include border-radius(var(--rosie-card-inner-border-radius));
+}
+
+.card-img,
+.card-img-top,
+.card-img-bottom { width: 100%; }
+
+.card-img,
+.card-img-top { @include border-top-radius(var(--rosie-card-inner-border-radius)); }
+.card-img,
+.card-img-bottom { @include border-bottom-radius(var(--rosie-card-inner-border-radius)); }
+
+.card-group {
+  > .card { margin-bottom: var(--rosie-card-group-margin); }
+}

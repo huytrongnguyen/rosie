@@ -1,0 +1,112 @@
+// Flex grid (Bootstrap-compatible) — make-row, make-col, make-grid-columns.
+@use 'sass:map';
+@use 'sass:math';
+@use '../functions' as *;
+@use '../variables' as *;
+@use 'breakpoints' as *;
+
+@mixin make-row($gutter: $grid-gutter-width) {
+  --rosie-gutter-x: #{$gutter};
+  --rosie-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--rosie-gutter-y) * -1);
+  margin-right: calc(var(--rosie-gutter-x) * -.5);
+  margin-left: calc(var(--rosie-gutter-x) * -.5);
+
+  > * {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--rosie-gutter-x) * .5);
+    padding-left: calc(var(--rosie-gutter-x) * .5);
+    margin-top: var(--rosie-gutter-y);
+  }
+}
+
+@mixin make-col-ready() {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--rosie-gutter-x) * .5);
+  padding-left: calc(var(--rosie-gutter-x) * .5);
+  margin-top: var(--rosie-gutter-y);
+}
+
+@mixin make-col($size: false, $columns: $grid-columns) {
+  @if $size {
+    flex: 0 0 auto;
+    width: math.percentage(divide($size, $columns));
+  } @else {
+    flex: 1 1 0;
+    max-width: 100%;
+  }
+}
+
+@mixin make-col-auto() {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+@mixin make-col-offset($size, $columns: $grid-columns) {
+  $num: divide($size, $columns);
+  $offset: 0;
+  @if $num != 0 { $offset: math.percentage($num); }
+  margin-left: $offset;
+}
+
+@mixin row-cols($count) {
+  > * {
+    flex: 0 0 auto;
+    width: math.percentage(divide(1, $count));
+  }
+}
+
+// Generate the responsive col-{breakpoint}-{n}, offset-*, order-*, row-cols-* classes
+@mixin make-grid-columns($columns: $grid-columns, $gutters: $gutters, $breakpoints: $grid-breakpoints) {
+  @each $breakpoint in map.keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      .col#{$infix}        { flex: 1 0 0%; }
+      .row-cols#{$infix}-auto > * { @include make-col-auto(); }
+      @if $columns > 0 {
+        @for $i from 1 through $columns {
+          .row-cols#{$infix}-#{$i} > * { @include make-col($i, $columns); }
+        }
+      }
+
+      .col#{$infix}-auto { @include make-col-auto(); }
+
+      @if $columns > 0 {
+        @for $i from 1 through $columns {
+          .col#{$infix}-#{$i} { @include make-col($i, $columns); }
+        }
+
+        // Order
+        .order#{$infix}-first { order: -1; }
+        .order#{$infix}-last  { order: $columns + 1; }
+        @for $i from 0 through $columns {
+          .order#{$infix}-#{$i} { order: $i; }
+        }
+
+        @if $columns > 0 {
+          // Offsets — skip last column
+          @for $i from 0 through ($columns - 1) {
+            @if not ($infix == '' and $i == 0) {
+              .offset#{$infix}-#{$i} { @include make-col-offset($i, $columns); }
+            }
+          }
+        }
+      }
+
+      // Gutters
+      @each $key, $value in $gutters {
+        .g#{$infix}-#{$key},
+        .gx#{$infix}-#{$key} { --rosie-gutter-x: #{$value}; }
+        .g#{$infix}-#{$key},
+        .gy#{$infix}-#{$key} { --rosie-gutter-y: #{$value}; }
+      }
+    }
+  }
+}

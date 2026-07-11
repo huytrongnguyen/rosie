@@ -1,6 +1,7 @@
-@import '../node_modules/bootstrap/scss/bootstrap';
+// Modern reset + opinionated baseline. Light theme only.
+@use 'variables' as *;
 
-// System
+*, *::before, *::after { box-sizing: border-box; }
 
 *:focus, *:active, *:read-only {
   outline: none !important;
@@ -10,146 +11,249 @@
   -webkit-box-shadow: none;
 }
 
-// Body
+@if $enable-reduced-motion {
+  @media (prefers-reduced-motion: no-preference) {
+    :root { scroll-behavior: smooth; }
+  }
+}
 
-body, input, textarea, select, button {
-  -webkit-font-smoothing: subpixel-antialiased;
+body {
+  margin: 0;
+  font-family: var(--rosie-body-font-family);
+  font-size: var(--rosie-body-font-size);
+  font-weight: var(--rosie-body-font-weight);
+  line-height: var(--rosie-body-line-height);
+  color: var(--rosie-body-color);
+  text-align: var(--rosie-body-text-align, inherit);
+  background-color: var(--rosie-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba($black, 0);
+  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-// // Links (449)
-// //
-// // Style anchor elements.
+hr {
+  margin: $hr-margin-y 0;
+  color: $hr-color;
+  border: 0;
+  border-top: $hr-height solid;
+  opacity: $hr-opacity;
+}
 
-// .nav-link {
-//   &:hover, &:focus { background-color: $gray-200; }
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: $headings-margin-bottom;
+  font-family: $headings-font-family;
+  font-style: $headings-font-style;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  color: var(--rosie-emphasis-color, $headings-color);
+}
 
-//   .nav-hidden-menu {
-//     display: none;
+h1 { font-size: $h1-font-size; }
+h2 { font-size: $h2-font-size; }
+h3 { font-size: $h3-font-size; }
+h4 { font-size: $h4-font-size; }
+h5 { font-size: $h5-font-size; }
+h6 { font-size: $h6-font-size; }
 
-//   }
+p {
+  margin-top: 0;
+  margin-bottom: $paragraph-margin-bottom;
+}
 
-//   &:hover {
-//     .nav-hidden-menu { display: block; }
-//   }
-// }
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+  text-decoration-skip-ink: none;
+}
 
-// // Buttons (813)
-// //
-// // For each of Bootstrap's buttons, define text, background, and border color.
+address {
+  margin-bottom: 1rem;
+  font-style: normal;
+  line-height: inherit;
+}
 
-// .btn {
-//   padding: .25rem .625rem;
-//   font-weight: 500;
-//   &.show {
-//     border-color: transparent;
-//   }
-// }
+ol, ul {
+  padding-left: 2rem;
+}
 
-// .btn-outline-secondary {
-//   border-color: $border-color !important;
-//   color: $body-color;
-// }
+ol, ul, dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
 
-// .btn-primary, .btn-outline-primary:hover, .btn-check:checked + .btn-outline-primary {
-//   color: $white !important;
-// }
+ol ol, ul ul, ol ul, ul ol { margin-bottom: 0; }
 
-// // Forms (866)
+dt { font-weight: $font-weight-semibold; }
+dd { margin-bottom: .5rem; margin-left: 0; }
 
-// .form-control, .form-select {
-//   font-size: .8125rem;
-//   border-color: $border-color;
-//   &:focus { border-color: $primary; }
-// }
+blockquote {
+  margin: 0 0 1rem;
+}
 
-// // Navs (1156)
+b, strong { font-weight: $font-weight-bold; }
 
-// .nav-tabs {
-//   .nav-link {
-//     background-color: #eaeaea;
-//     border-top-color: $border-color !important;
-//     border-left-color: $border-color !important;
-//     border-right-color: $border-color !important;
+small { font-size: $small-font-size; }
 
-//     &:hover, &:focus {
-//       background-color: #f2eeee;
-//     }
+mark, .mark {
+  padding: $mark-padding;
+  background-color: var(--rosie-highlight-bg);
+  color: var(--rosie-highlight-color);
+}
 
-//     &.active {
-//       background-color: $white !important;
-//     }
-//   }
-// }
+sub, sup {
+  position: relative;
+  font-size: .75em;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sub { bottom: -.25em; }
+sup { top: -.5em; }
 
-// // Dropdowns (1233)
-// //
-// // Dropdown menu container and contents.
+a {
+  color: rgba(var(--rosie-link-color-rgb), 1);
+  text-decoration: var(--rosie-link-decoration);
 
-// .dropdown {
-//   .dropdown-toggle.hide-indicator::after {
-//     display: none;
-//   }
+  &:hover {
+    --rosie-link-color-rgb: var(--rosie-link-hover-color-rgb);
+    text-decoration: var(--rosie-link-hover-decoration);
+  }
+}
 
-//   .dropdown-item-list {
-//     max-height: 12rem;
-//     overflow-y: auto;
-//   }
-// }
+a:not([href]):not([class]) {
+  &, &:hover { color: inherit; text-decoration: none; }
+}
 
-// // Cards (1339)
+pre, code, kbd, samp {
+  font-family: var(--rosie-font-monospace);
+  font-size: 1em;
+}
 
-// .card {
-//   &.card-hover:hover {
-//     border: 1px solid $primary;
-//   }
-// }
+pre {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  overflow: auto;
+  font-size: $code-font-size;
+  color: $pre-color;
 
-// // Modals (1498)
+  code {
+    font-size: inherit;
+    color: inherit;
+    word-break: normal;
+  }
+}
 
-// .modal-content {
-//   box-shadow: $modal-content-box-shadow-xs;
-// }
-// .modal-backdrop {
-//   background-color: rgba(15, 15, 15, 0.4);
-// }
+code {
+  font-size: $code-font-size;
+  color: var(--rosie-code-color);
+  word-wrap: break-word;
 
-// // Breadcrumb (1631)
+  a > & { color: inherit; }
+}
 
-// .breadcrumb {
-//   .breadcrumb-item {
-//     padding-top: 4px;
-//     &.dropdown {
-//       .dropdown-toggle {
-//         padding: 0;
-//         margin-top: -3px;
-//       }
-//     }
-//   }
-// }
+kbd {
+  padding: $kbd-padding-y $kbd-padding-x;
+  font-size: $kbd-font-size;
+  color: $kbd-color;
+  background-color: $kbd-bg;
+  border: 1px solid $kbd-border-color;
+  border-radius: $border-radius-sm;
+  box-shadow: 0 1px 0 $kbd-border-color;
 
-// // .list-group-item {
-// //   background-color: transparent;
-// //   &.disabled { background-color: transparent !important; }
-// // }
+  kbd { padding: 0; font-size: 1em; }
+}
 
-// // Typography
-// //
-// // Font, line-height, and color for body text, headings, and more.
+figure {
+  margin: 0 0 1rem;
+}
 
-// // @each $color, $value in $colors {
-// //   .text-#{$color} {
-// //     color: $value !important;
-// //   }
-// // }
+img, svg { vertical-align: middle; }
 
-// // @each $color in ('primary', 'secondary', 'success', 'info') {
-// //   .text-bg-#{$color} {
-// //     color: $white !important;
-// //   }
-// //   .btn-outline-#{$color} {
-// //     &.active, &:hover {
-// //       color: $white;
-// //     }
-// //   }
-// // }
+table {
+  caption-side: bottom;
+  border-collapse: collapse;
+}
+
+caption {
+  padding-top: $table-cell-padding-y;
+  padding-bottom: $table-cell-padding-y;
+  color: $table-caption-color;
+  text-align: left;
+}
+
+th { font-weight: $table-th-font-weight; text-align: inherit; text-align: -webkit-match-parent; }
+
+thead, tbody, tfoot, tr, td, th { border-color: inherit; border-style: solid; border-width: 0; }
+
+label { display: inline-block; }
+
+button { border-radius: 0; }
+button:focus:not(:focus-visible) { outline: 0; }
+
+input, button, select, optgroup, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button, select { text-transform: none; }
+
+[role='button'] { cursor: pointer; }
+select { word-wrap: normal; }
+select:disabled { opacity: 1; }
+
+[list]:not([type='date']):not([type='datetime-local']):not([type='month']):not([type='week']):not([type='time'])::-webkit-calendar-picker-indicator { display: none !important; }
+
+button, [type='button'], [type='reset'], [type='submit'] { -webkit-appearance: button; }
+button:not(:disabled), [type='button']:not(:disabled), [type='reset']:not(:disabled), [type='submit']:not(:disabled) { cursor: pointer; }
+
+::-moz-focus-inner { padding: 0; border-style: none; }
+
+textarea { resize: vertical; }
+
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: .5rem;
+  font-size: $font-size-base * 1.5;
+  line-height: inherit;
+
+  + * { clear: left; }
+}
+
+::-webkit-datetime-edit-fields-wrapper, ::-webkit-datetime-edit-text, ::-webkit-datetime-edit-minute, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-year-field { padding: 0; }
+
+::-webkit-inner-spin-button { height: auto; }
+
+[type='search'] {
+  outline-offset: -2px;
+  -webkit-appearance: textfield;
+}
+
+::-webkit-search-decoration { -webkit-appearance: none; }
+::-webkit-color-swatch-wrapper { padding: 0; }
+
+::file-selector-button {
+  font: inherit;
+  -webkit-appearance: button;
+}
+
+output { display: inline-block; }
+iframe { border: 0; }
+summary {
+  display: list-item;
+  cursor: pointer;
+}
+progress { vertical-align: baseline; }
+[hidden] { display: none !important; }

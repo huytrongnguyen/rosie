@@ -1,0 +1,4 @@
+@mixin resizable($direction: both) {
+  overflow: auto;
+  resize: $direction;
+}

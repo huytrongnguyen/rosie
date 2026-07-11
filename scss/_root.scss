@@ -1,0 +1,183 @@
+// Root token tiers. Light-theme only, but layered so a future theme only
+// needs to override the semantic tier.
+//   Tier 1 — primitives: raw scales, no meaning (palette, spacing, radius, z).
+//   Tier 2 — semantic:    roles that reference primitives (surface, text, accent…).
+// Component-level tokens live on each component's own selector (Bootstrap-style).
+@use 'sass:map';
+@use 'sass:meta';
+@use 'functions' as *;
+@use 'variables' as *;
+
+:root {
+  // ---- Tier 1: primitives — palette --------------------------------------
+  --rosie-white: #{$white};
+  --rosie-black: #{$black};
+
+  --rosie-neutral-25: #{$neutral-25};
+  --rosie-neutral-50: #{$neutral-50};
+  --rosie-neutral-100: #{$neutral-100};
+  --rosie-neutral-200: #{$neutral-200};
+  --rosie-neutral-300: #{$neutral-300};
+  --rosie-neutral-400: #{$neutral-400};
+  --rosie-neutral-500: #{$neutral-500};
+  --rosie-neutral-600: #{$neutral-600};
+  --rosie-neutral-700: #{$neutral-700};
+  --rosie-neutral-800: #{$neutral-800};
+  --rosie-neutral-900: #{$neutral-900};
+
+  --rosie-rose-25: #{$rose-25};
+  --rosie-rose-50: #{$rose-50};
+  --rosie-rose-100: #{$rose-100};
+  --rosie-rose-200: #{$rose-200};
+  --rosie-rose-300: #{$rose-300};
+  --rosie-rose-400: #{$rose-400};
+  --rosie-rose-500: #{$rose-500};
+  --rosie-rose-600: #{$rose-600};
+  --rosie-rose-700: #{$rose-700};
+  --rosie-rose-800: #{$rose-800};
+  --rosie-rose-900: #{$rose-900};
+
+  --rosie-mint-50: #{$mint-50};
+  --rosie-mint-100: #{$mint-100};
+  --rosie-mint-300: #{$mint-300};
+  --rosie-mint-500: #{$mint-500};
+  --rosie-mint-700: #{$mint-700};
+  --rosie-mint-900: #{$mint-900};
+
+  --rosie-apricot-50: #{$apricot-50};
+  --rosie-apricot-100: #{$apricot-100};
+  --rosie-apricot-300: #{$apricot-300};
+  --rosie-apricot-500: #{$apricot-500};
+  --rosie-apricot-700: #{$apricot-700};
+  --rosie-apricot-900: #{$apricot-900};
+
+  --rosie-coral-50: #{$coral-50};
+  --rosie-coral-100: #{$coral-100};
+  --rosie-coral-300: #{$coral-300};
+  --rosie-coral-500: #{$coral-500};
+  --rosie-coral-700: #{$coral-700};
+  --rosie-coral-900: #{$coral-900};
+
+  --rosie-sky-50: #{$sky-50};
+  --rosie-sky-100: #{$sky-100};
+  --rosie-sky-300: #{$sky-300};
+  --rosie-sky-500: #{$sky-500};
+  --rosie-sky-700: #{$sky-700};
+  --rosie-sky-900: #{$sky-900};
+
+  // Categorical chart palette
+  @each $key, $value in $chart-colors {
+    --rosie-chart-#{$key}: #{$value};
+  }
+
+  // ---- Tier 1: primitives — spacing / radius / z scales ------------------
+  @each $key, $value in $spacers {
+    --rosie-space-#{$key}: #{$value};
+  }
+  --rosie-radius-sm: #{$border-radius-sm};
+  --rosie-radius: #{$border-radius};
+  --rosie-radius-lg: #{$border-radius-lg};
+  --rosie-radius-xl: #{$border-radius-xl};
+  --rosie-radius-xxl: #{$border-radius-xxl};
+  --rosie-radius-pill: #{$border-radius-pill};
+
+  // ---- Tier 2: semantic — theme colors -----------------------------------
+  --rosie-primary: #{$primary};
+  --rosie-secondary: #{$secondary};
+  --rosie-success: #{$success};
+  --rosie-info: #{$info};
+  --rosie-warning: #{$warning};
+  --rosie-danger: #{$danger};
+  --rosie-light: #{$light};
+  --rosie-dark: #{$dark};
+
+  --rosie-primary-rgb: #{to-rgb($primary)};
+  --rosie-secondary-rgb: #{to-rgb($secondary)};
+  --rosie-success-rgb: #{to-rgb($success)};
+  --rosie-info-rgb: #{to-rgb($info)};
+  --rosie-warning-rgb: #{to-rgb($warning)};
+  --rosie-danger-rgb: #{to-rgb($danger)};
+  --rosie-light-rgb: #{to-rgb($light)};
+  --rosie-dark-rgb: #{to-rgb($dark)};
+
+  --rosie-white-rgb: #{to-rgb($white)};
+  --rosie-black-rgb: #{to-rgb($black)};
+
+  // Per-theme-color subtle/emphasis surfaces (drive .text-bg-*, .alert-*, etc.)
+  @each $key, $value in $theme-colors-bg-subtle {
+    --rosie-#{$key}-bg-subtle: #{$value};
+  }
+  @each $key, $value in $theme-colors-border-subtle {
+    --rosie-#{$key}-border-subtle: #{$value};
+  }
+  @each $key, $value in $theme-colors-emphasis {
+    --rosie-#{$key}-text-emphasis: #{$value};
+  }
+
+  // ---- Tier 2: semantic — surface / text / border ------------------------
+  --rosie-body-bg: #{$body-bg};
+  --rosie-body-bg-rgb: #{to-rgb($body-bg)};
+  --rosie-body-color: #{$body-color};
+  --rosie-body-color-rgb: #{to-rgb($body-color)};
+  --rosie-body-secondary-color: #{$body-secondary-color};
+  --rosie-body-secondary-bg: #{$body-secondary-bg};
+  --rosie-body-tertiary-color: #{$body-tertiary-color};
+  --rosie-body-tertiary-bg: #{$body-tertiary-bg};
+  --rosie-emphasis-color: #{$body-emphasis-color};
+
+  // Role aliases — the intended API for app-level theming.
+  --rosie-surface: var(--rosie-body-bg);
+  --rosie-surface-raised: var(--rosie-white);
+  --rosie-surface-sunken: var(--rosie-body-secondary-bg);
+  --rosie-text: var(--rosie-body-color);
+  --rosie-text-muted: var(--rosie-body-secondary-color);
+  --rosie-accent: var(--rosie-primary);
+  --rosie-accent-fg: var(--rosie-white);
+
+  // Borders + radius
+  --rosie-border-width: #{$border-width};
+  --rosie-border-style: #{$border-style};
+  --rosie-border-color: #{$border-color};
+  --rosie-border-color-translucent: #{$border-color-translucent};
+  --rosie-border-radius: #{$border-radius};
+  --rosie-border-radius-sm: #{$border-radius-sm};
+  --rosie-border-radius-lg: #{$border-radius-lg};
+  --rosie-border-radius-xl: #{$border-radius-xl};
+  --rosie-border-radius-xxl: #{$border-radius-xxl};
+  --rosie-border-radius-pill: #{$border-radius-pill};
+
+  // Typography
+  --rosie-font-sans-serif: #{meta.inspect($font-family-sans-serif)};
+  --rosie-font-monospace: #{meta.inspect($font-family-monospace)};
+  --rosie-font-family-base: var(--rosie-font-sans-serif);
+  --rosie-body-font-family: var(--rosie-font-sans-serif);
+  --rosie-body-font-size: #{$font-size-base};
+  --rosie-body-font-weight: #{$font-weight-base};
+  --rosie-body-line-height: #{$line-height-base};
+
+  // Links
+  --rosie-link-color: #{$link-color};
+  --rosie-link-color-rgb: #{to-rgb($link-color)};
+  --rosie-link-decoration: #{$link-decoration};
+  --rosie-link-hover-color: #{$link-hover-color};
+  --rosie-link-hover-color-rgb: #{to-rgb($link-hover-color)};
+  --rosie-link-hover-decoration: #{$link-hover-decoration};
+
+  // Code
+  --rosie-code-color: #{$code-color};
+
+  // Highlight + selection
+  --rosie-highlight-color: #{$body-color};
+  --rosie-highlight-bg: #{$mark-bg};
+
+  // Focus ring
+  --rosie-focus-ring-width: #{$focus-ring-width};
+  --rosie-focus-ring-opacity: #{$focus-ring-opacity};
+  --rosie-focus-ring-color: #{rgba($primary, $focus-ring-opacity)};
+
+  // Box shadows (soft, Notion-like)
+  --rosie-box-shadow: #{$box-shadow};
+  --rosie-box-shadow-sm: #{$box-shadow-sm};
+  --rosie-box-shadow-lg: #{$box-shadow-lg};
+  --rosie-box-shadow-inset: #{$box-shadow-inset};
+}

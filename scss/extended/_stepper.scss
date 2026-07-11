@@ -1,0 +1,98 @@
+@use '../variables' as *;
+
+.rosie-stepper {
+  --rosie-stepper-line-color: #{$border-color};
+  --rosie-stepper-step-bg: #{$white};
+  --rosie-stepper-step-border: #{$border-color};
+  --rosie-stepper-step-color: #{$body-secondary-color};
+  --rosie-stepper-step-active-bg: #{$primary};
+  --rosie-stepper-step-active-color: #{$white};
+  --rosie-stepper-step-complete-bg: #{$mint-500};
+  --rosie-stepper-step-complete-color: #{$white};
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.rosie-stepper-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+  text-align: center;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: var(--rosie-stepper-line-color);
+    z-index: 0;
+  }
+
+  &.is-complete:not(:last-child)::after {
+    background: var(--rosie-stepper-step-complete-bg);
+  }
+}
+
+.rosie-stepper-step {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: var(--rosie-stepper-step-color);
+  background: var(--rosie-stepper-step-bg);
+  border: 2px solid var(--rosie-stepper-step-border);
+  border-radius: 50%;
+}
+
+.rosie-stepper-item.is-active .rosie-stepper-step {
+  color: var(--rosie-stepper-step-active-color);
+  background: var(--rosie-stepper-step-active-bg);
+  border-color: var(--rosie-stepper-step-active-bg);
+}
+
+.rosie-stepper-item.is-complete .rosie-stepper-step {
+  color: var(--rosie-stepper-step-complete-color);
+  background: var(--rosie-stepper-step-complete-bg);
+  border-color: var(--rosie-stepper-step-complete-bg);
+}
+
+.rosie-stepper-label {
+  margin-top: .375rem;
+  font-size: $font-size-sm;
+  color: $body-secondary-color;
+  white-space: nowrap;
+
+  .rosie-stepper-item.is-active & { color: $body-color; font-weight: $font-weight-semibold; }
+}
+
+.rosie-stepper-vertical {
+  flex-direction: column;
+  align-items: flex-start;
+
+  .rosie-stepper-item {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+
+    &:not(:last-child)::after {
+      top: 2rem;
+      left: 1rem;
+      width: 2px;
+      height: 100%;
+    }
+  }
+
+  .rosie-stepper-label { margin-top: 0; margin-left: .5rem; }
+}

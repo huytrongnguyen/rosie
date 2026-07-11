@@ -1,0 +1,109 @@
+@use 'sass:map';
+@use 'variables' as *;
+@use 'mixins/breakpoints' as *;
+@use 'mixins/transition' as *;
+
+.offcanvas, .offcanvas-xxl, .offcanvas-xl, .offcanvas-lg, .offcanvas-md, .offcanvas-sm {
+  --rosie-offcanvas-zindex: #{$zindex-offcanvas};
+  --rosie-offcanvas-width: #{$offcanvas-horizontal-width};
+  --rosie-offcanvas-height: #{$offcanvas-vertical-height};
+  --rosie-offcanvas-padding-x: #{$offcanvas-padding-x};
+  --rosie-offcanvas-padding-y: #{$offcanvas-padding-y};
+  --rosie-offcanvas-color: #{$offcanvas-color};
+  --rosie-offcanvas-bg: #{$offcanvas-bg-color};
+  --rosie-offcanvas-border-width: #{$offcanvas-border-width};
+  --rosie-offcanvas-border-color: #{$offcanvas-border-color};
+  --rosie-offcanvas-box-shadow: #{$offcanvas-box-shadow};
+  --rosie-offcanvas-transition: transform #{$offcanvas-transition-duration} ease-in-out;
+  --rosie-offcanvas-title-line-height: #{$offcanvas-title-line-height};
+}
+
+@each $breakpoint in map.keys($grid-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+  $next: breakpoint-next($breakpoint, $grid-breakpoints);
+
+  .offcanvas#{$infix} {
+    @include media-breakpoint-down($next) {
+      position: fixed;
+      bottom: 0;
+      z-index: var(--rosie-offcanvas-zindex);
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      color: var(--rosie-offcanvas-color);
+      visibility: hidden;
+      background-color: var(--rosie-offcanvas-bg);
+      background-clip: padding-box;
+      outline: 0;
+      transition: var(--rosie-offcanvas-transition);
+    }
+    @if $infix != '' {
+      @include media-breakpoint-up($next) {
+        --rosie-offcanvas-height: auto;
+        --rosie-offcanvas-border-width: 0;
+        background-color: transparent !important;
+
+        .offcanvas-header { display: none; }
+        .offcanvas-body {
+          display: flex;
+          flex-grow: 0;
+          padding: 0;
+          overflow-y: visible;
+          background-color: transparent !important;
+        }
+      }
+    }
+  }
+}
+
+.offcanvas-start { top: 0; left: 0; width: var(--rosie-offcanvas-width); border-right: var(--rosie-offcanvas-border-width) solid var(--rosie-offcanvas-border-color); transform: translateX(-100%); }
+.offcanvas-end   { top: 0; right: 0; width: var(--rosie-offcanvas-width); border-left:  var(--rosie-offcanvas-border-width) solid var(--rosie-offcanvas-border-color); transform: translateX(100%); }
+.offcanvas-top   { top: 0; right: 0; left: 0; height: var(--rosie-offcanvas-height); max-height: 100%; border-bottom: var(--rosie-offcanvas-border-width) solid var(--rosie-offcanvas-border-color); transform: translateY(-100%); }
+.offcanvas-bottom{ right: 0; left: 0; height: var(--rosie-offcanvas-height); max-height: 100%; border-top: var(--rosie-offcanvas-border-width) solid var(--rosie-offcanvas-border-color); transform: translateY(100%); }
+
+.offcanvas.showing,
+.offcanvas.show:not(.hiding) {
+  transform: none;
+}
+
+.offcanvas.showing,
+.offcanvas.hiding,
+.offcanvas.show {
+  visibility: visible;
+}
+
+.offcanvas-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $zindex-offcanvas-backdrop;
+  width: 100vw;
+  height: 100vh;
+  background-color: $modal-backdrop-bg;
+
+  &.fade { opacity: 0; }
+  &.show { opacity: $offcanvas-backdrop-opacity; }
+}
+
+.offcanvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--rosie-offcanvas-padding-y) var(--rosie-offcanvas-padding-x);
+
+  .btn-close {
+    padding: calc(var(--rosie-offcanvas-padding-y) * .5) calc(var(--rosie-offcanvas-padding-x) * .5);
+    margin: calc(-.5 * var(--rosie-offcanvas-padding-y)) calc(-.5 * var(--rosie-offcanvas-padding-x)) calc(-.5 * var(--rosie-offcanvas-padding-y)) auto;
+  }
+}
+
+.offcanvas-title {
+  margin-bottom: 0;
+  line-height: var(--rosie-offcanvas-title-line-height);
+}
+
+.offcanvas-body {
+  flex-grow: 1;
+  padding: var(--rosie-offcanvas-padding-y) var(--rosie-offcanvas-padding-x);
+  overflow-y: auto;
+}

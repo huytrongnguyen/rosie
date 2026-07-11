@@ -1,0 +1,4 @@
+// Soft gradient helpers for elevated surfaces. Used sparingly.
+@mixin gradient-bg($color: null) {
+  background-color: $color;
+}

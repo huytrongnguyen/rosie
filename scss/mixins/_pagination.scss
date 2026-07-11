@@ -1,0 +1,9 @@
+@use '../functions' as *;
+@use 'border-radius' as *;
+
+@mixin pagination-size($padding-y, $padding-x, $font-size, $border-radius) {
+  --rosie-pagination-padding-x: #{$padding-x};
+  --rosie-pagination-padding-y: #{$padding-y};
+  --rosie-pagination-font-size: #{$font-size};
+  --rosie-pagination-border-radius: #{$border-radius};
+}

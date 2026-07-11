@@ -1,0 +1,102 @@
+@use 'sass:map';
+@use '../functions' as *;
+@use '../variables' as *;
+
+@mixin form-validation-state-selector($state) {
+  $ampersand: '';
+  @if & { $ampersand: '&'; }
+  @if ($state == 'valid' or $state == 'invalid') {
+    .was-validated #{$ampersand}:#{$state},
+    #{$ampersand}.is-#{$state} { @content; }
+  } @else {
+    #{$ampersand}.is-#{$state} { @content; }
+  }
+}
+
+@mixin form-validation-state(
+  $state,
+  $color,
+  $icon,
+  $tooltip-color: $white,
+  $tooltip-bg-color: rgba($color, $form-feedback-tooltip-opacity),
+  $border-color: $color
+) {
+  .#{$state}-feedback {
+    display: none;
+    width: 100%;
+    margin-top: $form-feedback-margin-top;
+    font-size: $form-feedback-font-size;
+    font-style: $form-feedback-font-style;
+    color: $color;
+  }
+
+  .#{$state}-tooltip {
+    position: absolute;
+    top: 100%;
+    z-index: 5;
+    display: none;
+    max-width: 100%;
+    padding: $form-feedback-tooltip-padding-y $form-feedback-tooltip-padding-x;
+    margin-top: .1rem;
+    font-size: $form-feedback-tooltip-font-size;
+    line-height: $form-feedback-tooltip-line-height;
+    color: $tooltip-color;
+    background-color: $tooltip-bg-color;
+    border-radius: $form-feedback-tooltip-border-radius;
+  }
+
+  @include form-validation-state-selector($state) {
+    ~ .#{$state}-feedback,
+    ~ .#{$state}-tooltip {
+      display: block;
+    }
+  }
+
+  .form-control {
+    @include form-validation-state-selector($state) {
+      border-color: $border-color;
+      &:focus {
+        border-color: $border-color;
+        box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($border-color, $focus-ring-opacity);
+      }
+    }
+  }
+
+  .form-select {
+    @include form-validation-state-selector($state) {
+      &:not([multiple]):not([size]),
+      &:not([multiple])[size='1'] {
+        --rosie-form-select-bg-icon: #{$icon};
+      }
+      border-color: $border-color;
+      &:focus {
+        border-color: $border-color;
+        box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($border-color, $focus-ring-opacity);
+      }
+    }
+  }
+
+  .form-check-input {
+    @include form-validation-state-selector($state) {
+      border-color: $border-color;
+      &:checked { background-color: $color; }
+      &:focus   { box-shadow: 0 0 $input-btn-focus-blur $input-focus-width rgba($border-color, $focus-ring-opacity); }
+      ~ .form-check-label { color: $color; }
+    }
+  }
+
+  .form-check-inline .form-check-input {
+    ~ .#{$state}-feedback { margin-left: .5em; }
+  }
+
+  .input-group {
+    > .form-control:not(:focus),
+    > .form-select:not(:focus),
+    > .form-floating:not(:focus-within) {
+      @include form-validation-state-selector($state) {
+        @if $state == 'valid'   { z-index: 3; }
+        @else if $state == 'invalid' { z-index: 4; }
+      }
+    }
+  }
+}

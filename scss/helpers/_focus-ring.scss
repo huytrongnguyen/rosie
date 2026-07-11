@@ -1,0 +1,12 @@
+@use '../variables' as *;
+
+.focus-ring {
+  --rosie-focus-ring-x: 0;
+  --rosie-focus-ring-y: 0;
+  --rosie-focus-ring-blur: 0;
+  --rosie-focus-ring-width: #{$focus-ring-width};
+  --rosie-focus-ring-color: #{$focus-ring-color};
+
+  outline: 0 !important;
+  box-shadow: var(--rosie-focus-ring-x, 0) var(--rosie-focus-ring-y, 0) var(--rosie-focus-ring-blur, 0) var(--rosie-focus-ring-width) var(--rosie-focus-ring-color) !important;
+}

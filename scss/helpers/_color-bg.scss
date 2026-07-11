@@ -1,0 +1,10 @@
+@use 'sass:map';
+@use '../functions' as *;
+@use '../variables' as *;
+
+@each $color, $value in $theme-colors {
+  .text-bg-#{$color} {
+    color: map.get($theme-colors-text, $color) !important;
+    background-color: RGBA(#{to-rgb($value)}, var(--rosie-bg-opacity, 1)) !important;
+  }
+}

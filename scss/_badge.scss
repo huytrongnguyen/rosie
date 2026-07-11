@@ -1,0 +1,29 @@
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+
+.badge {
+  --rosie-badge-padding-x: #{$badge-padding-x};
+  --rosie-badge-padding-y: #{$badge-padding-y};
+  --rosie-badge-font-size: #{$badge-font-size};
+  --rosie-badge-font-weight: #{$badge-font-weight};
+  --rosie-badge-color: #{$badge-color};
+  --rosie-badge-border-radius: #{$badge-border-radius};
+
+  display: inline-block;
+  padding: var(--rosie-badge-padding-y) var(--rosie-badge-padding-x);
+  font-size: var(--rosie-badge-font-size);
+  font-weight: var(--rosie-badge-font-weight);
+  line-height: 1;
+  color: var(--rosie-badge-color);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  @include border-radius(var(--rosie-badge-border-radius));
+
+  &:empty { display: none; }
+}
+
+.btn .badge {
+  position: relative;
+  top: -1px;
+}

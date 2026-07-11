@@ -1,0 +1,66 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-property {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .125rem .375rem;
+  font-size: $font-size-sm;
+  line-height: 1.25;
+  color: $body-color;
+  background: $neutral-100;
+  @include border-radius($border-radius-sm);
+}
+
+.rosie-property-icon {
+  flex-shrink: 0;
+  width: .875rem;
+  height: .875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $body-secondary-color;
+}
+
+@each $color, $value in (
+  'rose':       $rose-100,
+  'lavender':   #e8def8,
+  'mint':       $mint-100,
+  'sky':        $sky-100,
+  'apricot':    $apricot-100,
+  'sage':       #dde9d2,
+  'lilac':      #ecd9eb,
+  'powder':     #d6e4e7,
+  'butter':     #faf0d2,
+  'coral':      $coral-100,
+  'periwinkle': #d8e1f0,
+  'sand':       #ebe0cc,
+  'gray':       $neutral-100,
+) {
+  .rosie-property-#{$color} {
+    background-color: $value;
+  }
+}
+
+.rosie-property-label {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  font-size: $font-size-sm;
+  color: $body-secondary-color;
+
+  .rosie-property-label-icon {
+    width: 1rem;
+    height: 1rem;
+    color: $body-secondary-color;
+  }
+}
+
+.rosie-property-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  align-items: center;
+  gap: .5rem;
+  padding: .25rem 0;
+}

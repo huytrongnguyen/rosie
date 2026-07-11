@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+.fade {
+  transition: $transition-fade;
+
+  &:not(.show) { opacity: 0; }
+}
+
+.collapse {
+  &:not(.show) { display: none; }
+}
+
+.collapsing {
+  height: 0;
+  overflow: hidden;
+  transition: $transition-collapse;
+
+  &.collapse-horizontal {
+    width: 0;
+    height: auto;
+    transition: $transition-collapse-width;
+  }
+}

@@ -1,0 +1,85 @@
+@use 'sass:map';
+@use 'variables' as *;
+@use 'mixins/table-variants' as *;
+
+.table {
+  --rosie-table-color: #{$table-color};
+  --rosie-table-bg: #{$table-bg};
+  --rosie-table-border-color: #{$table-border-color};
+  --rosie-table-accent-bg: #{$table-accent-bg};
+  --rosie-table-striped-color: #{$table-striped-color};
+  --rosie-table-striped-bg: #{$table-striped-bg};
+  --rosie-table-active-color: #{$table-active-color};
+  --rosie-table-active-bg: #{$table-active-bg};
+  --rosie-table-hover-color: #{$table-hover-color};
+  --rosie-table-hover-bg: #{$table-hover-bg};
+
+  width: 100%;
+  margin-bottom: 1rem;
+  vertical-align: $table-cell-vertical-align;
+  border-color: var(--rosie-table-border-color);
+  color: var(--rosie-table-color);
+
+  > :not(caption) > * > * {
+    padding: $table-cell-padding-y $table-cell-padding-x;
+    background-color: var(--rosie-table-bg);
+    border-bottom-width: $table-border-width;
+    box-shadow: inset 0 0 0 9999px var(--rosie-table-accent-bg);
+  }
+
+  > tbody { vertical-align: inherit; }
+  > thead { vertical-align: bottom; }
+}
+
+.table-group-divider {
+  border-top: ($table-border-width * 2) solid $table-group-separator-color;
+}
+
+.caption-top { caption-side: top; }
+
+.table-sm > :not(caption) > * > * {
+  padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
+}
+
+.table-bordered {
+  > :not(caption) > * { border-width: $table-border-width 0; }
+  > :not(caption) > * > * { border-width: 0 $table-border-width; }
+}
+
+.table-borderless {
+  > :not(caption) > * > * { border-bottom-width: 0; }
+  > :not(:first-child) { border-top-width: 0; }
+}
+
+.table-striped > tbody > tr:nth-of-type(#{$table-striped-order}) > * {
+  --rosie-table-accent-bg: var(--rosie-table-striped-bg);
+  color: var(--rosie-table-striped-color);
+}
+
+.table-striped-columns > :not(caption) > tr > :nth-child(#{$table-striped-columns-order}) {
+  --rosie-table-accent-bg: var(--rosie-table-striped-bg);
+  color: var(--rosie-table-striped-color);
+}
+
+.table-active {
+  --rosie-table-accent-bg: var(--rosie-table-active-bg);
+  color: var(--rosie-table-active-color);
+}
+
+.table-hover > tbody > tr:hover > * {
+  --rosie-table-accent-bg: var(--rosie-table-hover-bg);
+  color: var(--rosie-table-hover-color);
+}
+
+@each $color, $value in $theme-colors {
+  @include table-variant($color, map.get($theme-colors-bg-subtle, $color));
+}
+
+.table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+@each $breakpoint, $bp-min in $grid-breakpoints {
+  $next: null;
+  @if $bp-min == 0 {
+    .table-responsive { overflow-x: auto; }
+  }
+}

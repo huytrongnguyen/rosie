@@ -1,0 +1,199 @@
+@use 'sass:map';
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+@use 'mixins/breakpoints' as *;
+@use 'mixins/transition' as *;
+
+.navbar {
+  $navbar-padding-x-value: $navbar-padding-x;
+  @if $navbar-padding-x == null { $navbar-padding-x-value: 0; }
+  --rosie-navbar-padding-x: #{$navbar-padding-x-value};
+  --rosie-navbar-padding-y: #{$navbar-padding-y};
+  --rosie-navbar-color: #{$navbar-light-color};
+  --rosie-navbar-hover-color: #{$navbar-light-hover-color};
+  --rosie-navbar-disabled-color: #{$navbar-light-disabled-color};
+  --rosie-navbar-active-color: #{$navbar-light-active-color};
+  --rosie-navbar-brand-padding-y: #{$navbar-brand-padding-y};
+  --rosie-navbar-brand-margin-end: #{$navbar-brand-margin-end};
+  --rosie-navbar-brand-font-size: #{$navbar-brand-font-size};
+  --rosie-navbar-brand-color: #{$navbar-light-brand-color};
+  --rosie-navbar-brand-hover-color: #{$navbar-light-brand-hover-color};
+  --rosie-navbar-nav-link-padding-x: #{$navbar-nav-link-padding-x};
+  --rosie-navbar-toggler-padding-y: #{$navbar-toggler-padding-y};
+  --rosie-navbar-toggler-padding-x: #{$navbar-toggler-padding-x};
+  --rosie-navbar-toggler-font-size: #{$navbar-toggler-font-size};
+  --rosie-navbar-toggler-icon-bg: #{$navbar-light-toggler-icon-bg};
+  --rosie-navbar-toggler-border-color: #{$navbar-light-toggler-border-color};
+  --rosie-navbar-toggler-border-radius: #{$navbar-toggler-border-radius};
+  --rosie-navbar-toggler-focus-width: #{$navbar-toggler-focus-width};
+  --rosie-navbar-toggler-transition: #{$navbar-toggler-transition};
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--rosie-navbar-padding-y) var(--rosie-navbar-padding-x);
+
+  > .container,
+  > .container-fluid {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @each $breakpoint, $width in $grid-breakpoints {
+    > .container#{breakpoint-infix($breakpoint, $grid-breakpoints)} {
+      @extend .container, .container-fluid;
+    }
+  }
+}
+
+.navbar-brand {
+  padding-top: var(--rosie-navbar-brand-padding-y);
+  padding-bottom: var(--rosie-navbar-brand-padding-y);
+  margin-right: var(--rosie-navbar-brand-margin-end);
+  font-size: var(--rosie-navbar-brand-font-size);
+  color: var(--rosie-navbar-brand-color);
+  text-decoration: none;
+  white-space: nowrap;
+
+  &:hover, &:focus { color: var(--rosie-navbar-brand-hover-color); }
+}
+
+.navbar-nav {
+  --rosie-nav-link-padding-x: 0;
+  --rosie-nav-link-padding-y: #{$nav-link-padding-y};
+  --rosie-nav-link-font-weight: #{$nav-link-font-weight};
+  --rosie-nav-link-color: var(--rosie-navbar-color);
+  --rosie-nav-link-hover-color: var(--rosie-navbar-hover-color);
+  --rosie-nav-link-disabled-color: var(--rosie-navbar-disabled-color);
+
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+
+  .nav-link {
+    &.active, &.show { color: var(--rosie-navbar-active-color); }
+  }
+  .dropdown-menu { position: static; }
+}
+
+.navbar-text {
+  padding-top: $nav-link-padding-y;
+  padding-bottom: $nav-link-padding-y;
+  color: var(--rosie-navbar-color);
+
+  a, a:hover, a:focus { color: var(--rosie-navbar-active-color); }
+}
+
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.navbar-toggler {
+  padding: var(--rosie-navbar-toggler-padding-y) var(--rosie-navbar-toggler-padding-x);
+  font-size: var(--rosie-navbar-toggler-font-size);
+  line-height: 1;
+  color: var(--rosie-navbar-color);
+  background-color: transparent;
+  border: var(--rosie-border-width) solid var(--rosie-navbar-toggler-border-color);
+  @include border-radius(var(--rosie-navbar-toggler-border-radius));
+  @include transition(var(--rosie-navbar-toggler-transition));
+
+  &:hover { text-decoration: none; }
+
+  &:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0 var(--rosie-navbar-toggler-focus-width);
+  }
+}
+
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  background-image: var(--rosie-navbar-toggler-icon-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+
+.navbar-nav-scroll {
+  max-height: var(--rosie-scroll-height, 75vh);
+  overflow-y: auto;
+}
+
+@each $breakpoint, $width in $grid-breakpoints {
+  $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+  .navbar-expand#{$infix} {
+    @if $infix != '' {
+      @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+
+        .navbar-nav {
+          flex-direction: row;
+
+          .dropdown-menu { position: absolute; }
+          .nav-link {
+            padding-right: var(--rosie-navbar-nav-link-padding-x);
+            padding-left: var(--rosie-navbar-nav-link-padding-x);
+          }
+        }
+
+        .navbar-nav-scroll { overflow: visible; }
+        .navbar-collapse { display: flex !important; flex-basis: auto; }
+        .navbar-toggler { display: none; }
+        .offcanvas {
+          position: static;
+          z-index: auto;
+          flex-grow: 1;
+          width: auto !important;
+          height: auto !important;
+          visibility: visible !important;
+          background-color: transparent !important;
+          border: 0 !important;
+          transform: none !important;
+          transition: none;
+        }
+      }
+    } @else {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+
+      .navbar-nav {
+        flex-direction: row;
+
+        .dropdown-menu { position: absolute; }
+        .nav-link {
+          padding-right: var(--rosie-navbar-nav-link-padding-x);
+          padding-left: var(--rosie-navbar-nav-link-padding-x);
+        }
+      }
+
+      .navbar-nav-scroll { overflow: visible; }
+      .navbar-collapse { display: flex !important; flex-basis: auto; }
+      .navbar-toggler { display: none; }
+    }
+  }
+}
+
+.navbar-dark, .navbar[data-rosie-theme='dark'] {
+  --rosie-navbar-color: #{$navbar-dark-color};
+  --rosie-navbar-hover-color: #{$navbar-dark-hover-color};
+  --rosie-navbar-disabled-color: #{$navbar-dark-disabled-color};
+  --rosie-navbar-active-color: #{$navbar-dark-active-color};
+  --rosie-navbar-brand-color: #{$navbar-dark-brand-color};
+  --rosie-navbar-brand-hover-color: #{$navbar-dark-brand-hover-color};
+  --rosie-navbar-toggler-border-color: #{$navbar-dark-toggler-border-color};
+  --rosie-navbar-toggler-icon-bg: #{$navbar-dark-toggler-icon-bg};
+}

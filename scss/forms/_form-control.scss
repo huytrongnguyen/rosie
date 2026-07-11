@@ -1,0 +1,136 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+@use '../mixins/transition' as *;
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: $input-padding-y $input-padding-x;
+  font-family: $input-font-family;
+  font-size: $input-font-size;
+  font-weight: $input-font-weight;
+  line-height: $input-line-height;
+  color: $input-color;
+  appearance: none;
+  background-color: $input-bg;
+  background-clip: padding-box;
+  border: $input-border-width solid $input-border-color;
+  @include border-radius($input-border-radius, 0);
+  @include transition($input-transition);
+
+  &[type='file'] {
+    overflow: hidden;
+    &:not(:disabled):not([readonly]) { cursor: pointer; }
+  }
+
+  &:focus {
+    color: $input-focus-color;
+    background-color: $input-focus-bg;
+    border-color: $input-focus-border-color;
+    outline: 0;
+    box-shadow: $input-focus-box-shadow;
+  }
+
+  &::-webkit-date-and-time-value {
+    min-width: 85px;
+    height: $input-line-height * 1em;
+    margin: 0;
+  }
+
+  &::-webkit-datetime-edit { display: block; padding: 0; }
+
+  &::placeholder {
+    color: $input-placeholder-color;
+    opacity: 1;
+  }
+
+  &:disabled {
+    color: $input-disabled-color;
+    background-color: $input-disabled-bg;
+    border-color: $input-disabled-border-color;
+    opacity: 1;
+  }
+
+  &::file-selector-button {
+    padding: $input-padding-y $input-padding-x;
+    margin: -$input-padding-y - $input-padding-x;
+    margin-inline-end: $input-padding-x;
+    color: $form-file-button-color;
+    pointer-events: none;
+    background-color: $form-file-button-bg;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    border-inline-end-width: $input-border-width;
+    border-radius: 0;
+    @include transition($btn-transition);
+  }
+
+  &:hover:not(:disabled):not([readonly])::file-selector-button {
+    background-color: $form-file-button-hover-bg;
+  }
+}
+
+.form-control-plaintext {
+  display: block;
+  width: 100%;
+  padding: $input-padding-y 0;
+  margin-bottom: 0;
+  line-height: $input-line-height;
+  color: $input-plaintext-color;
+  background-color: transparent;
+  border: solid transparent;
+  border-width: $input-border-width 0;
+
+  &:focus { outline: 0; }
+
+  &.form-control-sm,
+  &.form-control-lg {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+.form-control-sm {
+  min-height: add($input-line-height * 1em, $input-padding-y-sm * 2);
+  padding: $input-padding-y-sm $input-padding-x-sm;
+  font-size: $input-font-size-sm;
+  @include border-radius($input-border-radius-sm);
+
+  &::file-selector-button {
+    padding: $input-padding-y-sm $input-padding-x-sm;
+    margin: -$input-padding-y-sm - $input-padding-x-sm;
+    margin-inline-end: $input-padding-x-sm;
+  }
+}
+
+.form-control-lg {
+  min-height: add($input-line-height * 1em, $input-padding-y-lg * 2);
+  padding: $input-padding-y-lg $input-padding-x-lg;
+  font-size: $input-font-size-lg;
+  @include border-radius($input-border-radius-lg);
+
+  &::file-selector-button {
+    padding: $input-padding-y-lg $input-padding-x-lg;
+    margin: -$input-padding-y-lg - $input-padding-x-lg;
+    margin-inline-end: $input-padding-x-lg;
+  }
+}
+
+textarea.form-control     { min-height: $input-height; }
+textarea.form-control-sm  { min-height: add($input-line-height * 1em, $input-padding-y-sm * 2); }
+textarea.form-control-lg  { min-height: add($input-line-height * 1em, $input-padding-y-lg * 2); }
+
+.form-control-color {
+  width: $form-color-width;
+  height: add($input-line-height * 1em, $input-padding-y * 2);
+  padding: $input-padding-y;
+
+  &:not(:disabled):not([readonly]) { cursor: pointer; }
+
+  &::-moz-color-swatch        { border: 0 !important; @include border-radius($input-border-radius); }
+  &::-webkit-color-swatch     { border: 0 !important; @include border-radius($input-border-radius); }
+
+  &.form-control-sm { height: add($input-line-height * 1em, $input-padding-y-sm * 2); }
+  &.form-control-lg { height: add($input-line-height * 1em, $input-padding-y-lg * 2); }
+}

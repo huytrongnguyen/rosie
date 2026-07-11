@@ -1,0 +1,67 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-callout {
+  --rosie-callout-bg: #{$neutral-50};
+  --rosie-callout-border-color: #{$border-color};
+  --rosie-callout-icon-color: #{$body-secondary-color};
+
+  display: flex;
+  align-items: flex-start;
+  gap: .625rem;
+  padding: .75rem 1rem;
+  margin: 1rem 0;
+  background: var(--rosie-callout-bg);
+  border: 1px solid var(--rosie-callout-border-color);
+  border-left-width: 3px;
+  @include border-radius($border-radius);
+}
+
+.rosie-callout-icon {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rosie-callout-icon-color);
+  margin-top: .125rem;
+}
+
+.rosie-callout-body {
+  flex: 1;
+  min-width: 0;
+
+  > :first-child { margin-top: 0; }
+  > :last-child  { margin-bottom: 0; }
+}
+
+.rosie-callout-info {
+  --rosie-callout-bg: #{$sky-50};
+  --rosie-callout-border-color: #{$sky-300};
+  --rosie-callout-icon-color: #{$sky-700};
+}
+
+.rosie-callout-success {
+  --rosie-callout-bg: #{$mint-50};
+  --rosie-callout-border-color: #{$mint-300};
+  --rosie-callout-icon-color: #{$mint-700};
+}
+
+.rosie-callout-warning {
+  --rosie-callout-bg: #{$apricot-50};
+  --rosie-callout-border-color: #{$apricot-300};
+  --rosie-callout-icon-color: #{$apricot-700};
+}
+
+.rosie-callout-danger {
+  --rosie-callout-bg: #{$coral-50};
+  --rosie-callout-border-color: #{$coral-300};
+  --rosie-callout-icon-color: #{$coral-700};
+}
+
+.rosie-callout-tip {
+  --rosie-callout-bg: #{$rose-50};
+  --rosie-callout-border-color: #{$rose-300};
+  --rosie-callout-icon-color: #{$rose-700};
+}

@@ -1,0 +1,45 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-time-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .25rem .5rem;
+  background-color: $white;
+  border: 1px solid $border-color;
+  @include border-radius($border-radius);
+
+  .rosie-time-picker-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .rosie-time-picker-input {
+    width: 2rem;
+    text-align: center;
+    border: 0;
+    background: transparent;
+    font-variant-numeric: tabular-nums;
+    font-size: $font-size-base;
+    outline: 0;
+
+    &:focus { color: $rose-700; }
+  }
+
+  .rosie-time-picker-step {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    color: $neutral-500;
+    border-radius: 2px;
+
+    &:hover { background-color: $neutral-50; color: $body-color; }
+  }
+
+  .rosie-time-picker-divider { color: $neutral-400; }
+}

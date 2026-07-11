@@ -1,0 +1,11 @@
+@use '../variables' as *;
+
+@mixin make-container($gutter: $grid-gutter-width) {
+  --rosie-gutter-x: #{$gutter};
+  --rosie-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--rosie-gutter-x) * .5);
+  padding-left: calc(var(--rosie-gutter-x) * .5);
+  margin-right: auto;
+  margin-left: auto;
+}

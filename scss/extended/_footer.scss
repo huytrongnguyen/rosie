@@ -1,0 +1,18 @@
+@use '../variables' as *;
+
+.rosie-footer {
+  --rosie-footer-bg: #{$white};
+  --rosie-footer-color: #{$body-secondary-color};
+  --rosie-footer-padding-y: .75rem;
+  --rosie-footer-padding-x: 1rem;
+  --rosie-footer-border-color: #{$border-color};
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--rosie-footer-padding-y) var(--rosie-footer-padding-x);
+  font-size: $font-size-sm;
+  color: var(--rosie-footer-color);
+  background: var(--rosie-footer-bg);
+  border-top: 1px solid var(--rosie-footer-border-color);
+}

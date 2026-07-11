@@ -1,0 +1,50 @@
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+
+@keyframes progress-bar-stripes {
+  0%   { background-position-x: $progress-height; }
+}
+
+.progress,
+.progress-stacked {
+  --rosie-progress-height: #{$progress-height};
+  --rosie-progress-font-size: #{$progress-font-size};
+  --rosie-progress-bg: #{$progress-bg};
+  --rosie-progress-border-radius: #{$progress-border-radius};
+  --rosie-progress-box-shadow: #{$progress-box-shadow};
+  --rosie-progress-bar-color: #{$progress-bar-color};
+  --rosie-progress-bar-bg: #{$progress-bar-bg};
+  --rosie-progress-bar-transition: #{$progress-bar-transition};
+
+  display: flex;
+  height: var(--rosie-progress-height);
+  overflow: hidden;
+  font-size: var(--rosie-progress-font-size);
+  background-color: var(--rosie-progress-bg);
+  @include border-radius(var(--rosie-progress-border-radius));
+  box-shadow: var(--rosie-progress-box-shadow);
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--rosie-progress-bar-color);
+  text-align: center;
+  white-space: nowrap;
+  background-color: var(--rosie-progress-bar-bg);
+  transition: var(--rosie-progress-bar-transition);
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
+  background-size: $progress-height $progress-height;
+}
+
+.progress-stacked > .progress { overflow: visible; }
+.progress-stacked > .progress > .progress-bar { width: 100%; }
+
+.progress-bar-animated {
+  animation: $progress-bar-animation-timing progress-bar-stripes;
+}

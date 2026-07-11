@@ -1,0 +1,42 @@
+@use '../variables' as *;
+
+.rosie-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: $body-secondary-color;
+}
+
+.rosie-empty-state-icon {
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: .75rem;
+  color: $neutral-400;
+  background: $neutral-50;
+  border-radius: 50%;
+}
+
+.rosie-empty-state-title {
+  margin: 0 0 .25rem;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $body-color;
+}
+
+.rosie-empty-state-description {
+  margin: 0 0 1rem;
+  font-size: $font-size-sm;
+  color: $body-secondary-color;
+  max-width: 24rem;
+}
+
+.rosie-empty-state-actions {
+  display: inline-flex;
+  gap: .5rem;
+}

@@ -1,0 +1,53 @@
+@use 'sass:map';
+@use 'variables' as *;
+@use 'mixins/alert' as *;
+@use 'mixins/border-radius' as *;
+
+.alert {
+  --rosie-alert-bg: transparent;
+  --rosie-alert-padding-x: #{$alert-padding-x};
+  --rosie-alert-padding-y: #{$alert-padding-y};
+  --rosie-alert-margin-bottom: #{$alert-margin-bottom};
+  --rosie-alert-color: inherit;
+  --rosie-alert-border-color: transparent;
+  --rosie-alert-border: #{$alert-border-width} solid var(--rosie-alert-border-color);
+  --rosie-alert-border-radius: #{$alert-border-radius};
+  --rosie-alert-link-color: inherit;
+
+  position: relative;
+  padding: var(--rosie-alert-padding-y) var(--rosie-alert-padding-x);
+  margin-bottom: var(--rosie-alert-margin-bottom);
+  color: var(--rosie-alert-color);
+  background-color: var(--rosie-alert-bg);
+  border: var(--rosie-alert-border);
+  @include border-radius(var(--rosie-alert-border-radius));
+}
+
+.alert-heading { color: inherit; }
+
+.alert-link {
+  font-weight: $alert-link-font-weight;
+  color: var(--rosie-alert-link-color);
+}
+
+.alert-dismissible {
+  padding-right: $alert-dismissible-padding-r;
+
+  .btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: $alert-padding-y * 1.25 $alert-padding-x;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    @include alert-variant(
+      map.get($theme-colors-bg-subtle, $color),
+      map.get($theme-colors-border-subtle, $color),
+      map.get($theme-colors-emphasis, $color)
+    );
+  }
+}

@@ -1,0 +1,27 @@
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.fixed-bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.sticky-top, .sticky-sm-top, .sticky-md-top, .sticky-lg-top, .sticky-xl-top, .sticky-xxl-top {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.sticky-bottom, .sticky-sm-bottom, .sticky-md-bottom, .sticky-lg-bottom, .sticky-xl-bottom, .sticky-xxl-bottom {
+  position: sticky;
+  bottom: 0;
+  z-index: 1020;
+}

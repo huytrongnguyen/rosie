@@ -1,0 +1,119 @@
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+@use 'mixins/transition' as *;
+
+.accordion {
+  --rosie-accordion-color: #{$accordion-color};
+  --rosie-accordion-bg: #{$accordion-bg};
+  --rosie-accordion-transition: #{$accordion-transition};
+  --rosie-accordion-border-color: #{$accordion-border-color};
+  --rosie-accordion-border-width: #{$accordion-border-width};
+  --rosie-accordion-border-radius: #{$accordion-border-radius};
+  --rosie-accordion-inner-border-radius: #{$accordion-inner-border-radius};
+  --rosie-accordion-btn-padding-x: #{$accordion-button-padding-x};
+  --rosie-accordion-btn-padding-y: #{$accordion-button-padding-y};
+  --rosie-accordion-btn-color: #{$accordion-color};
+  --rosie-accordion-btn-bg: #{$accordion-button-bg};
+  --rosie-accordion-btn-icon: #{$accordion-button-icon};
+  --rosie-accordion-btn-icon-width: #{$accordion-icon-width};
+  --rosie-accordion-btn-icon-transform: #{$accordion-icon-transform};
+  --rosie-accordion-btn-icon-transition: #{$accordion-icon-transition};
+  --rosie-accordion-btn-active-icon: #{$accordion-button-active-icon};
+  --rosie-accordion-btn-focus-border-color: #{$accordion-button-focus-border-color};
+  --rosie-accordion-btn-focus-box-shadow: #{$accordion-button-focus-box-shadow};
+  --rosie-accordion-body-padding-x: #{$accordion-body-padding-x};
+  --rosie-accordion-body-padding-y: #{$accordion-body-padding-y};
+  --rosie-accordion-active-color: #{$accordion-button-active-color};
+  --rosie-accordion-active-bg: #{$accordion-button-active-bg};
+}
+
+.accordion-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--rosie-accordion-btn-padding-y) var(--rosie-accordion-btn-padding-x);
+  font-size: $font-size-base;
+  color: var(--rosie-accordion-btn-color);
+  text-align: left;
+  background-color: var(--rosie-accordion-btn-bg);
+  border: 0;
+  @include border-radius(0);
+  overflow-anchor: none;
+  @include transition(var(--rosie-accordion-transition));
+
+  &:not(.collapsed) {
+    color: var(--rosie-accordion-active-color);
+    background-color: var(--rosie-accordion-active-bg);
+    box-shadow: inset 0 calc(-1 * var(--rosie-accordion-border-width)) 0 var(--rosie-accordion-border-color);
+
+    &::after {
+      background-image: var(--rosie-accordion-btn-active-icon);
+      transform: var(--rosie-accordion-btn-icon-transform);
+    }
+  }
+
+  &::after {
+    flex-shrink: 0;
+    width: var(--rosie-accordion-btn-icon-width);
+    height: var(--rosie-accordion-btn-icon-width);
+    margin-left: auto;
+    content: '';
+    background-image: var(--rosie-accordion-btn-icon);
+    background-repeat: no-repeat;
+    background-size: var(--rosie-accordion-btn-icon-width);
+    transition: var(--rosie-accordion-btn-icon-transition);
+  }
+
+  &:hover { z-index: 2; }
+
+  &:focus {
+    z-index: 3;
+    border-color: var(--rosie-accordion-btn-focus-border-color);
+    outline: 0;
+    box-shadow: var(--rosie-accordion-btn-focus-box-shadow);
+  }
+}
+
+.accordion-header { margin-bottom: 0; }
+
+.accordion-item {
+  color: var(--rosie-accordion-color);
+  background-color: var(--rosie-accordion-bg);
+  border: var(--rosie-accordion-border-width) solid var(--rosie-accordion-border-color);
+
+  &:first-of-type {
+    @include border-top-radius(var(--rosie-accordion-border-radius));
+
+    .accordion-button { @include border-top-radius(var(--rosie-accordion-inner-border-radius)); }
+  }
+
+  &:not(:first-of-type) { border-top: 0; }
+
+  &:last-of-type {
+    @include border-bottom-radius(var(--rosie-accordion-border-radius));
+
+    .accordion-button.collapsed { @include border-bottom-radius(var(--rosie-accordion-inner-border-radius)); }
+    .accordion-collapse { @include border-bottom-radius(var(--rosie-accordion-border-radius)); }
+  }
+}
+
+.accordion-body {
+  padding: var(--rosie-accordion-body-padding-y) var(--rosie-accordion-body-padding-x);
+}
+
+.accordion-flush {
+  .accordion-collapse { border-width: 0; }
+  .accordion-item {
+    border-right: 0;
+    border-left: 0;
+    @include border-radius(0);
+
+    &:first-child { border-top: 0; }
+    &:last-child  { border-bottom: 0; }
+
+    .accordion-button {
+      &, &.collapsed { @include border-radius(0); }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-date-range-picker {
+  display: inline-flex;
+  background-color: $white;
+  border: 1px solid $border-color;
+  @include border-radius($border-radius-lg);
+  box-shadow: $box-shadow-lg;
+  overflow: hidden;
+}
+
+.rosie-date-range-presets {
+  width: 8.5rem;
+  padding: .5rem 0;
+  background-color: $neutral-25;
+  border-right: 1px solid $border-color;
+
+  .rosie-date-range-preset {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: $font-size-sm;
+    color: $body-color;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+
+    &:hover, &.is-active {
+      background-color: $rose-50;
+      color: $rose-700;
+    }
+  }
+}
+
+.rosie-date-range-calendars {
+  display: flex;
+  padding: .5rem;
+  gap: .5rem;
+
+  > .rosie-date-picker {
+    box-shadow: none;
+    border: 0;
+    padding: .25rem;
+  }
+}
+
+.rosie-date-range-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+  padding: .5rem .75rem;
+  border-top: 1px solid $border-color;
+  background: $white;
+}

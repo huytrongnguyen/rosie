@@ -1,0 +1,7 @@
+@use 'sass:map';
+@use '../variables' as *;
+@use '../mixins/forms' as *;
+
+@each $state, $data in $form-validation-states {
+  @include form-validation-state($state, map.get($data, color), map.get($data, icon));
+}

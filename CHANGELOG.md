@@ -2,6 +2,11 @@
 
 ## Next
 
+## 0.4.0
+> 2026-07-11
+
+- Rebuild Rosie UI with token-based design system, Bootstrap-compatible class names
+
 **New Features**
 
 - Add new components:

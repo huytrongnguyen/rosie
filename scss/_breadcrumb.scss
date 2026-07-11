@@ -1,0 +1,37 @@
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+
+.breadcrumb {
+  --rosie-breadcrumb-padding-x: #{$breadcrumb-padding-x};
+  --rosie-breadcrumb-padding-y: #{$breadcrumb-padding-y};
+  --rosie-breadcrumb-margin-bottom: #{$breadcrumb-margin-bottom};
+  --rosie-breadcrumb-bg: #{$breadcrumb-bg};
+  --rosie-breadcrumb-border-radius: #{$breadcrumb-border-radius};
+  --rosie-breadcrumb-divider-color: #{$breadcrumb-divider-color};
+  --rosie-breadcrumb-item-padding-x: #{$breadcrumb-item-padding-x};
+  --rosie-breadcrumb-item-active-color: #{$breadcrumb-active-color};
+
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--rosie-breadcrumb-padding-y) var(--rosie-breadcrumb-padding-x);
+  margin-bottom: var(--rosie-breadcrumb-margin-bottom);
+  font-size: var(--rosie-breadcrumb-font-size);
+  list-style: none;
+  background-color: var(--rosie-breadcrumb-bg);
+  @include border-radius(var(--rosie-breadcrumb-border-radius));
+}
+
+.breadcrumb-item {
+  + .breadcrumb-item {
+    padding-left: var(--rosie-breadcrumb-item-padding-x);
+
+    &::before {
+      float: left;
+      padding-right: var(--rosie-breadcrumb-item-padding-x);
+      color: var(--rosie-breadcrumb-divider-color);
+      content: var(--rosie-breadcrumb-divider, $breadcrumb-divider);
+    }
+  }
+
+  &.active { color: var(--rosie-breadcrumb-item-active-color); }
+}

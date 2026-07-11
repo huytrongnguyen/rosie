@@ -1,0 +1,63 @@
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+
+.toast {
+  --rosie-toast-zindex: #{$zindex-toast};
+  --rosie-toast-padding-x: #{$toast-padding-x};
+  --rosie-toast-padding-y: #{$toast-padding-y};
+  --rosie-toast-spacing: #{$toast-spacing};
+  --rosie-toast-max-width: #{$toast-max-width};
+  --rosie-toast-font-size: #{$toast-font-size};
+  --rosie-toast-color: #{$toast-color};
+  --rosie-toast-bg: #{$toast-background-color};
+  --rosie-toast-border-width: #{$toast-border-width};
+  --rosie-toast-border-color: #{$toast-border-color};
+  --rosie-toast-border-radius: #{$toast-border-radius};
+  --rosie-toast-box-shadow: #{$toast-box-shadow};
+  --rosie-toast-header-color: #{$toast-header-color};
+  --rosie-toast-header-bg: #{$toast-header-background-color};
+  --rosie-toast-header-border-color: #{$toast-header-border-color};
+
+  width: var(--rosie-toast-max-width);
+  max-width: 100%;
+  font-size: var(--rosie-toast-font-size);
+  color: var(--rosie-toast-color);
+  pointer-events: auto;
+  background-color: var(--rosie-toast-bg);
+  background-clip: padding-box;
+  border: var(--rosie-toast-border-width) solid var(--rosie-toast-border-color);
+  box-shadow: var(--rosie-toast-box-shadow);
+  @include border-radius(var(--rosie-toast-border-radius));
+
+  &.showing { opacity: 0; }
+  &:not(.show) { display: none; }
+}
+
+.toast-container {
+  --rosie-toast-zindex: #{$zindex-toast};
+  position: absolute;
+  z-index: var(--rosie-toast-zindex);
+  width: max-content;
+  max-width: 100%;
+  pointer-events: none;
+
+  > :not(:last-child) { margin-bottom: var(--rosie-toast-spacing); }
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  padding: var(--rosie-toast-padding-y) var(--rosie-toast-padding-x);
+  color: var(--rosie-toast-header-color);
+  background-color: var(--rosie-toast-header-bg);
+  background-clip: padding-box;
+  border-bottom: var(--rosie-toast-border-width) solid var(--rosie-toast-header-border-color);
+  @include border-top-radius(calc(var(--rosie-toast-border-radius) - var(--rosie-toast-border-width)));
+
+  .btn-close { margin-right: calc(-.5 * var(--rosie-toast-padding-x)); margin-left: var(--rosie-toast-padding-x); }
+}
+
+.toast-body {
+  padding: var(--rosie-toast-padding-x);
+  word-wrap: break-word;
+}

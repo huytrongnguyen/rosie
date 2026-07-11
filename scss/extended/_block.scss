@@ -1,0 +1,68 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-block {
+  --rosie-block-padding-y: .25rem;
+  --rosie-block-padding-x: .5rem;
+  --rosie-block-handle-width: 1.5rem;
+  --rosie-block-handle-color: #{$neutral-400};
+  --rosie-block-hover-bg: #{$neutral-25};
+
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: .25rem;
+  padding: var(--rosie-block-padding-y) var(--rosie-block-padding-x);
+  margin-left: calc(-1 * var(--rosie-block-handle-width));
+  border-radius: $border-radius-sm;
+  transition: background-color .12s ease;
+
+  &:hover {
+    background-color: var(--rosie-block-hover-bg);
+
+    .rosie-block-handle, .rosie-block-add { opacity: 1; }
+  }
+
+  &.is-selected { background-color: $rose-50; }
+}
+
+.rosie-block-handles {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0;
+  width: var(--rosie-block-handle-width);
+  margin-top: .125rem;
+}
+
+.rosie-block-handle, .rosie-block-add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: .75rem;
+  height: 1.25rem;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: grab;
+  color: var(--rosie-block-handle-color);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity .12s ease, background-color .12s ease;
+
+  &:hover { background-color: $neutral-100; color: $body-color; }
+
+  &::before {
+    content: '\22EE\22EE';
+    letter-spacing: -2px;
+    font-size: .625rem;
+    line-height: 1;
+  }
+}
+
+.rosie-block-add::before { content: '+'; font-size: 1rem; }
+
+.rosie-block-content {
+  flex: 1;
+  min-width: 0;
+}

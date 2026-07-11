@@ -1,0 +1,26 @@
+@use '../variables' as *;
+
+.rosie-rating {
+  --rosie-rating-color: #{$apricot-500};
+  --rosie-rating-empty-color: #{$neutral-200};
+  --rosie-rating-size: 1rem;
+
+  display: inline-flex;
+  align-items: center;
+  gap: .125rem;
+
+  .rosie-rating-star {
+    width: var(--rosie-rating-size);
+    height: var(--rosie-rating-size);
+    color: var(--rosie-rating-empty-color);
+    cursor: pointer;
+    transition: color .12s ease;
+
+    &.is-filled, &.is-active { color: var(--rosie-rating-color); }
+  }
+
+  &.rosie-rating-readonly .rosie-rating-star { cursor: default; }
+}
+
+.rosie-rating-sm { --rosie-rating-size: .75rem; }
+.rosie-rating-lg { --rosie-rating-size: 1.25rem; }

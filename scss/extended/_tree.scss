@@ -1,0 +1,98 @@
+@use '../variables' as *;
+
+.rosie-tree {
+  --rosie-tree-indent: 1rem;
+  --rosie-tree-item-padding-y: .25rem;
+  --rosie-tree-item-padding-x: .375rem;
+  --rosie-tree-item-color: #{$body-color};
+  --rosie-tree-item-hover-bg: #{$neutral-50};
+  --rosie-tree-item-active-bg: #{$rose-50};
+  --rosie-tree-item-active-color: #{$rose-700};
+
+  font-size: $font-size-sm;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rosie-tree-item {
+  display: block;
+}
+
+.rosie-tree-row {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  padding: var(--rosie-tree-item-padding-y) var(--rosie-tree-item-padding-x);
+  color: var(--rosie-tree-item-color);
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover { background: var(--rosie-tree-item-hover-bg); }
+  &.is-active {
+    color: var(--rosie-tree-item-active-color);
+    background: var(--rosie-tree-item-active-bg);
+    font-weight: $font-weight-medium;
+  }
+}
+
+.rosie-tree-toggle {
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: $body-secondary-color;
+  border-radius: 2px;
+  transition: transform .15s ease;
+
+  &::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 0 4px 6px;
+    border-color: transparent transparent transparent currentcolor;
+  }
+
+  &:hover { background: $neutral-100; color: $body-color; }
+  .rosie-tree-item.is-expanded > .rosie-tree-row & { transform: rotate(90deg); }
+}
+
+.rosie-tree-toggle-spacer { width: 1rem; height: 1rem; flex-shrink: 0; }
+
+.rosie-tree-icon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $body-secondary-color;
+}
+
+.rosie-tree-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rosie-tree-children {
+  list-style: none;
+  padding: 0 0 0 var(--rosie-tree-indent);
+  margin: 0;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .25s ease;
+}
+
+.rosie-tree-item.is-expanded > .rosie-tree-children {
+  max-height: 2000px;
+}

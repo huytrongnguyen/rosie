@@ -1,0 +1,21 @@
+@use '../variables' as *;
+
+.rosie-toaster {
+  position: fixed;
+  z-index: $zindex-toast;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 360px;
+  max-width: calc(100% - 2rem);
+  pointer-events: none;
+
+  > * { pointer-events: auto; }
+}
+
+.rosie-toaster-top-end       { top: 1rem; right: 1rem; }
+.rosie-toaster-top-start     { top: 1rem; left: 1rem; }
+.rosie-toaster-top-center    { top: 1rem; left: 50%; transform: translateX(-50%); }
+.rosie-toaster-bottom-end    { bottom: 1rem; right: 1rem; }
+.rosie-toaster-bottom-start  { bottom: 1rem; left: 1rem; }
+.rosie-toaster-bottom-center { bottom: 1rem; left: 50%; transform: translateX(-50%); }

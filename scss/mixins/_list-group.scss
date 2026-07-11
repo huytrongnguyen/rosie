@@ -1,0 +1,18 @@
+@mixin list-group-item-variant($state, $background, $color) {
+  .list-group-item-#{$state} {
+    color: $color;
+    background-color: $background;
+
+    &.list-group-item-action {
+      &:hover, &:focus {
+        color: $color;
+        background-color: $background;
+      }
+      &.active {
+        color: #fff;
+        background-color: $color;
+        border-color: $color;
+      }
+    }
+  }
+}

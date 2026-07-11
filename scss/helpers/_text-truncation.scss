@@ -1,0 +1,3 @@
+@use '../mixins/text-truncate' as *;
+
+.text-truncate { @include text-truncate(); }

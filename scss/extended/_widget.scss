@@ -1,0 +1,61 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-widget {
+  --rosie-widget-bg: #{$white};
+  --rosie-widget-border-color: #{$border-color};
+  --rosie-widget-padding: 1rem;
+  --rosie-widget-label-color: #{$body-secondary-color};
+  --rosie-widget-value-color: #{$body-color};
+  --rosie-widget-trend-positive: #{$mint-700};
+  --rosie-widget-trend-negative: #{$coral-700};
+
+  display: flex;
+  flex-direction: column;
+  padding: var(--rosie-widget-padding);
+  background: var(--rosie-widget-bg);
+  border: 1px solid var(--rosie-widget-border-color);
+  @include border-radius($border-radius-lg);
+}
+
+.rosie-widget-label {
+  font-size: $font-size-sm;
+  color: var(--rosie-widget-label-color);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  font-weight: $font-weight-semibold;
+}
+
+.rosie-widget-value {
+  margin-top: .25rem;
+  font-size: 1.75rem;
+  font-weight: $font-weight-bold;
+  color: var(--rosie-widget-value-color);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.rosie-widget-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  margin-top: .375rem;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  &.is-positive { color: var(--rosie-widget-trend-positive); }
+  &.is-negative { color: var(--rosie-widget-trend-negative); }
+  &.is-neutral  { color: $body-secondary-color; }
+}
+
+.rosie-widget-sparkline {
+  margin-top: .75rem;
+  width: 100%;
+  height: 2.5rem;
+}
+
+.rosie-widget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}

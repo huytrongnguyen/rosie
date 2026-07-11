@@ -1,0 +1,86 @@
+// Button variants — explicit, hand-tuned. No auto color-math.
+@use '../variables' as *;
+
+@mixin button-variant(
+  $background,
+  $border,
+  $color: $white,
+  $hover-background: null,
+  $hover-border: null,
+  $hover-color: null,
+  $active-background: null,
+  $active-border: null,
+  $active-color: null,
+  $disabled-background: null,
+  $disabled-border: null,
+  $disabled-color: null
+) {
+  $hover-color-value: $color;
+  @if $hover-color { $hover-color-value: $hover-color; }
+  $hover-background-value: $background;
+  @if $hover-background { $hover-background-value: $hover-background; }
+  $hover-border-value: $border;
+  @if $hover-border { $hover-border-value: $hover-border; }
+  $active-color-value: $color;
+  @if $active-color { $active-color-value: $active-color; }
+  $active-background-value: $background;
+  @if $active-background { $active-background-value: $active-background; }
+  $active-border-value: $border;
+  @if $active-border { $active-border-value: $active-border; }
+  $disabled-color-value: $color;
+  @if $disabled-color { $disabled-color-value: $disabled-color; }
+  $disabled-background-value: $background;
+  @if $disabled-background { $disabled-background-value: $disabled-background; }
+  $disabled-border-value: $border;
+  @if $disabled-border { $disabled-border-value: $disabled-border; }
+
+  --rosie-btn-color: #{$color};
+  --rosie-btn-bg: #{$background};
+  --rosie-btn-border-color: #{$border};
+  --rosie-btn-hover-color: #{$hover-color-value};
+  --rosie-btn-hover-bg: #{$hover-background-value};
+  --rosie-btn-hover-border-color: #{$hover-border-value};
+  --rosie-btn-focus-shadow-rgb: var(--rosie-primary-rgb);
+  --rosie-btn-active-color: #{$active-color-value};
+  --rosie-btn-active-bg: #{$active-background-value};
+  --rosie-btn-active-border-color: #{$active-border-value};
+  --rosie-btn-active-shadow: #{$btn-active-box-shadow};
+  --rosie-btn-disabled-color: #{$disabled-color-value};
+  --rosie-btn-disabled-bg: #{$disabled-background-value};
+  --rosie-btn-disabled-border-color: #{$disabled-border-value};
+}
+
+@mixin button-outline-variant(
+  $color,
+  $color-hover: $white,
+  $active-background: $color,
+  $active-border: $color,
+  $active-color: $white
+) {
+  --rosie-btn-color: #{$color};
+  --rosie-btn-border-color: #{$color};
+  --rosie-btn-hover-color: #{$color-hover};
+  --rosie-btn-hover-bg: #{$active-background};
+  --rosie-btn-hover-border-color: #{$active-border};
+  --rosie-btn-focus-shadow-rgb: var(--rosie-primary-rgb);
+  --rosie-btn-active-color: #{$active-color};
+  --rosie-btn-active-bg: #{$active-background};
+  --rosie-btn-active-border-color: #{$active-border};
+  --rosie-btn-active-shadow: #{$btn-active-box-shadow};
+  --rosie-btn-disabled-color: #{$color};
+  --rosie-btn-disabled-bg: transparent;
+  --rosie-btn-disabled-border-color: #{$color};
+  --rosie-gradient: none;
+}
+
+@mixin button-size(
+  $padding-y,
+  $padding-x,
+  $font-size,
+  $border-radius
+) {
+  --rosie-btn-padding-y: #{$padding-y};
+  --rosie-btn-padding-x: #{$padding-x};
+  --rosie-btn-font-size: #{$font-size};
+  --rosie-btn-border-radius: #{$border-radius};
+}

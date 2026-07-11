@@ -1,0 +1,47 @@
+@use '../variables' as *;
+
+.rosie-range-slider {
+  --rosie-range-track-bg: #{$neutral-200};
+  --rosie-range-track-fill: #{$primary};
+  --rosie-range-thumb-bg: #{$white};
+  --rosie-range-thumb-border: #{$primary};
+  --rosie-range-track-height: 4px;
+  --rosie-range-thumb-size: 1rem;
+
+  position: relative;
+  width: 100%;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.rosie-range-slider-track {
+  position: relative;
+  width: 100%;
+  height: var(--rosie-range-track-height);
+  background-color: var(--rosie-range-track-bg);
+  border-radius: 999px;
+}
+
+.rosie-range-slider-fill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: var(--rosie-range-track-fill);
+  border-radius: 999px;
+}
+
+.rosie-range-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: var(--rosie-range-thumb-size);
+  height: var(--rosie-range-thumb-size);
+  background: var(--rosie-range-thumb-bg);
+  border: 2px solid var(--rosie-range-thumb-border);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: $box-shadow-sm;
+  cursor: grab;
+
+  &:active { cursor: grabbing; box-shadow: 0 0 0 .25rem rgba($primary, .15), $box-shadow-sm; }
+}

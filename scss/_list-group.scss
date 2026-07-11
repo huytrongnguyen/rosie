@@ -1,0 +1,124 @@
+@use 'sass:map';
+@use 'variables' as *;
+@use 'mixins/border-radius' as *;
+@use 'mixins/list-group' as *;
+
+.list-group {
+  --rosie-list-group-color: #{$list-group-color};
+  --rosie-list-group-bg: #{$list-group-bg};
+  --rosie-list-group-border-color: #{$list-group-border-color};
+  --rosie-list-group-border-width: #{$list-group-border-width};
+  --rosie-list-group-border-radius: #{$list-group-border-radius};
+  --rosie-list-group-item-padding-x: #{$list-group-item-padding-x};
+  --rosie-list-group-item-padding-y: #{$list-group-item-padding-y};
+  --rosie-list-group-action-color: #{$list-group-action-color};
+  --rosie-list-group-action-hover-color: #{$list-group-action-hover-color};
+  --rosie-list-group-action-hover-bg: #{$list-group-hover-bg};
+  --rosie-list-group-action-active-color: #{$list-group-action-active-color};
+  --rosie-list-group-action-active-bg: #{$list-group-action-active-bg};
+  --rosie-list-group-disabled-color: #{$list-group-disabled-color};
+  --rosie-list-group-disabled-bg: #{$list-group-disabled-bg};
+  --rosie-list-group-active-color: #{$list-group-active-color};
+  --rosie-list-group-active-bg: #{$list-group-active-bg};
+  --rosie-list-group-active-border-color: #{$list-group-active-border-color};
+
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  @include border-radius(var(--rosie-list-group-border-radius));
+}
+
+.list-group-numbered {
+  list-style-type: none;
+  counter-reset: section;
+
+  > .list-group-item::before {
+    content: counters(section, '.') '. ';
+    counter-increment: section;
+  }
+}
+
+.list-group-item-action {
+  width: 100%;
+  color: var(--rosie-list-group-action-color);
+  text-align: inherit;
+
+  &:hover, &:focus {
+    z-index: 1;
+    color: var(--rosie-list-group-action-hover-color);
+    text-decoration: none;
+    background-color: var(--rosie-list-group-action-hover-bg);
+  }
+
+  &:active {
+    color: var(--rosie-list-group-action-active-color);
+    background-color: var(--rosie-list-group-action-active-bg);
+  }
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: var(--rosie-list-group-item-padding-y) var(--rosie-list-group-item-padding-x);
+  color: var(--rosie-list-group-color);
+  text-decoration: none;
+  background-color: var(--rosie-list-group-bg);
+  border: var(--rosie-list-group-border-width) solid var(--rosie-list-group-border-color);
+
+  &:first-child { @include border-top-radius(inherit); }
+  &:last-child  { @include border-bottom-radius(inherit); }
+
+  &.disabled, &:disabled {
+    color: var(--rosie-list-group-disabled-color);
+    pointer-events: none;
+    background-color: var(--rosie-list-group-disabled-bg);
+  }
+
+  &.active {
+    z-index: 2;
+    color: var(--rosie-list-group-active-color);
+    background-color: var(--rosie-list-group-active-bg);
+    border-color: var(--rosie-list-group-active-border-color);
+  }
+
+  + .list-group-item {
+    border-top-width: 0;
+
+    &.active { margin-top: calc(-1 * var(--rosie-list-group-border-width)); border-top-width: var(--rosie-list-group-border-width); }
+  }
+}
+
+.list-group-horizontal {
+  flex-direction: row;
+
+  > .list-group-item:first-child:not(:last-child) {
+    border-bottom-left-radius: var(--rosie-list-group-border-radius);
+    border-top-right-radius: 0;
+  }
+  > .list-group-item:last-child:not(:first-child) {
+    border-top-right-radius: var(--rosie-list-group-border-radius);
+    border-bottom-left-radius: 0;
+  }
+  > .list-group-item.active { margin-top: 0; }
+  > .list-group-item + .list-group-item {
+    border-top-width: var(--rosie-list-group-border-width);
+    border-left-width: 0;
+
+    &.active { margin-left: calc(-1 * var(--rosie-list-group-border-width)); border-left-width: var(--rosie-list-group-border-width); }
+  }
+}
+
+.list-group-flush {
+  @include border-radius(0);
+
+  > .list-group-item {
+    border-width: 0 0 var(--rosie-list-group-border-width);
+
+    &:last-child { border-bottom-width: 0; }
+  }
+}
+
+@each $state, $value in $theme-colors {
+  @include list-group-item-variant($state, map.get($theme-colors-bg-subtle, $state), map.get($theme-colors-emphasis, $state));
+}

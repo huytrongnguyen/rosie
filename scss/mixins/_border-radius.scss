@@ -1,0 +1,42 @@
+@use '../functions' as *;
+@use '../variables' as *;
+
+@mixin border-radius($radius: $border-radius, $fallback-border-radius: false) {
+  border-radius: valid-radius($radius);
+}
+
+@mixin border-top-radius($radius: $border-radius) {
+  border-top-left-radius: valid-radius($radius);
+  border-top-right-radius: valid-radius($radius);
+}
+
+@mixin border-end-radius($radius: $border-radius) {
+  border-top-right-radius: valid-radius($radius);
+  border-bottom-right-radius: valid-radius($radius);
+}
+
+@mixin border-bottom-radius($radius: $border-radius) {
+  border-bottom-right-radius: valid-radius($radius);
+  border-bottom-left-radius: valid-radius($radius);
+}
+
+@mixin border-start-radius($radius: $border-radius) {
+  border-top-left-radius: valid-radius($radius);
+  border-bottom-left-radius: valid-radius($radius);
+}
+
+@mixin border-top-start-radius($radius: $border-radius) {
+  border-top-left-radius: valid-radius($radius);
+}
+
+@mixin border-top-end-radius($radius: $border-radius) {
+  border-top-right-radius: valid-radius($radius);
+}
+
+@mixin border-bottom-end-radius($radius: $border-radius) {
+  border-bottom-right-radius: valid-radius($radius);
+}
+
+@mixin border-bottom-start-radius($radius: $border-radius) {
+  border-bottom-left-radius: valid-radius($radius);
+}

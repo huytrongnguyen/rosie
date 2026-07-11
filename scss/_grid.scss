@@ -1,0 +1,8 @@
+@use 'variables' as *;
+@use 'mixins/grid' as *;
+
+.row {
+  @include make-row();
+}
+
+@include make-grid-columns($grid-columns, $gutters, $grid-breakpoints);

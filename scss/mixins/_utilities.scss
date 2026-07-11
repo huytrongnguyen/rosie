@@ -1,0 +1,65 @@
+// Generate utility classes from the $utilities config map.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../variables' as *;
+@use 'breakpoints' as *;
+
+@mixin generate-utility($utility, $infix: '', $is-rfs-media-query: false) {
+  $values: map.get($utility, values);
+
+  // Maps short to plain class chains
+  @if meta.type-of($values) == 'string' or meta.type-of(list.nth($values, 1)) != 'list' {
+    $values: list.zip($values, $values);
+  }
+
+  $css-property: map.get($utility, property);
+  $css-property-value-list: map.get($utility, property);
+  $local-vars: map.get($utility, local-vars);
+  $properties: $css-property;
+
+  @if meta.type-of($properties) == 'string' { $properties: list.append((), $properties); }
+
+  @each $key, $value in $values {
+    $properties: map.get($utility, property);
+    @if meta.type-of($properties) == 'string' { $properties: list.append((), $properties); }
+
+    @if (meta.type-of($value) != null) {
+      $property-class: list.nth($properties, 1);
+      @if map.has-key($utility, class) { $property-class: map.get($utility, class); }
+      @if $property-class == null { $property-class: ''; }
+      $property-class-modifier: '';
+      @if $key {
+        $separator: '-';
+        @if $property-class == '' and $infix == '' { $separator: ''; }
+        $property-class-modifier: $separator + $key;
+      }
+
+      @if map.get($utility, rfs) {
+        @if meta.type-of($value) == 'number' and unit($value) != '' {
+          // RFS skipped — Rosie omits RFS.
+        }
+      }
+
+      $is-rtl: true;
+      @if map.has-key($utility, rtl) { $is-rtl: map.get($utility, rtl); }
+
+      @if $is-rtl == false { /*rtl:begin:remove*/ }
+
+      @if $value != null {
+        .#{$property-class + $infix + $property-class-modifier} {
+          @each $property in $properties {
+            @if $enable-important-utilities {
+              #{$property}: $value !important;
+            } @else {
+              #{$property}: $value;
+            }
+          }
+        }
+      }
+
+      @if $is-rtl == false { /*rtl:end:remove*/ }
+    }
+  }
+}

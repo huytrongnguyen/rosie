@@ -1,23 +1,27 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "target": "es5",
-    "module": "esnext",
-    "lib": [ "dom", "esnext" ],
-    "skipLibCheck": true,
-    "baseUrl": ".",
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "strict": true,
+
+    "declaration": true,
     "outDir": "dist/js",
+    "rootDir": "ts",
     "removeComments": true,
+
+    "strict": true,
     "strictNullChecks": false,
     "strictPropertyInitialization": false,
-    "inlineSourceMap": true,
+
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": false,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules", "ts/test", "dist"]
+  "include": ["ts/index.ts"],
+  "exclude": ["node_modules", "dist"]
 }

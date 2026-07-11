@@ -1,0 +1,11 @@
+@mixin table-variant($state, $background) {
+  .table-#{$state} {
+    --rosie-table-bg: #{$background};
+    --rosie-table-border-color: rgba(0, 0, 0, .1);
+    --rosie-table-striped-bg: rgba(0, 0, 0, .035);
+    --rosie-table-active-bg: rgba(0, 0, 0, .075);
+    --rosie-table-hover-bg: rgba(0, 0, 0, .05);
+    color: var(--rosie-body-color);
+    border-color: var(--rosie-table-border-color);
+  }
+}

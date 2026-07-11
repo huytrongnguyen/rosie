@@ -1,0 +1,28 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 .375rem;
+  font-family: var(--rosie-font-monospace);
+  font-size: .6875rem;
+  font-weight: $font-weight-medium;
+  color: $body-color;
+  background: $neutral-50;
+  border: 1px solid $neutral-200;
+  border-bottom-width: 2px;
+  @include border-radius($border-radius-sm);
+  line-height: 1;
+}
+
+.rosie-kbd-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+
+  .rosie-kbd-plus { color: $body-secondary-color; font-size: .625rem; }
+}

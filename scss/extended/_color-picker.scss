@@ -1,0 +1,49 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+.rosie-color-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: .25rem .375rem;
+  background-color: $white;
+  border: 1px solid $border-color;
+  @include border-radius($border-radius);
+}
+
+.rosie-color-swatch {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid rgba($black, .1);
+  @include border-radius($border-radius-sm);
+  cursor: pointer;
+  transition: transform .12s ease;
+
+  &:hover { transform: scale(1.1); }
+  &.is-selected { box-shadow: 0 0 0 2px $primary; }
+}
+
+.rosie-color-picker-popup {
+  position: absolute;
+  z-index: $zindex-dropdown;
+  width: 280px;
+  padding: .75rem;
+  background: $white;
+  border: 1px solid $border-color;
+  @include border-radius($border-radius-lg);
+  box-shadow: $box-shadow-lg;
+
+  .rosie-color-swatches {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: .375rem;
+  }
+
+  .rosie-color-input {
+    display: flex;
+    gap: .375rem;
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px solid $border-color;
+  }
+}

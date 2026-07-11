@@ -1,0 +1,65 @@
+@use '../variables' as *;
+
+.rosie-avatar {
+  --rosie-avatar-width: 2rem;
+  --rosie-avatar-height: 2rem;
+  --rosie-avatar-font-size: #{$font-size-sm};
+  --rosie-avatar-bg: #{$neutral-100};
+  --rosie-avatar-color: #{$neutral-700};
+  --rosie-avatar-border-radius: 50%;
+  --rosie-avatar-status-size: .5rem;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rosie-avatar-width);
+  height: var(--rosie-avatar-height);
+  font-size: var(--rosie-avatar-font-size);
+  font-weight: $font-weight-semibold;
+  color: var(--rosie-avatar-color);
+  background-color: var(--rosie-avatar-bg);
+  border-radius: var(--rosie-avatar-border-radius);
+  overflow: hidden;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.rosie-avatar-xs { --rosie-avatar-width: 1.25rem; --rosie-avatar-height: 1.25rem; --rosie-avatar-font-size: .625rem; }
+.rosie-avatar-sm { --rosie-avatar-width: 1.5rem;  --rosie-avatar-height: 1.5rem;  --rosie-avatar-font-size: .75rem; }
+.rosie-avatar-lg { --rosie-avatar-width: 2.5rem;  --rosie-avatar-height: 2.5rem;  --rosie-avatar-font-size: 1rem; }
+.rosie-avatar-xl { --rosie-avatar-width: 3rem;    --rosie-avatar-height: 3rem;    --rosie-avatar-font-size: 1.125rem; }
+
+.rosie-avatar-square { --rosie-avatar-border-radius: #{$border-radius}; }
+
+.rosie-avatar-status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: var(--rosie-avatar-status-size);
+  height: var(--rosie-avatar-status-size);
+  border-radius: 50%;
+  border: 2px solid $white;
+  background-color: $neutral-400;
+
+  &.rosie-avatar-status-online  { background-color: $mint-500; }
+  &.rosie-avatar-status-busy    { background-color: $coral-500; }
+  &.rosie-avatar-status-away    { background-color: $apricot-500; }
+  &.rosie-avatar-status-offline { background-color: $neutral-400; }
+}
+
+.rosie-avatar-group {
+  display: inline-flex;
+  align-items: center;
+
+  .rosie-avatar {
+    margin-left: -.5rem;
+    box-shadow: 0 0 0 2px $white;
+
+    &:first-child { margin-left: 0; }
+  }
+}
