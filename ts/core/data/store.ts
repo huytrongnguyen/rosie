@@ -11,11 +11,17 @@ export class DataStore<T = any> extends Subject<DataModel<T>[]> {
   addRecord(record: DataModel<T>) { this.next([...(this.value ?? []), record]); }
   insertRecord(record: DataModel<T>) { this.next([record, ...(this.value ?? [])]); }
 
-  load(params?: HttpParams, onError?: (_reason: AjaxError) => T[], onComplete?: () => void) {
+  load(params?: HttpParams, onError?: (_reason: AjaxError) => T[] | null | void, onComplete?: () => void) {
     this.fetch(params, onError, onComplete).then((value: T[]) => value && this.loadData(value));
   }
 
-  fetch(params?: HttpParams, onError?: (_reason: AjaxError) => T[], onComplete?: () => void) {
-    return ajaxRequest<T[]>(this.config, params).catch(onError).finally(onComplete);
+  fetch(params?: HttpParams, onError?: (_reason: AjaxError) => T[] | null | void, onComplete?: () => void): Promise<T[] | null> {
+    return ajaxRequest<T[]>(this.config, params)
+      .catch(err => {
+        if (!onError) throw err;
+        const r = onError(err);
+        return (r ?? null) as T[] | null;
+      })
+      .finally(onComplete);
   }
 }

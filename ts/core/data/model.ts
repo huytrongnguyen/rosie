@@ -12,12 +12,18 @@ export class DataModel<T> extends Subject<T> {
   unselect() { this.selected = false; this.refresh(); }
   toggle() { this.selected = !this.selected; this.refresh(); }
 
-  load(params?: HttpParams, onError?: (_reason: AjaxError) => T, onComplete?: () => void) {
+  load(params?: HttpParams, onError?: (_reason: AjaxError) => T | null | void, onComplete?: () => void) {
     this.fetch(params, onError, onComplete).then(value => value && this.loadData(value));
   }
 
-  fetch(params?: HttpParams, onError?: (_reason: AjaxError) => T, onComplete?: () => void) {
-    return ajaxRequest<T>(this.config, params).catch(onError).finally(onComplete);
+  fetch(params?: HttpParams, onError?: (_reason: AjaxError) => T | null | void, onComplete?: () => void): Promise<T | null> {
+    return ajaxRequest<T>(this.config, params)
+      .catch(err => {
+        if (!onError) throw err;
+        const r = onError(err);
+        return (r ?? null) as T | null;
+      })
+      .finally(onComplete);
   }
 
   static create<T = any>(data: T) {

@@ -2,30 +2,27 @@
 
 ## Next
 
+## 0.4.1
+> 2026-08-01
+
+- Expose `Ajax`, `Observable`, `DataModel`, `DataStore`
+
 ## 0.4.0
 > 2026-07-11
 
-- Rebuild Rosie UI with token-based design system, Bootstrap-compatible class names
+Rebuilt Rosie UI around a `--rosie-*` token-based design system with Bootstrap-compatible class names, with zero Bootstrap dependencies. This release ships **styles + core scripts only** — React components are being reworked and will return in a later version.
 
 **New Features**
 
-- Add new components:
-  - `Dropdown`, `InputDropdown`
-
-**Improvements**
-- Add `onCheckChange` to `Grid`
-- Supports `fitScreen` when `Dialog` contains `Grid`
-- Supports to `select`, `unselect`, `toggle` in `Model`
-- Supports to `addRecord` to `Store`
-- Supports to `triggerEvent` on `Subject`
-- Update `Grid` footer, remove `rosie-grid-striped` class
-- Fix issue `Dialog` cannot be removed after `onSubmit`
-- Add `groupBy`, `orderBy` to `/lang/array`
+- Token-based SCSS design system (primitive → semantic `--rosie-*` tiers), light theme, primary `#e97b98`
+- Subpath exports: `rosie-ui/css`, `rosie-ui/scss`, `rosie-ui/scss/*`
 
 **Breaking Changes**
 
-- Revamp `scss`
-  - Remove `FontAwesome`
+- ESM-only package (`"type": "module"`)
+- Removed the React component API from the published package (`Grid`, `Dialog`, `DatePicker`, `Dropdown`, …) — temporarily; only styles + the `Rosie` core namespace (lang extensions, utilities, types) ship now
+- Removed runtime dependencies: `bootstrap`, `@popperjs/core`, `axios`
+- Removed `FontAwesome` from styles
 
 ## 0.3.0
 > 2026-02-12

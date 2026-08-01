@@ -1,6 +1,6 @@
 {
   "name": "rosie-ui",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Rosie UI — a pastel, token-based design system (styles + core scripts) for data-intensive, cross-platform web apps.",
   "author": "Lionel Nguyen <huynguyen8505@gmail.com> (https://github.com/huytrongnguyen)",
   "license": "MIT",
