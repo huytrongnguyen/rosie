@@ -2,6 +2,30 @@
 
 ## Next
 
+## 0.4.2
+> 2026-08-23
+
+**New Features**
+
+- Add `Router`: `Routes`, `Route`, `Outlet`, `Link`, `NavLink`, `Navigate`, and the `useLocation`, `useNavigate`, `useParams`, `useSearchParams`, `useMatch` hooks
+  - Two URL modes — `history` for apps behind a server, `hash` for a static HTML page opened over `file://`, where `pushState` is not permitted
+  - Detected from the document protocol; override with `configureRouter({ mode })`
+- Add icons as CSS: `<i class="rosie-icon rosie-icon-chart-bar">`, drawn on a 24×24 grid and emitted as a mask, so a glyph takes its colour from `currentColor` and its size from `font-size`. 68 glyphs, plus `.rosie-icon-spin`
+  - No font file, no sprite and no JavaScript, so icons work in a plain HTML page
+- Add `demo/` — a sample single-page app built on the package (`npm run demo`), alongside `kitchen-sink.html`
+- Add `Grid` — a div-based data grid bound to a `DataStore`, with columns declared as `<GridColumn>` children
+  - Column config: `field`, `header`, `headerRenderer`, `headerTooltip`, `width`, `flex`, `alignClass`, `format`, `renderer`
+  - Columns without an explicit `width` are sized from their own content and clamped to 100–400px, so a grid whose shape is only known at runtime still lines up
+  - `format` accepts `integer`, `decimal`, `percent` (a 0–1 ratio) and `number`; an empty value renders as `—` so it reads apart from a blank string
+  - The header sits outside the scrolling area and follows the body's horizontal scroll, so only the body scrolls
+  - Loading skeleton and empty state
+  - Sorting, resizing, column pinning, tree rows, paging and selection are present in the types but not implemented yet
+- Add `Number.prototype.format(fractionDigits?)` — thousands separators, with a fixed number of decimals when given
+
+**Improvements**
+
+- `kitchen-sink.html` gains an Icons section
+
 ## 0.4.1
 > 2026-08-01
 

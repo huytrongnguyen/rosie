@@ -15,6 +15,7 @@ interface Number {
   ceil(): number,
   floor(): number,
   round(fractionDigits?: number): number,
+  format(fractionDigits?: number): string,
 }
 
 Number.prototype.abs = function(this: number) { return Math.abs(this); }
@@ -23,4 +24,11 @@ Number.prototype.floor = function(this: number) { return Math.floor(this); }
 
 Number.prototype.round = function(this: number, fractionDigits?: number) {
   return fractionDigits ? Math.round(this * 10 * fractionDigits + Number.EPSILON) / (10 * fractionDigits) : Math.round(this);
+}
+
+Number.prototype.format = function(this: number, fractionDigits?: number) {
+  return this.toLocaleString(undefined, fractionDigits === undefined ? undefined : {
+    minimumFractionDigits: fractionDigits,
+    maximumFractionDigits: fractionDigits,
+  });
 }

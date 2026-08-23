@@ -33,13 +33,13 @@ export function useDialog(id: string) {
 
   useEffect(() => {
     if (isShown) {
-      Rosie.showModal(id, undefined, () => { setState(false) });
+      // Rosie.showModal(id, undefined, () => { setState(false) });
     }
   }, [isShown]);
 
   return {
     isShown,
     show: () => setState(true),
-    hide: () => Rosie.hideModal(id),
+    hide: () => {},//Rosie.hideModal(id),
   };
 }

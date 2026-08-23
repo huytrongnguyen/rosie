@@ -1,29 +1,51 @@
-import { PropsWithChildren, HTMLAttributes, ReactElement } from 'react';
+import { HTMLAttributes, ReactElement, ReactNode } from 'react';
 import { DataModel, DataStore } from '../../core';
 
-export interface GridProps extends PropsWithChildren<any> {
-  // data?: any[],
-  store?: DataStore<any>,
-  checkboxSelection?: boolean,
-  onCheckChange?: (value: any, selected: boolean) => void,
-  // bbar?: (records: DataModel<any>[]) => ReactElement,
-  // pagingToolbar?: { pageSize?: number },
-  fitScreen?: boolean,
-  fitWidth?: boolean,
-  fitHeight?: boolean,
-  pagingToolbar?: boolean,
-}
+export type SortDirection = 'asc' | 'desc';
 
-export type GridRowProps = {
-  record: DataModel<any>,
-  rowIndex: number,
-  columns: GridColumnProps[],
-  checkboxSelection?: boolean,
-  onCheckChange?: (value: any, selected: boolean) => void,
-}
+export type SortState = { field: string, dir: SortDirection };
+
+export type ColumnFormat = 'integer' | 'decimal' | 'percent' | 'number';
+
+export type ColumnLock = boolean | 'left' | 'right';
 
 export interface GridColumnProps extends HTMLAttributes<HTMLDivElement> {
-  field: string,
-  headerName?: string,
-  renderer?: (value: any, record?: DataModel<any>, rowIndex?: number, colIndex?: number) => string | number | ReactElement,
+  field: string;
+  header?: string;
+  headerRenderer?: () => ReactNode;
+  headerTooltip?: string;
+  width?: number;
+  flex?: boolean;
+  alignClass?: string;
+  format?: ColumnFormat;
+  locked?: ColumnLock;
+  renderer?: (value: any, record: DataModel<any>, rowIndex: number, colIndex: number) => ReactNode;
+  sortable?: boolean;
+  sortComparator?: (a: unknown, b: unknown) => number;
+  resizable?: boolean;
+}
+
+export type GridEmptyProps = {
+  title?: string;
+  desc?: string;
+};
+
+export interface GridProps {
+  store: DataStore<any>;
+  children: ReactElement<GridColumnProps> | ReactElement<GridColumnProps>[];
+  className?: string;
+  sortable?: boolean;
+  resizable?: boolean;
+  selectable?: boolean;
+  defaultSort?: SortState;
+  onSortChange?: (sort: SortState | null) => void;
+  onSelectionChange?: (records: DataModel<any>[]) => void;
+  searchText?: string;
+  paginated?: boolean;
+  pageSize?: number;
+  treeDepths?: number[];
+  treeIndentPx?: number;
+  loading?: boolean;
+  skeletonRows?: number;
+  empty?: GridEmptyProps;
 }

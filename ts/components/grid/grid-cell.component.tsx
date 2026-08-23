@@ -1,32 +1,26 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties } from 'react';
 import { DataModel, Rosie } from '../../core';
+import { formatCellText, isEmptyValue } from './format';
 import { GridColumnProps } from './types';
 
-interface GridCellProps extends GridColumnProps {
-  record?: DataModel<any>,
-  rowIndex?: number,
-  colIndex?: number,
-  header?: boolean,
+type GridCellProps = {
+  column: GridColumnProps,
+  width: number,
+  record: DataModel<any>,
+  rowIndex: number,
+  colIndex: number,
 }
 
-export function GridCell(props: GridCellProps) {
-  const { field, headerName, className, renderer, rowIndex, colIndex, header, ...others } = props,
-        cellCls = Rosie.classNames('rosie-grid-cell p-1', className);
+export function cellStyle({ flex }: GridColumnProps, width: number): CSSProperties {
+  return flex ? { flex: '1 1 auto', minWidth: width } : { flex: `0 0 ${width}px` };
+}
 
-  if (header) {
-    return <div className={cellCls} {...others}>{headerName ?? field}</div>
-  }
+export function GridCell({ column, width, record, rowIndex, colIndex }: Readonly<GridCellProps>) {
+  const { field, format, alignClass, renderer, className } = column,
+        value = record.get(field);
 
-  const [fieldValue, setFieldValue] = useState<any>(props.record?.get(field));
-
-  useEffect(() => { setFieldValue(props.record?.get(field)) }, [props.record])
-
-  function getDisplayValue() {
-    if (renderer) return renderer(fieldValue, props.record, rowIndex, colIndex);
-    return fieldValue;
-  }
-
-  return <>
-    <div className={Rosie.classNames(cellCls)} {...others}>{getDisplayValue()}</div>
-  </>
+  return <div className={Rosie.classNames('rosie-grid-cell', alignClass, className, { 'is-empty': isEmptyValue(value) })}
+              style={cellStyle(column, width)}>
+    {renderer ? renderer(value, record, rowIndex, colIndex) : formatCellText(value, format)}
+  </div>
 }

@@ -1,83 +1,62 @@
-import { useState, useEffect, Children } from 'react';
-
+import { Children, isValidElement, useEffect, useRef, useState } from 'react';
 import { DataModel, Rosie } from '../../core';
-import { PagingToolbar } from '../paging-toolbar.component';
-
-import { GridColumnProps, GridProps } from './types';
+import { measureColumnWidth } from './column-width';
+import { cellStyle } from './grid-cell.component';
+import { GridHeader } from './grid-header.component';
 import { GridRow } from './grid-row.component';
-import { GridCell } from './grid-cell.component';
+import { GridColumnProps, GridProps } from './types';
 
-export function GridColumn(_: GridColumnProps): any { return null; }
+export function GridColumn(_: GridColumnProps): any { return null }
 
-export function Grid(props: GridProps) {
-  const [gridId] = useState(Rosie.guid('rosie-grid-')),
-        [records, setRecords] = useState<DataModel<any>[]>([]),
-        [columns, setColumns] = useState([] as GridColumnProps[]);
-        // [currentPage, setCurrentPage] = useState(1),
-        // [allSelected, setAllSelected] = useState(false),
-
-        // [rawData, setRawData] = useState<DataModel<any>[]>([]);
+export function Grid({ store, children, className, loading, skeletonRows = 5, empty }: Readonly<GridProps>) {
+  const [records, setRecords] = useState<DataModel<any>[]>([]),
+        headerRef = useRef<HTMLDivElement>(null),
+        bodyRef = useRef<HTMLDivElement>(null),
+        columns = toColumns(children),
+        widths = columns.map(column => measureColumnWidth(column, records));
 
   useEffect(() => {
-    const store$ = props.store?.subscribe(value => setRecords(value || []));
-
-    const body = document.querySelector(`#${gridId} .rosie-grid-body`);
-    body.addEventListener('scroll', () => {
-      document.querySelector(`#${gridId} .rosie-grid-header`).scrollLeft = body.scrollLeft;
-    });
-
-    return () => { store$?.unsubscribe(); }
-  }, [])
-
-  // useEffect(() => { !props.store && setRecords((props.data ?? []).map(DataModel.create)) }, [props.data])
+    const subscription = store.subscribe(value => setRecords(value ?? []));
+    return () => subscription.unsubscribe();
+  }, [store]);
 
   useEffect(() => {
-    const columns = Children.toArray(props.children).map((child: any) => child.props as GridColumnProps);
-    setColumns(columns);
-  }, [props.children])
+    const body = bodyRef.current;
+    if (!body) return;
 
-  // useEffect(() => { records.forEach(record => { record.selected = allSelected; }) }, [allSelected])
+    const followBodyScroll = () => {
+      if (headerRef.current) headerRef.current.scrollLeft = body.scrollLeft;
+    };
 
-  // useEffect(() => {
-  //   if (!rawData?.length || !currentPage) return;
+    body.addEventListener('scroll', followBodyScroll);
+    return () => body.removeEventListener('scroll', followBodyScroll);
+  }, []);
 
-  //   if (!props.pagingToolbar) {
-  //     setRecords([...rawData]);
-  //   } else {
-  //     const { pageSize = 25 } = props.pagingToolbar,
-  //           data = rawData.take(pageSize, pageSize * (currentPage - 1));
-  //     setRecords([...data]);
-  //   }
-  // }, [rawData, currentPage])
+  return <div className={Rosie.classNames('rosie-grid', className)}>
+    <GridHeader ref={headerRef} columns={columns} widths={widths} />
 
-  return <>
-    <div id={gridId} className={Rosie.classNames('rosie-grid rosie-grid-bordered rosie-grid-hover d-flex flex-row', { fullscreen: props.fitScreen || props.fitHeight }, props.className)}>
-      <div className="rosie-grid-viewport d-flex flex-column fullscreen">
-        <div className={Rosie.classNames('rosie-grid-header fw-bold overflow-hidden d-flex', { 'flex-column': props.fitScreen || props.fitWidth })}>
-          <div className="rosie-grid-row d-flex flex-row">
-            {columns.map((col: GridColumnProps, index) => <GridCell header key={index} {...col} />)}
-            <div style={{width:Rosie.SCROLLBAR_WIDTH}} />
-          </div>
+    <div className="rosie-grid-body" ref={bodyRef}>
+      {loading && Array.from({ length: skeletonRows }, (_, rowIndex) =>
+        <div key={rowIndex} className="rosie-grid-row">
+          {columns.map((column, colIndex) =>
+            <div key={column.field} className="rosie-grid-cell" style={cellStyle(column, widths[colIndex])}>
+              <span className="rosie-skeleton rosie-skeleton-text" />
+            </div>)}
+        </div>)}
+
+      {!loading && records.map((record, rowIndex) =>
+        <GridRow key={rowIndex} columns={columns} widths={widths} record={record} rowIndex={rowIndex} />)}
+
+      {!loading && !records.length && <div className="rosie-grid-empty">
+        <div className="rosie-empty-state">
+          <div className="rosie-empty-state-title">{empty?.title ?? 'No records'}</div>
+          {empty?.desc && <div className="rosie-empty-state-description">{empty.desc}</div>}
         </div>
-        <div className={Rosie.classNames('rosie-grid-body fullscreen overflow-x-auto d-flex', { 'flex-column': !props.fitHeight, 'overflow-y-scroll': !props.fitWidth })}>
-          <div>
-            {(!records?.length) && <div className="border-top p-2">No record found.</div>}
-            {(records?.length > 0) && records.map((record, rowIndex) => {
-              return <GridRow key={rowIndex} record={record} rowIndex={rowIndex} columns={columns} checkboxSelection={props.checkboxSelection} onCheckChange={props.onCheckChange} />
-            })}
-          </div>
-        </div>
-        {(!props.pagingToolbar && records?.length > 0) && <>
-          <div className="rosie-grid-footer border-top d-flex flex-row p-2">
-            <div className="text-body-tertiary">{records.length} record{records.length > 1 ? 's' : ''}</div>
-          </div>
-        </>}
-        {(props.pagingToolbar) && <>
-          <div className="rosie-grid-footer border-top d-flex flex-row p-2">
-            {props.pagingToolbar && <PagingToolbar />}
-          </div>
-        </>}
-      </div>
+      </div>}
     </div>
-  </>
+  </div>
+}
+
+function toColumns(children: GridProps['children']): GridColumnProps[] {
+  return Children.toArray(children).filter(isValidElement).map(child => child.props as GridColumnProps);
 }

@@ -24,6 +24,10 @@
     .ks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
     .ks-token { display: flex; align-items: center; gap: .5rem; font-size: .75rem; font-family: var(--rosie-font-monospace); }
     .ks-token i { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--rosie-border-color); flex: none; }
+    .ks-icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: .25rem; margin-top: 1rem; }
+    .ks-icon { display: flex; align-items: center; gap: .5rem; padding: .375rem .5rem; border-radius: var(--rosie-radius-sm); font-size: .75rem; font-family: var(--rosie-font-monospace); color: var(--rosie-text-muted); }
+    .ks-icon:hover { background: var(--rosie-surface-sunken); color: var(--rosie-text); }
+    .ks-icon .rosie-icon { font-size: 1.125rem; color: var(--rosie-text); }
     .ks-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--rosie-text-muted); margin: 1rem 0 .5rem; }
   </style>
 </head>
@@ -34,6 +38,7 @@
     <a href="#tokens">Tokens</a>
     <a href="#typography">Typography</a>
     <a href="#colors">Colors</a>
+    <a href="#icons">Icons</a>
     <a href="#buttons">Buttons</a>
     <a href="#badges">Badges</a>
     <a href="#alerts">Alerts</a>
@@ -137,6 +142,90 @@
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-6)"></i>
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-7)"></i>
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-8)"></i>
+      </div>
+    </section>
+
+    <section id="icons" class="ks-section">
+      <h2>Icons <small class="text-muted">(extended)</small></h2>
+      <p class="text-muted">Drawn on a 24&times;24 grid, 2px stroke, emitted as a CSS mask — so an icon
+        inherits <code>color</code> and scales with <code>font-size</code>. No font, no sprite, no JavaScript.</p>
+      <div class="ks-row" style="gap:1.5rem">
+        <span style="font-size:.875rem"><i class="rosie-icon rosie-icon-chart-bar"></i> .875rem</span>
+        <span style="font-size:1rem"><i class="rosie-icon rosie-icon-chart-bar"></i> 1rem</span>
+        <span style="font-size:1.5rem"><i class="rosie-icon rosie-icon-chart-bar"></i> 1.5rem</span>
+        <span class="text-primary"><i class="rosie-icon rosie-icon-chart-bar"></i> currentColor</span>
+        <span class="text-danger"><i class="rosie-icon rosie-icon-chart-bar"></i> currentColor</span>
+        <span><i class="rosie-icon rosie-icon-spinner rosie-icon-spin"></i> .rosie-icon-spin</span>
+      </div>
+      <div class="ks-icon-grid">
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-bars"></i><span>bars</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chevron-down"></i><span>chevron-down</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chevron-up"></i><span>chevron-up</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chevron-left"></i><span>chevron-left</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chevron-right"></i><span>chevron-right</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chevrons-left"></i><span>chevrons-left</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chevrons-right"></i><span>chevrons-right</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-arrow-left"></i><span>arrow-left</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-arrow-right"></i><span>arrow-right</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-arrow-up"></i><span>arrow-up</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-arrow-down"></i><span>arrow-down</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-caret-down"></i><span>caret-down</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-caret-right"></i><span>caret-right</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-house"></i><span>house</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-plus"></i><span>plus</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-minus"></i><span>minus</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-xmark"></i><span>xmark</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-check"></i><span>check</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-pencil"></i><span>pencil</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-pen-to-square"></i><span>pen-to-square</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-trash"></i><span>trash</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-copy"></i><span>copy</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-download"></i><span>download</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-upload"></i><span>upload</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-magnifying-glass"></i><span>magnifying-glass</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-link"></i><span>link</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-rotate"></i><span>rotate</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-share"></i><span>share</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-paper-plane"></i><span>paper-plane</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-expand"></i><span>expand</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-compress"></i><span>compress</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-circle-info"></i><span>circle-info</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-circle-check"></i><span>circle-check</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-circle-xmark"></i><span>circle-xmark</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-triangle-exclamation"></i><span>triangle-exclamation</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-bell"></i><span>bell</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-clock"></i><span>clock</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-spinner"></i><span>spinner</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chart-bar"></i><span>chart-bar</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chart-line"></i><span>chart-line</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chart-area"></i><span>chart-area</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-chart-pie"></i><span>chart-pie</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-table"></i><span>table</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-filter"></i><span>filter</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-database"></i><span>database</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-sigma"></i><span>sigma</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-sliders"></i><span>sliders</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-sort"></i><span>sort</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-sort-up"></i><span>sort-up</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-sort-down"></i><span>sort-down</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-folder"></i><span>folder</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-file"></i><span>file</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-box"></i><span>box</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-tag"></i><span>tag</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-star"></i><span>star</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-gear"></i><span>gear</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-user"></i><span>user</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-users"></i><span>users</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-envelope"></i><span>envelope</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-eye"></i><span>eye</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-eye-slash"></i><span>eye-slash</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-calendar"></i><span>calendar</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-code"></i><span>code</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-columns"></i><span>columns</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-grip-vertical"></i><span>grip-vertical</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-ellipsis"></i><span>ellipsis</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-ellipsis-vertical"></i><span>ellipsis-vertical</span></div>
+        <div class="ks-icon"><i class="rosie-icon rosie-icon-right-from-bracket"></i><span>right-from-bracket</span></div>
       </div>
     </section>
 

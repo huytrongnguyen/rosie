@@ -5,3 +5,4 @@ export * from './paging-toolbar.component';
 export * from './dropdown.component';
 export * from './datepicker';
 export * from './query-builder';
+export * from './router';
