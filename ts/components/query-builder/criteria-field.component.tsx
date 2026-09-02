@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { InputDropdown } from '../dropdown.component';
+// import { InputDropdown } from '../dropdown.component';
 import { compareOperators, CriteriaField } from './type';
 
 type CriteriaFieldComponentProps = {
@@ -17,10 +17,10 @@ export function CriteriaFieldComponent(props: CriteriaFieldComponentProps) {
   }, [value])
 
   return <div className="input-group">
-    <InputDropdown options={props.criteria}
+    {/* <InputDropdown options={props.criteria}
         value={[props.field]} onChange={(fields) => props.onChange(fields[0], props.index)} />
     <InputDropdown options={compareOperators}
-        value={[props.field.operator]} onChange={(fields) => props.onChange(fields[0], props.index)} />
+        value={[props.field.operator]} onChange={(fields) => props.onChange(fields[0], props.index)} /> */}
     <input type="text" className="form-control" value={value} onChange={e => setValue(e.target.value)} />
   </div>
 }

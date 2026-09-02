@@ -1,0 +1,92 @@
+@use '../variables' as *;
+
+.card-sm {
+  --rosie-card-spacer-y: .5rem;
+  --rosie-card-spacer-x: .625rem;
+  --rosie-card-cap-padding-y: .375rem;
+  --rosie-card-cap-padding-x: .625rem;
+  --rosie-card-title-spacer-y: .25rem;
+
+  font-size: $font-size-sm;
+}
+
+.nav-sm {
+  --rosie-nav-link-padding-y: .25rem;
+  --rosie-nav-link-padding-x: .625rem;
+  --rosie-nav-link-font-size: #{$font-size-sm};
+}
+
+.accordion-sm {
+  --rosie-accordion-btn-padding-y: .4375rem;
+  --rosie-accordion-btn-padding-x: .625rem;
+  --rosie-accordion-body-padding-y: .5rem;
+  --rosie-accordion-body-padding-x: .625rem;
+  --rosie-accordion-btn-icon-width: .875rem;
+
+  font-size: $font-size-sm;
+}
+
+.badge-sm {
+  --rosie-badge-padding-y: .1875em;
+  --rosie-badge-padding-x: .4em;
+  --rosie-badge-font-size: .6875em;
+}
+
+.progress-sm {
+  --rosie-progress-height: .5rem;
+  --rosie-progress-font-size: .625rem;
+}
+
+.list-group-sm {
+  --rosie-list-group-item-padding-y: .25rem;
+  --rosie-list-group-item-padding-x: .5rem;
+
+  font-size: $font-size-sm;
+}
+
+.alert-sm {
+  --rosie-alert-padding-y: .375rem;
+  --rosie-alert-padding-x: .625rem;
+
+  font-size: $font-size-sm;
+}
+
+.rosie-callout-sm {
+  --rosie-callout-padding-y: .375rem;
+  --rosie-callout-padding-x: .625rem;
+
+  font-size: $font-size-sm;
+}
+
+.rosie-widget-sm {
+  --rosie-widget-padding: .5rem .625rem;
+
+  font-size: $font-size-sm;
+
+  .rosie-widget-value { font-size: 1.125rem; }
+}
+
+.rosie-grid-sm {
+  --rosie-grid-cell-padding-y: .3125rem;
+  --rosie-grid-cell-padding-x: .5rem;
+  --rosie-grid-header-font-size: .6875rem;
+
+  font-size: $font-size-sm;
+}
+
+.rosie-date-picker-sm {
+  --rosie-date-picker-cell-size: 1.75rem;
+
+  font-size: $font-size-sm;
+}
+
+.dropdown-menu-sm {
+  --rosie-dropdown-font-size: #{$font-size-sm};
+  --rosie-dropdown-padding-y: .25rem;
+  --rosie-dropdown-item-padding-y: .1875rem;
+  --rosie-dropdown-item-padding-x: .625rem;
+  --rosie-dropdown-header-padding-y: .1875rem;
+  --rosie-dropdown-header-padding-x: .625rem;
+  --rosie-dropdown-divider-margin-y: .25rem;
+  --rosie-dropdown-min-width: 8rem;
+}

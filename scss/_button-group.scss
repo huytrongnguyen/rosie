@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'mixins/border-radius' as *;
+@use 'mixins/buttons' as *;
 
 .btn-group,
 .btn-group-vertical {
@@ -44,8 +45,10 @@
   }
 }
 
-.btn-group-sm > .btn { @extend .btn-sm; }
-.btn-group-lg > .btn { @extend .btn-lg; }
+// @extend cannot reach .btn-sm / .btn-lg across the @use boundary, so the sizes are applied
+// through the same mixin those classes use.
+.btn-group-sm > .btn { @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $btn-font-size-sm, $btn-border-radius-sm); }
+.btn-group-lg > .btn { @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $btn-font-size-lg, $btn-border-radius-lg); }
 
 .dropdown-toggle-split {
   padding-right: $btn-padding-x * .75;

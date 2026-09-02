@@ -1,12 +1,22 @@
 type TemporalUnit = 'year' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond';
 
 interface DateConstructor {
+  MONTH_NAMES: string[],
+  DOW_NAMES: string[],
   currentDate(): Date,
   parseDate(value: string): Date
+  daysAgo(value: string): number,
   // difference(dateAfter: Date, dateBefore: Date, unit?: TemporalUnit): number,
   // differenceInCalendarWeeks(dateAfter: Date, dateBefore: Date, weekStartsOn?: number): number,
   // createTimeline(startDate: Date, endDate: Date, pattern: string): string[],
 }
+
+Date.MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'];
+
+Date.DOW_NAMES = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
 
 Date.currentDate = function() {
   const value = new Date();
@@ -16,6 +26,10 @@ Date.currentDate = function() {
 Date.parseDate = function(str: string) {
   const value = new Date(str) ?? new Date();
   return new Date(value.getFullYear(), value.getMonth(), value.getDate());
+}
+
+Date.daysAgo = function(value: string) {
+  return Math.round((Date.currentDate().getTime() - Date.parseDate(value).getTime()) / MILLISECONDS_IN_DAY);
 }
 
 // const MILLISECONDS_IN_SECOND = 1000,
@@ -63,7 +77,7 @@ interface Date {
   endOfMonth(): Date,
   lengthOfMonth(): number,
 
-  // startOfWeek(weekStartsOn?: number): Date,
+  startOfWeek(weekStartsOn?: number): Date,
 
   // getWeeksInMonth(): number,
 
@@ -89,13 +103,11 @@ Date.prototype.startOfMonth = function(this: Date) { return new Date(this.getFul
 Date.prototype.endOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth() + 1, 0); }
 Date.prototype.lengthOfMonth = function(this: Date) { return this.endOfMonth().getDate(); }
 
-// Date.prototype.startOfWeek = function(this: Date, weekStartsOn = 0) {
-//   const day = this.getDay(),
-//         diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn,
-//         date = this.minus(diff, 'day');
-//   date.setHours(0, 0, 0, 0);
-//   return date;
-// }
+Date.prototype.startOfWeek = function(this: Date, weekStartsOn = 0) {
+  const day = this.getDay(),
+        diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  return this.minus(diff, 'day');
+}
 
 // Date.prototype.getWeeksInMonth = function(this: Date) {
 //   const startOfMonth = this.startOfMonth(),
@@ -109,6 +121,7 @@ Date.prototype.plus = function(this: Date, amountToAdd: number, unit = 'day') {
   switch (unit) {
     case 'year': return new Date(this.getFullYear() + amountToAdd, this.getMonth(), this.getDate(), 0, 0, 0, 0);
     case 'month': return new Date(this.getFullYear(), this.getMonth() + amountToAdd, this.getDate(), 0, 0, 0, 0);
+    case 'week': return new Date(this.getFullYear(), this.getMonth(), this.getDate() + amountToAdd * 7, 0, 0, 0, 0);
     case 'day': return new Date(this.getFullYear(), this.getMonth(), this.getDate() + amountToAdd, 0, 0, 0, 0);
     case 'hour': return new Date(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours() + amountToAdd, 0, 0, 0);
     case 'minute': return new Date(this.getFullYear(), this.getMonth(), this.getDate(), this.getHours(), this.getMinutes() + amountToAdd, 0, 0);

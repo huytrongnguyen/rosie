@@ -1,4 +1,4 @@
-import { Dropdown } from '../dropdown.component';
+// import { Dropdown } from '../dropdown.component';
 import { CriteriaFieldComponent } from './criteria-field.component';
 import { combineOperators, CriteriaField, newOperation, QueryOperation } from './type';
 
@@ -22,9 +22,9 @@ export function QueryOperationComponent(props: QueryOperationComponentProps) {
   }
 
   return <div className="d-flex flex-column pt-2">
-    <Dropdown buttonClass="btn-outline-secondary" options={combineOperators} defaultText="" separator="" searchBox={false}
+    {/* <Dropdown buttonClass="btn-outline-secondary" options={combineOperators} defaultText="" separator="" searchBox={false}
         value={[props.operation.operator]}
-        onChange={(operators) => props.onChange({ ...props.operation, operator: operators[0] }, props.index)} />
+        onChange={(operators) => props.onChange({ ...props.operation, operator: operators[0] }, props.index)} /> */}
     <div className="d-flex flex-column ps-3 pt-2">
       <div className="d-flex flex-row">
         {props.operation.fields.map((value, index) => {

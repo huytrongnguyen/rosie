@@ -1,6 +1,5 @@
 import { Children, isValidElement, useEffect, useRef, useState } from 'react';
-import { DataModel, Rosie } from '../../core';
-import { measureColumnWidth } from './column-width';
+import { DataModel, Rosie, measureColumnWidth } from '../../core';
 import { cellStyle } from './grid-cell.component';
 import { GridHeader } from './grid-header.component';
 import { GridRow } from './grid-row.component';

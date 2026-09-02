@@ -3,6 +3,7 @@
 @use 'mixins/border-radius' as *;
 @use 'mixins/breakpoints' as *;
 @use 'mixins/transition' as *;
+@use 'mixins/container' as *;
 
 .navbar {
   $navbar-padding-x-value: $navbar-padding-x;
@@ -45,7 +46,7 @@
 
   @each $breakpoint, $width in $grid-breakpoints {
     > .container#{breakpoint-infix($breakpoint, $grid-breakpoints)} {
-      @extend .container, .container-fluid;
+      @include make-container();
     }
   }
 }

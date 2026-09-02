@@ -1,0 +1,34 @@
+@use '../variables' as *;
+
+.modal.show { display: block; }
+
+body.modal-open { overflow: hidden; }
+
+.modal-backdrop { backdrop-filter: blur(1px); }
+
+.modal-content { box-shadow: $box-shadow-lg; }
+
+.modal-header {
+  padding: 1rem 1.25rem;
+
+  .btn-close { margin: -.25rem -.5rem -.25rem auto; }
+}
+
+.modal-title {
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  color: $body-color;
+}
+
+.modal-body { padding: 1.25rem; }
+
+.modal-footer {
+  gap: .5rem;
+  padding: .75rem 1.25rem;
+  border-top-color: $neutral-100;
+}
+
+.modal-body .rosie-grid {
+  border: 0;
+  border-radius: 0;
+}

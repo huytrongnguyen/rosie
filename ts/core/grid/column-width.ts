@@ -1,6 +1,12 @@
-import { DataModel } from '../../core';
-import { formatCellText } from './format';
-import { GridColumnProps } from './types';
+import { DataModel } from '../data';
+import { ColumnFormat, formatCellText } from './format';
+
+export type MeasurableColumn = {
+  field: string,
+  header?: string,
+  width?: number,
+  format?: ColumnFormat,
+}
 
 const CHARACTER_WIDTH_PX = 12;
 const CELL_PADDING_PX = 32;
@@ -8,7 +14,7 @@ const MIN_MEASURED_WIDTH_PX = 100;
 const MAX_MEASURED_WIDTH_PX = 400;
 const DEFAULT_WIDTH_PX = 160;
 
-export function measureColumnWidth(column: GridColumnProps, records: DataModel<any>[]) {
+export function measureColumnWidth(column: MeasurableColumn, records: DataModel<any>[]) {
   if (column.width) return column.width;
   if (!records.length) return DEFAULT_WIDTH_PX;
 

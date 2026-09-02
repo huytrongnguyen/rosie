@@ -139,3 +139,18 @@
 @media (prefers-reduced-motion: reduce) {
   .demo-sidebar { transition: none; }
 }
+
+.demo-settings {
+  display: grid;
+  gap: .375rem;
+  max-width: 22rem;
+
+  .form-label { margin: .75rem 0 0; }
+  .form-label:first-child { margin-top: 0; }
+}
+
+.demo-settings-actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: 1.25rem;
+}

@@ -22,6 +22,32 @@
 }
 
 // ---------------------------------------------------------------------------
+// SVG helpers
+// ---------------------------------------------------------------------------
+
+// A data URI stops at a raw `#`, so an interpolated colour truncates the SVG and the image
+// silently fails to load. `<`, `>` and `%` need escaping for the same reason.
+@function escape-svg($string) {
+  @if meta.type-of($string) != 'string' { @return $string; }
+
+  $string: str-replace($string, '%', '%25');
+  $string: str-replace($string, '<', '%3C');
+  $string: str-replace($string, '>', '%3E');
+  $string: str-replace($string, '#', '%23');
+  @return $string;
+}
+
+@function str-replace($subject, $search, $replacement) {
+  $index: string.index($subject, $search);
+  @while $index {
+    $subject: string.slice($subject, 1, $index - 1) + $replacement
+            + string.slice($subject, $index + string.length($search));
+    $index: string.index($subject, $search);
+  }
+  @return $subject;
+}
+
+// ---------------------------------------------------------------------------
 // Color helpers
 // ---------------------------------------------------------------------------
 

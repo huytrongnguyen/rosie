@@ -1,45 +1,37 @@
-import { useEffect, useState } from 'react';
-import { Rosie } from '../core';
+import { PropsWithChildren, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { Rosie, lockModal, onEscape } from '../core';
 
-type DialogProps = {
-  id?: string,
+export type DialogProps = {
+  title: string,
+  onClose: () => void,
   className?: string,
-  title?: string,
-  dialogClass?: string,
-  disableCloseButton?: boolean,
-  fitScreen?: boolean,
-  height?: string | number,
-  children: React.ReactNode,
+  closable?: boolean,
 }
 
-export function Dialog(props: DialogProps) {
-  const { id = 'dialog', title = 'Dialog', className = '', dialogClass = '', disableCloseButton, fitScreen, children } = props;
+export function Dialog({ title, onClose, className = '', closable = true, children }: Readonly<PropsWithChildren<DialogProps>>) {
+  const dialogRef = useRef<HTMLDivElement>(null);
 
-  return <section className={`modal fade ${className}`} id={id} data-bs-backdrop="static" tabIndex={-1} role="dialog">
-    <div className={`modal-dialog modal-dialog-centered modal-dialog-scrollable ${dialogClass}`} role="document">
-      <div className={Rosie.classNames('modal-content', { fullscreen: fitScreen })} style={{maxHeight: props.height ?? '100%'}}>
-        <div className="modal-header">
-          <h5 className="modal-title">{title}</h5>
-          {!disableCloseButton && <button type="button" className="btn-close" data-bs-dismiss="modal" />}
-        </div>
-        {children}
-      </div>
-    </div>
-  </section>
-}
-
-export function useDialog(id: string) {
-  const [isShown, setState] = useState(false);
+  useEffect(() => lockModal(dialogRef.current), []);
 
   useEffect(() => {
-    if (isShown) {
-      // Rosie.showModal(id, undefined, () => { setState(false) });
-    }
-  }, [isShown]);
+    if (!closable) return;
+    return onEscape(onClose);
+  }, [closable, onClose]);
 
-  return {
-    isShown,
-    show: () => setState(true),
-    hide: () => {},//Rosie.hideModal(id),
-  };
+  return createPortal(<>
+    <div className="modal-backdrop show" />
+
+    <div ref={dialogRef} className="modal show" tabIndex={-1} role="dialog" aria-modal="true" aria-label={title}>
+      <div className={Rosie.classNames('modal-dialog modal-dialog-centered modal-dialog-scrollable', className)}>
+        <div className="modal-content">
+          <div className="modal-header">
+            <div className="modal-title">{title}</div>
+            {closable && <button type="button" className="btn-close" aria-label="Close" onClick={onClose} />}
+          </div>
+          {children}
+        </div>
+      </div>
+    </div>
+  </>, document.body);
 }

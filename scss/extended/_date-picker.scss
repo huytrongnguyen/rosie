@@ -9,8 +9,7 @@
   --rosie-date-picker-cell-hover-bg: #{$neutral-50};
   --rosie-date-picker-cell-active-bg: #{$primary};
   --rosie-date-picker-cell-active-color: #{$white};
-  --rosie-date-picker-cell-today-color: #{$rose-700};
-  --rosie-date-picker-cell-today-border: #{$rose-300};
+  --rosie-date-picker-cell-today-color: #{$primary};
   --rosie-date-picker-cell-disabled-color: #{$neutral-300};
   --rosie-date-picker-cell-out-month-color: #{$neutral-400};
 
@@ -26,27 +25,13 @@
 .rosie-date-picker-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: .5rem;
   padding: 0 .25rem;
 
   .rosie-date-picker-title { font-weight: $font-weight-semibold; }
   .rosie-date-picker-nav   { display: inline-flex; gap: .25rem; }
-  .rosie-date-picker-nav-btn {
-    width: 1.75rem;
-    height: 1.75rem;
-    padding: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 0;
-    border-radius: $border-radius-sm;
-    cursor: pointer;
-    color: $body-color;
 
-    &:hover { background-color: $neutral-50; }
-  }
 }
 
 .rosie-date-picker-grid {
@@ -79,13 +64,12 @@
   border-radius: $border-radius-sm;
   font-size: $font-size-sm;
 
-  &:hover:not(.is-disabled):not(.is-selected) {
+  &:hover:not(.is-disabled):not(.is-selected):not(.is-range-start):not(.is-range-end):not(.is-in-range) {
     background-color: var(--rosie-date-picker-cell-hover-bg);
   }
 
   &.is-today {
     color: var(--rosie-date-picker-cell-today-color);
-    border-color: var(--rosie-date-picker-cell-today-border);
     font-weight: $font-weight-semibold;
   }
 
@@ -95,6 +79,7 @@
     border-color: var(--rosie-date-picker-cell-active-bg);
   }
 
+  &.is-blank { cursor: default; pointer-events: none; }
   &.is-out-month  { color: var(--rosie-date-picker-cell-out-month-color); }
   &.is-disabled   { color: var(--rosie-date-picker-cell-disabled-color); pointer-events: none; }
 
@@ -106,7 +91,24 @@
 
   &.is-in-range {
     background-color: $rose-50;
-    color: $rose-700;
     border-radius: 0;
   }
+}
+
+.rosie-date-picker-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: .0625rem;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: $border-radius-sm;
+  color: $body-secondary-color;
+  cursor: pointer;
+
+  &:hover { background-color: $neutral-50; color: $body-color; }
 }

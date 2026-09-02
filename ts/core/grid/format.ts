@@ -1,4 +1,4 @@
-import { ColumnFormat } from './types';
+export type ColumnFormat = 'integer' | 'decimal' | 'percent' | 'number';
 
 export const EMPTY_CELL_TEXT = '—';
 

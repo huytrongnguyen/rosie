@@ -1,11 +1,9 @@
 import { HTMLAttributes, ReactElement, ReactNode } from 'react';
-import { DataModel, DataStore } from '../../core';
+import { ColumnFormat, DataModel, DataStore } from '../../core';
 
 export type SortDirection = 'asc' | 'desc';
 
 export type SortState = { field: string, dir: SortDirection };
-
-export type ColumnFormat = 'integer' | 'decimal' | 'percent' | 'number';
 
 export type ColumnLock = boolean | 'left' | 'right';
 

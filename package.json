@@ -1,6 +1,6 @@
 {
   "name": "rosie-ui",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Rosie UI — a pastel, token-based design system (styles + core scripts) for data-intensive, cross-platform web apps.",
   "author": "Lionel Nguyen <huynguyen8505@gmail.com> (https://github.com/huytrongnguyen)",
   "license": "MIT",
@@ -35,9 +35,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "npm run css && npm run js",
+    "build": "npm run css && npm run js && npm run js-bundle",
     "css": "sass scss/index.scss dist/css/rosie.css --style=compressed --no-source-map",
     "js": "tsc",
+    "js-bundle": "esbuild ts/bundle.ts --bundle --outfile=dist/js/rosie.bundle.js --format=iife",
     "prepublishOnly": "npm run build",
     "demo": "npm run demo-css && npm run demo-js",
     "demo-js": "esbuild demo/ts/app.tsx --bundle --outfile=demo/dist/demo.js --loader:.tsx=tsx --format=iife --alias:rosie-ui=./ts/index.ts",

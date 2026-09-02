@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
-import { DataModel, Rosie } from '../../core';
-import { formatCellText, isEmptyValue } from './format';
+import { DataModel, Rosie, formatCellText, isEmptyValue } from '../../core';
 import { GridColumnProps } from './types';
 
 type GridCellProps = {

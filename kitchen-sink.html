@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="dist/css/rosie.css" />
   <style>
     /* Page chrome only — not part of Rosie. */
-    body { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    body { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
     .ks-nav {
       position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto;
       border-right: 1px solid var(--rosie-border-color);
@@ -17,8 +17,9 @@
     .ks-nav .ks-swatch { width: 14px; height: 14px; border-radius: 50%; background: var(--rosie-primary); display: inline-block; vertical-align: middle; }
     .ks-nav a { display: block; padding: .25rem .5rem; border-radius: var(--rosie-radius-sm); color: var(--rosie-text-muted); font-size: .8125rem; text-decoration: none; }
     .ks-nav a:hover { background: var(--rosie-surface-sunken); color: var(--rosie-text); }
+    .ks-nav-group { margin: 1rem 0 .25rem; padding: 0 .5rem; font-size: .6875rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--rosie-text-muted); }
     .ks-main { padding: 2rem 2.5rem; max-width: 1100px; }
-    .ks-section { padding-block: 1.5rem; border-bottom: 1px dashed var(--rosie-border-color); }
+    .ks-section { padding-block: 1.5rem; }
     .ks-section > h2 { margin-top: 0; }
     .ks-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-bottom: .75rem; }
     .ks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
@@ -28,23 +29,49 @@
     .ks-icon { display: flex; align-items: center; gap: .5rem; padding: .375rem .5rem; border-radius: var(--rosie-radius-sm); font-size: .75rem; font-family: var(--rosie-font-monospace); color: var(--rosie-text-muted); }
     .ks-icon:hover { background: var(--rosie-surface-sunken); color: var(--rosie-text); }
     .ks-icon .rosie-icon { font-size: 1.125rem; color: var(--rosie-text); }
-    .ks-label { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--rosie-text-muted); margin: 1rem 0 .5rem; }
+
+    .ks-example { border: 1px solid var(--rosie-border-color); border-radius: var(--rosie-radius); margin-bottom: 1.25rem; overflow: hidden; }
+    .ks-example-title { padding: .5rem .875rem; border-bottom: 1px solid var(--rosie-border-color); background: var(--rosie-surface-raised); font-size: .6875rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--rosie-text-muted); }
+    .ks-preview { padding: 1.25rem; background: var(--rosie-surface-raised); }
+    .ks-preview > :last-child { margin-bottom: 0; }
+    .ks-code { margin: 0; padding: 1rem 1.25rem; border-top: 1px solid var(--rosie-border-color); background: var(--rosie-surface-sunken); font-size: .75rem; line-height: 1.6; overflow-x: auto; }
+    .ks-code code { color: var(--rosie-text); background: none; padding: 0; }
+
+    .ks-theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; }
+    .ks-theme-panel { padding: 1rem 1.125rem; border: 1px solid var(--rosie-border-color); border-radius: var(--rosie-radius); background: var(--rosie-surface-raised); }
+    .ks-theme-panel h3 { margin: 0 0 .75rem; font-size: .8125rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--rosie-text-muted); }
+    .ks-theme-panel > :last-child { margin-bottom: 0; }
+    .ks-theme-panel .form-label { margin-top: .5rem; }
+    .ks-theme-panel .form-label:first-of-type { margin-top: 0; }
+    .ks-theme-panel-wide { grid-column: 1 / -1; }
+    .ks-form-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .75rem 1rem; }
+    .ks-form-columns .form-label { margin: .5rem 0 .125rem; }
+    .ks-form-columns > div > .form-label:first-child { margin-top: 0; }
+    .ks-fieldset { padding: .75rem; border: 1px solid var(--rosie-border-color); border-radius: var(--rosie-radius-sm); }
+    .ks-fieldset legend { padding: 0 .375rem; font-size: .8125rem; color: var(--rosie-text-muted); float: none; width: auto; }
+    .ks-collapse-toggle { cursor: pointer; }
+    .ks-collapse-toggle .rosie-icon { transition: transform .15s ease; }
+    .ks-collapse-toggle.collapsed .rosie-icon { transform: rotate(-90deg); }
   </style>
 </head>
 <body>
   <nav class="ks-nav">
     <h1><span class="ks-swatch"></span> Rosie UI</h1>
     <div style="font-size:.7rem;color:var(--rosie-text-muted);margin-bottom:.75rem;font-family:var(--rosie-font-monospace)">#e97b98 · light · pastel</div>
+    <div class="ks-nav-group">Overview</div>
+    <a href="#theme">Theme viewer</a>
+    <div class="ks-nav-group">Foundations</div>
     <a href="#tokens">Tokens</a>
     <a href="#typography">Typography</a>
     <a href="#colors">Colors</a>
     <a href="#icons">Icons</a>
+    <div class="ks-nav-group">Forms</div>
+    <a href="#forms">Forms</a>
+    <div class="ks-nav-group">Components</div>
     <a href="#buttons">Buttons</a>
     <a href="#badges">Badges</a>
     <a href="#alerts">Alerts</a>
-    <a href="#callouts">Callouts</a>
     <a href="#cards">Cards</a>
-    <a href="#forms">Forms</a>
     <a href="#tables">Tables</a>
     <a href="#nav">Nav &amp; Tabs</a>
     <a href="#breadcrumb">Breadcrumb</a>
@@ -56,21 +83,559 @@
     <a href="#accordion">Accordion</a>
     <a href="#modal">Modal</a>
     <a href="#tooltip">Tooltip &amp; Popover</a>
+    <div class="ks-nav-group">Extended</div>
+    <a href="#callouts">Callouts</a>
     <a href="#avatar">Avatars</a>
     <a href="#stepper">Stepper</a>
     <a href="#rating">Rating</a>
     <a href="#widget">Widgets</a>
     <a href="#misc">Kbd · Empty · Skeleton</a>
+    <div class="ks-nav-group">Utilities</div>
     <a href="#utilities">Utilities</a>
   </nav>
 
   <main class="ks-main">
 
+    <section id="theme" class="ks-section">
+      <h2>Theme viewer</h2>
+      <p class="text-muted">The ExtJS theme viewer panel set, built by combining what rosie already ships — cards, utilities, form controls, dropdowns and the grid. Everything here uses the small size so a whole application screen fits in one panel.</p>
+
+      <div class="ks-theme-grid">
+        <div class="ks-theme-panel">
+          <h3>Basic Panel</h3>
+          <div class="card card-sm">
+            <div class="card-header">Basic Panel</div>
+            <div class="card-body">Some content</div>
+            <div class="card-footer d-flex gap-2 justify-content-end">
+              <button class="btn btn-outline-secondary btn-sm">Cancel</button>
+              <button class="btn btn-primary btn-sm">Save</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Masked Panel</h3>
+          <div class="card card-sm position-relative">
+            <div class="card-header">Masked Panel</div>
+            <div class="card-body">
+              <div class="form-label mb-0">Revenue</div>
+              <div style="font-size:1.5rem;font-weight:600">$48.2k</div>
+              <div class="text-muted">Compared with last month</div>
+            </div>
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center gap-2 bg-white opacity-75">
+              <span class="spinner-border spinner-border-sm text-primary" role="status"></span> Loading…
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Framed Panel</h3>
+          <div class="card card-sm">
+            <div class="card-header d-flex align-items-center">
+              Framed Panel
+              <div class="btn-group btn-group-sm ms-auto">
+                <button class="btn btn-outline-secondary"><i class="rosie-icon rosie-icon-pencil"></i></button>
+                <button class="btn btn-outline-secondary"><i class="rosie-icon rosie-icon-trash"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <label class="form-label" for="tv-framed">Report name</label>
+              <input type="text" class="form-control form-control-sm" id="tv-framed" value="Monetisation overview" />
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Collapsed Panel</h3>
+          <div class="card card-sm">
+            <div class="card-header d-flex align-items-center ks-collapse-toggle collapsed" role="button" aria-expanded="false"
+                 data-rosie-toggle="collapse" data-rosie-target="#tv-collapsed">
+              Collapsed Panel
+              <i class="rosie-icon rosie-icon-chevron-down ms-auto"></i>
+            </div>
+            <div class="collapse" id="tv-collapsed"><div class="card-body">Hidden until the header is toggled.</div></div>
+          </div>
+          <div class="card card-sm" style="margin-top:.5rem">
+            <div class="card-header d-flex align-items-center ks-collapse-toggle" role="button" aria-expanded="true"
+                 data-rosie-toggle="collapse" data-rosie-target="#tv-expanded">
+              Expanded Panel
+              <i class="rosie-icon rosie-icon-chevron-down ms-auto"></i>
+            </div>
+            <div class="collapse show" id="tv-expanded"><div class="card-body">Body shown.</div></div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Window</h3>
+          <div class="modal-content card-sm">
+            <div class="modal-header"><div class="modal-title">Confirm publish</div><button class="btn-close" aria-label="Close"></button></div>
+            <div class="modal-body">
+              <label class="form-label" for="tv-win">Dashboard</label>
+              <select class="form-select form-select-sm" id="tv-win"><option>Monetisation overview</option></select>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-outline-secondary btn-sm">Cancel</button>
+              <button class="btn btn-primary btn-sm">Submit</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel ks-theme-panel-wide">
+          <h3>Panel With Toolbars</h3>
+          <div class="card card-sm">
+            <div class="card-header d-flex align-items-center gap-2">
+              <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-secondary"><i class="rosie-icon rosie-icon-plus"></i> New</button>
+                <button class="btn btn-outline-secondary"><i class="rosie-icon rosie-icon-copy"></i></button>
+              </div>
+              <button class="dropdown-btn dropdown-btn-sm" style="width:auto" data-rosie-toggle="dropdown" data-rosie-target="#tv-actions"><span class="dropdown-placeholder has-value">Actions</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+              <div class="dropdown-menu dropdown-menu-sm" id="tv-actions">
+                <a class="dropdown-item" href="#">Duplicate</a>
+                <a class="dropdown-item" href="#">Export CSV</a>
+                <hr class="dropdown-divider" />
+                <a class="dropdown-item" href="#">Delete</a>
+              </div>
+              <div class="btn-group btn-group-sm ms-auto">
+                <button class="btn btn-outline-secondary active"><i class="rosie-icon rosie-icon-table"></i></button>
+                <button class="btn btn-outline-secondary"><i class="rosie-icon rosie-icon-chart-bar"></i></button>
+              </div>
+            </div>
+            <div class="card-body">Content between a top and a bottom toolbar.</div>
+            <div class="card-footer d-flex align-items-center gap-2">
+              <span class="text-muted text-nowrap">3 selected</span>
+              <button class="btn btn-outline-danger btn-sm ms-auto">Delete</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel ks-theme-panel-wide">
+          <h3>Form Widgets</h3>
+          <div class="card card-sm">
+            <div class="card-header">Create report</div>
+            <div class="card-body">
+              <div class="ks-form-columns">
+                <div>
+                  <label class="form-label" for="fw-name">Name</label>
+                  <input type="text" class="form-control form-control-sm" id="fw-name" placeholder="Enter a value" />
+
+                  <label class="form-label" for="fw-type">Type</label>
+                  <select class="form-select form-select-sm" id="fw-type"><option>Event analysis</option><option>Cohort</option></select>
+
+                  <label class="form-label" for="fw-date">Date</label>
+                  <div class="input-group input-group-sm">
+                    <input type="text" class="form-control" id="fw-date" value="2026-09-02" />
+                    <span class="input-group-text"><i class="rosie-icon rosie-icon-calendar"></i></span>
+                  </div>
+
+                  <label class="form-label" for="fw-limit">Row limit</label>
+                  <div class="input-group input-group-sm">
+                    <input type="number" class="form-control" id="fw-limit" value="500" />
+                    <span class="input-group-text">rows</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label" for="fw-notes">Description</label>
+                  <textarea class="form-control form-control-sm" id="fw-notes" rows="4">Revenue by channel, rolling 30 days.</textarea>
+
+                  <div class="form-label">Include</div>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="fw-i1" checked /><label class="form-check-label" for="fw-i1">Installs</label></div>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" id="fw-i2" /><label class="form-check-label" for="fw-i2">Revenue</label></div>
+
+                  <div class="form-label">Granularity</div>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="fw-g" id="fw-g1" checked /><label class="form-check-label" for="fw-g1">Daily</label></div>
+                  <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="fw-g" id="fw-g2" /><label class="form-check-label" for="fw-g2">Weekly</label></div>
+
+                  <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="fw-sw" checked /><label class="form-check-label" for="fw-sw">Share with group</label></div>
+                </div>
+              </div>
+
+              <fieldset class="ks-fieldset" style="margin-top:.75rem">
+                <legend class="d-flex align-items-center gap-2">
+                  <input class="form-check-input mb-0" type="checkbox" id="fw-fs" checked />
+                  <label class="form-check-label" for="fw-fs">Advanced</label>
+                </legend>
+                <div class="collapse show">
+                  <label class="form-label" for="fw-sql">Custom SQL</label>
+                  <textarea class="form-control form-control-sm" id="fw-sql" rows="2">select channel, sum(revenue) from fact_purchase group by 1</textarea>
+                  <div class="invalid-feedback d-block">Reference an existing table.</div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="card-footer d-flex gap-2 justify-content-end">
+              <button class="btn btn-outline-secondary btn-sm">Reset</button>
+              <button class="btn btn-primary btn-sm">Validate</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel ks-theme-panel-wide">
+          <h3>Border layout</h3>
+          <div class="card card-sm">
+            <div class="card-header">Workspace</div>
+            <div class="d-flex flex-column" style="height:16rem">
+              <div class="p-2 border-bottom">North — filter bar</div>
+              <div class="d-flex flex-fill" style="min-height:0">
+                <div class="p-2 border-end overflow-auto" style="width:9rem">
+                  <div class="form-label mb-0">West</div>
+                  <ul class="list-group list-group-flush list-group-sm">
+                    <li class="list-group-item">Overview</li>
+                    <li class="list-group-item">Acquisition</li>
+                    <li class="list-group-item">Retention</li>
+                  </ul>
+                </div>
+                <div class="p-2 flex-fill overflow-auto" style="min-width:0">
+                  <div class="form-label mb-0">Center</div>
+                  <table class="table table-sm table-hover mb-0">
+                    <thead><tr><th>Channel</th><th class="text-end">Installs</th></tr></thead>
+                    <tbody>
+                      <tr><td>Paid Search</td><td class="text-end">48,210</td></tr>
+                      <tr><td>Paid Social</td><td class="text-end">31,870</td></tr>
+                      <tr><td>Owned</td><td class="text-end">54,300</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="p-2 border-start overflow-auto" style="width:11rem">
+                  <div class="form-label mb-0">East</div>
+                  <div class="rosie-widget rosie-widget-sm"><div class="rosie-widget-label">Revenue</div><div class="rosie-widget-value">$71.8k</div></div>
+                </div>
+              </div>
+              <div class="p-2 border-top d-flex align-items-center gap-2">
+                <span class="text-muted">South — 3 rows</span>
+                <button class="btn btn-outline-secondary btn-sm ms-auto">Export</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel ks-theme-panel-wide">
+          <h3>Grid panel</h3>
+          <div class="card card-sm">
+            <div class="card-header d-flex align-items-center gap-2">
+              <div class="input-group input-group-sm" style="width:14rem">
+                <span class="input-group-text"><i class="rosie-icon rosie-icon-magnifying-glass"></i></span>
+                <input type="text" class="form-control" placeholder="Search company" />
+              </div>
+              <button class="dropdown-btn dropdown-btn-sm" style="width:auto" data-rosie-toggle="dropdown" data-rosie-target="#tv-sectors"><span class="dropdown-placeholder has-value">All sectors</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+              <div class="dropdown-menu dropdown-menu-sm" id="tv-sectors">
+                <a class="dropdown-item active" href="#">All sectors</a>
+                <a class="dropdown-item" href="#">Manufacturing</a>
+                <a class="dropdown-item" href="#">Telecom</a>
+              </div>
+              <button class="btn btn-outline-secondary btn-sm ms-auto"><i class="rosie-icon rosie-icon-download"></i> Export</button>
+            </div>
+
+            <div class="rosie-grid rosie-grid-sm rounded-0" style="border:0;height:11rem">
+              <div class="rosie-grid-header">
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Company <i class="rosie-icon rosie-icon-sort-up"></i></div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Sector</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">Price</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">Change</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem">% Change</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">Market Cap</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">Volume</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">Exchange</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">Last Updated</div>
+                </div>
+              </div>
+              <div class="rosie-grid-body">
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">3m Co</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Manufacturing</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">71.72</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.02</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.03%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$44.1B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">2,891,300</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">AT&amp;T Inc.</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Telecom</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">31.61</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">-0.48</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-danger">-1.54%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$180.4B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">9,442,100</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Alcoa Inc</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Materials</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">29.01</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.42</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">1.47%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$25.3B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">4,118,700</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Altria Group Inc</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Consumer</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">83.81</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.28</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.34%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$172.9B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">6,203,400</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">American Express</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Financials</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">52.55</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.01</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.02%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$61.7B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">3,554,800</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">American Intl Group</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Financials</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">64.13</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.31</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.49%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$96.2B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">5,017,600</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">AmerisourceBergen</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Health Care</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">45.45</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.12</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.27%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$9.4B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">812,500</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Amgen Inc</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Health Care</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">58.40</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.87</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">1.51%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$74.8B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">7,336,900</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NASDAQ</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Apache Corp</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Energy</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">109.12</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">-0.85</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-danger">-0.77%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$36.0B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">2,044,200</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Archer-Daniels</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Consumer</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">52.55</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.01</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.02%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$33.6B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">1,978,400</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Boeing Co</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Industrials</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">75.43</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.53</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">0.71%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$60.1B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">4,662,000</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Caterpillar Inc</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Industrials</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">67.27</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">0.92</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-success">1.39%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$45.8B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">3,209,700</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+                <div class="rosie-grid-row">
+                  <div class="rosie-grid-cell" style="flex:0 0 14rem">Chevron Corp</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 9rem">Energy</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">92.30</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 5.5rem">-1.14</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 6.5rem"><span class="badge badge-sm text-bg-danger">-1.22%</span></div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7.5rem">$186.5B</div>
+                  <div class="rosie-grid-cell text-end" style="flex:0 0 7rem">8,155,300</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 6rem">NYSE</div>
+                  <div class="rosie-grid-cell" style="flex:0 0 7.5rem">2026-09-01</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer d-flex align-items-center gap-2">
+              <nav><ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled"><a class="page-link" href="#theme">&laquo;</a></li>
+                <li class="page-item active"><a class="page-link" href="#theme">1</a></li>
+                <li class="page-item"><a class="page-link" href="#theme">2</a></li>
+                <li class="page-item"><a class="page-link" href="#theme">&raquo;</a></li>
+              </ul></nav>
+              <div class="dropdown">
+                <button class="dropdown-btn dropdown-btn-sm" style="width:auto" data-rosie-toggle="dropdown" data-rosie-target="#tv-pagesize"><span class="dropdown-placeholder has-value">25 / page</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+                <div class="dropdown-menu dropdown-menu-sm" id="tv-pagesize">
+                  <a class="dropdown-item active" href="#">25 / page</a>
+                  <a class="dropdown-item" href="#">50 / page</a>
+                  <a class="dropdown-item" href="#">100 / page</a>
+                </div>
+              </div>
+              <span class="text-muted text-nowrap ms-auto">Displaying 1 – 13 of 50</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Accordion</h3>
+          <div class="accordion accordion-sm" id="tv-acc">
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="true"
+                  data-rosie-toggle="collapse" data-rosie-target="#tv-acc-1" data-rosie-parent="#tv-acc">Acquisition</button></h2>
+              <div class="accordion-collapse collapse show" id="tv-acc-1"><div class="accordion-body">
+                <ul class="list-group list-group-flush list-group-sm">
+                  <li class="list-group-item d-flex justify-content-between">Installs <span class="text-muted">54,300</span></li>
+                  <li class="list-group-item d-flex justify-content-between">Cost <span class="text-muted">$32,400</span></li>
+                </ul>
+              </div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" aria-expanded="false"
+                  data-rosie-toggle="collapse" data-rosie-target="#tv-acc-2" data-rosie-parent="#tv-acc">Engagement</button></h2>
+              <div class="accordion-collapse collapse" id="tv-acc-2"><div class="accordion-body">Session length, retention and stickiness.</div></div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" aria-expanded="false"
+                  data-rosie-toggle="collapse" data-rosie-target="#tv-acc-3" data-rosie-parent="#tv-acc">Monetisation</button></h2>
+              <div class="accordion-collapse collapse" id="tv-acc-3"><div class="accordion-body">Revenue, ARPU and payer conversion.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Progress and slider</h3>
+          <div class="card card-sm">
+            <div class="card-body">
+              <div class="form-label mb-0">Sync</div>
+              <div class="progress progress-sm" style="margin-bottom:.75rem"><div class="progress-bar" style="width:60%">60%</div></div>
+              <div class="progress progress-sm" style="margin-bottom:.75rem"><div class="progress-bar bg-success" style="width:85%"></div></div>
+              <label class="form-label" for="tv-thr">Threshold</label>
+              <input type="range" class="form-range" id="tv-thr" value="40" />
+              <div class="d-flex justify-content-between text-muted"><span>0</span><span>100</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel ks-theme-panel-wide">
+          <h3>Tab panel</h3>
+          <ul class="nav nav-tabs nav-sm">
+            <li class="nav-item"><a class="nav-link active" href="#tv-tab-trend" data-rosie-toggle="tab" aria-selected="true">Trend</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tv-tab-breakdown" data-rosie-toggle="tab" aria-selected="false">Breakdown</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tv-tab-sql" data-rosie-toggle="tab" aria-selected="false">SQL</a></li>
+          </ul>
+          <div class="card card-sm rounded-0" style="border-top:0">
+            <div class="card-body d-flex gap-2 align-items-center">
+              <button class="dropdown-btn dropdown-btn-sm" style="width:auto"><span class="dropdown-placeholder has-value">Last 30D</span><i class="rosie-icon rosie-icon-calendar"></i></button>
+              <button class="dropdown-btn dropdown-btn-sm" style="width:auto" data-rosie-toggle="dropdown" data-rosie-target="#tv-channels"><span class="dropdown-placeholder">All channels</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+              <div class="dropdown-menu dropdown-menu-sm" id="tv-channels">
+                <a class="dropdown-item" href="#">Paid Search</a>
+                <a class="dropdown-item" href="#">Paid Social</a>
+                <a class="dropdown-item" href="#">Organic</a>
+              </div>
+              <div class="btn-group btn-group-sm ms-auto">
+                <button class="btn btn-outline-secondary active">Day</button>
+                <button class="btn btn-outline-secondary">Week</button>
+                <button class="btn btn-outline-secondary">Month</button>
+              </div>
+            </div>
+            <div class="card-body border-top tab-content">
+              <div class="tab-pane active show" id="tv-tab-trend">
+                <table class="table table-sm table-hover mb-0">
+                  <thead><tr><th>Date</th><th class="text-end">Installs</th><th class="text-end">Revenue</th></tr></thead>
+                  <tbody>
+                    <tr><td>2026-09-01</td><td class="text-end">48,210</td><td class="text-end">$71,800</td></tr>
+                    <tr><td>2026-08-31</td><td class="text-end">31,870</td><td class="text-end">$40,120</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="tab-pane" id="tv-tab-breakdown">
+                <ul class="list-group list-group-flush list-group-sm">
+                  <li class="list-group-item d-flex justify-content-between">Paid Search <span class="text-muted">$71,800</span></li>
+                  <li class="list-group-item d-flex justify-content-between">Paid Social <span class="text-muted">$40,120</span></li>
+                  <li class="list-group-item d-flex justify-content-between">Organic <span class="text-muted">$12,640</span></li>
+                </ul>
+              </div>
+              <div class="tab-pane" id="tv-tab-sql">
+                <pre class="mb-0"><code>select date, sum(installs), sum(revenue)
+from fact_daily
+group by 1 order by 1 desc</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Date picker</h3>
+          <div class="rosie-date-picker rosie-date-picker-sm">
+            <div class="rosie-date-picker-header"><span class="rosie-date-picker-title">September 2026</span></div>
+            <div class="rosie-date-picker-grid">
+              <div class="rosie-date-picker-weekday">Mo</div><div class="rosie-date-picker-weekday">Tu</div><div class="rosie-date-picker-weekday">We</div><div class="rosie-date-picker-weekday">Th</div><div class="rosie-date-picker-weekday">Fr</div><div class="rosie-date-picker-weekday">Sa</div><div class="rosie-date-picker-weekday">Su</div>
+              <div class="rosie-date-picker-cell is-blank"></div><div class="rosie-date-picker-cell">1</div><div class="rosie-date-picker-cell is-today">2</div><div class="rosie-date-picker-cell">3</div><div class="rosie-date-picker-cell">4</div><div class="rosie-date-picker-cell">5</div><div class="rosie-date-picker-cell">6</div>
+              <div class="rosie-date-picker-cell">7</div><div class="rosie-date-picker-cell">8</div><div class="rosie-date-picker-cell is-range-start">9</div><div class="rosie-date-picker-cell is-in-range">10</div><div class="rosie-date-picker-cell is-in-range">11</div><div class="rosie-date-picker-cell is-range-end">12</div><div class="rosie-date-picker-cell">13</div>
+              <div class="rosie-date-picker-cell">14</div><div class="rosie-date-picker-cell">15</div><div class="rosie-date-picker-cell">16</div><div class="rosie-date-picker-cell">17</div><div class="rosie-date-picker-cell">18</div><div class="rosie-date-picker-cell">19</div><div class="rosie-date-picker-cell">20</div>
+              <div class="rosie-date-picker-cell">21</div><div class="rosie-date-picker-cell">22</div><div class="rosie-date-picker-cell">23</div><div class="rosie-date-picker-cell">24</div><div class="rosie-date-picker-cell">25</div><div class="rosie-date-picker-cell">26</div><div class="rosie-date-picker-cell">27</div>
+              <div class="rosie-date-picker-cell">28</div><div class="rosie-date-picker-cell">29</div><div class="rosie-date-picker-cell">30</div><div class="rosie-date-picker-cell is-blank"></div><div class="rosie-date-picker-cell is-blank"></div><div class="rosie-date-picker-cell is-blank"></div><div class="rosie-date-picker-cell is-blank"></div>
+            </div>
+            <div class="d-flex justify-content-end" style="margin-top:.5rem">
+              <button class="btn btn-outline-secondary btn-sm">Today</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ks-theme-panel">
+          <h3>Menu</h3>
+          <button class="dropdown-btn dropdown-btn-sm"><span class="dropdown-placeholder has-value">Monetisation overview</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+          <div class="dropdown-menu show" style="position:static;display:block;margin-top:.25rem">
+            <div class="dropdown-search"><input type="text" placeholder="Search…" /></div>
+            <div class="dropdown-list">
+              <div class="dropdown-section"><span>Governed (2)</span><i class="rosie-icon rosie-icon-chevron-up"></i></div>
+              <div class="dropdown-item active"><span class="dropdown-item-label">Monetisation overview</span><i class="rosie-icon rosie-icon-check"></i></div>
+              <div class="dropdown-item"><span class="dropdown-item-label">Retention cohort</span></div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-item"><span class="dropdown-item-label">Create report…</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="tokens" class="ks-section">
       <h2>Design Tokens</h2>
       <p class="text-muted">Runtime <code>--rosie-*</code> custom properties. Tier 1 primitives (raw scales) feed Tier 2 semantic roles.</p>
-      <div class="ks-label">Semantic roles</div>
-      <div class="ks-grid">
+  <div class="ks-example">
+    <div class="ks-example-title">Semantic roles</div>
+    <div class="ks-preview">
+<div class="ks-grid">
         <div class="ks-token"><i style="background:var(--rosie-surface)"></i> --rosie-surface</div>
         <div class="ks-token"><i style="background:var(--rosie-surface-raised)"></i> --rosie-surface-raised</div>
         <div class="ks-token"><i style="background:var(--rosie-surface-sunken)"></i> --rosie-surface-sunken</div>
@@ -78,26 +643,59 @@
         <div class="ks-token"><i style="background:var(--rosie-text)"></i> --rosie-text</div>
         <div class="ks-token"><i style="background:var(--rosie-border-color)"></i> --rosie-border-color</div>
       </div>
-      <div class="ks-label">Spacing scale</div>
-      <div class="ks-row">
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-grid&quot;&gt;
+  &lt;div class=&quot;ks-token&quot;&gt;&lt;i style=&quot;background:var(--rosie-surface)&quot;&gt;&lt;/i&gt; --rosie-surface&lt;/div&gt;
+  &lt;div class=&quot;ks-token&quot;&gt;&lt;i style=&quot;background:var(--rosie-surface-raised)&quot;&gt;&lt;/i&gt; --rosie-surface-raised&lt;/div&gt;
+  &lt;div class=&quot;ks-token&quot;&gt;&lt;i style=&quot;background:var(--rosie-surface-sunken)&quot;&gt;&lt;/i&gt; --rosie-surface-sunken&lt;/div&gt;
+  &lt;div class=&quot;ks-token&quot;&gt;&lt;i style=&quot;background:var(--rosie-accent)&quot;&gt;&lt;/i&gt; --rosie-accent&lt;/div&gt;
+  &lt;div class=&quot;ks-token&quot;&gt;&lt;i style=&quot;background:var(--rosie-text)&quot;&gt;&lt;/i&gt; --rosie-text&lt;/div&gt;
+  &lt;div class=&quot;ks-token&quot;&gt;&lt;i style=&quot;background:var(--rosie-border-color)&quot;&gt;&lt;/i&gt; --rosie-border-color&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Spacing scale</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <div style="height:24px;background:var(--rosie-primary);width:var(--rosie-space-1)"></div>
         <div style="height:24px;background:var(--rosie-primary);width:var(--rosie-space-2)"></div>
         <div style="height:24px;background:var(--rosie-primary);width:var(--rosie-space-3)"></div>
         <div style="height:24px;background:var(--rosie-primary);width:var(--rosie-space-4)"></div>
         <div style="height:24px;background:var(--rosie-primary);width:var(--rosie-space-5)"></div>
       </div>
-      <div class="ks-label">Radius &amp; shadow</div>
-      <div class="ks-row">
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;div style=&quot;height:24px;background:var(--rosie-primary);width:var(--rosie-space-1)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;height:24px;background:var(--rosie-primary);width:var(--rosie-space-2)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;height:24px;background:var(--rosie-primary);width:var(--rosie-space-3)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;height:24px;background:var(--rosie-primary);width:var(--rosie-space-4)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;height:24px;background:var(--rosie-primary);width:var(--rosie-space-5)&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Radius &amp; shadow</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <div style="width:70px;height:44px;background:var(--rosie-surface-raised);border:1px solid var(--rosie-border-color);border-radius:var(--rosie-radius-sm)"></div>
         <div style="width:70px;height:44px;background:var(--rosie-surface-raised);border:1px solid var(--rosie-border-color);border-radius:var(--rosie-radius-lg)"></div>
         <div style="width:70px;height:44px;background:var(--rosie-surface-raised);border-radius:var(--rosie-radius);box-shadow:var(--rosie-box-shadow)"></div>
         <div style="width:70px;height:44px;background:var(--rosie-surface-raised);border-radius:var(--rosie-radius);box-shadow:var(--rosie-box-shadow-lg)"></div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;div style=&quot;width:70px;height:44px;background:var(--rosie-surface-raised);border:1px solid var(--rosie-border-color);border-radius:var(--rosie-radius-sm)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;width:70px;height:44px;background:var(--rosie-surface-raised);border:1px solid var(--rosie-border-color);border-radius:var(--rosie-radius-lg)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;width:70px;height:44px;background:var(--rosie-surface-raised);border-radius:var(--rosie-radius);box-shadow:var(--rosie-box-shadow)&quot;&gt;&lt;/div&gt;
+  &lt;div style=&quot;width:70px;height:44px;background:var(--rosie-surface-raised);border-radius:var(--rosie-radius);box-shadow:var(--rosie-box-shadow-lg)&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="typography" class="ks-section">
       <h2>Typography</h2>
-      <h1>h1. Plus Jakarta Sans</h1>
+  <div class="ks-example">
+    <div class="ks-preview">
+<h1>h1. Plus Jakarta Sans</h1>
       <h2>h2. Heading</h2>
       <h3>h3. Heading</h3>
       <h4>h4. Heading</h4>
@@ -107,12 +705,26 @@
       <p>Body copy with an <a href="#">inline link</a>, <strong>strong</strong>, <em>emphasis</em>, and <code>inline code</code>. <mark>Highlighted text</mark> and <small class="text-muted">muted small text</small>.</p>
       <blockquote class="blockquote"><p>A pastel design system that stays out of the way.</p></blockquote>
       <pre><code>const rosie = { primary: '#e97b98' };</code></pre>
+    </div>
+    <pre class="ks-code"><code>&lt;h1&gt;h1. Plus Jakarta Sans&lt;/h1&gt;
+&lt;h2&gt;h2. Heading&lt;/h2&gt;
+&lt;h3&gt;h3. Heading&lt;/h3&gt;
+&lt;h4&gt;h4. Heading&lt;/h4&gt;
+&lt;h5&gt;h5. Heading&lt;/h5&gt;
+&lt;h6&gt;h6. Heading&lt;/h6&gt;
+&lt;p class=&quot;lead&quot;&gt;Lead paragraph — data-dense 14px base, generous line-height.&lt;/p&gt;
+&lt;p&gt;Body copy with an &lt;a href=&quot;#&quot;&gt;inline link&lt;/a&gt;, &lt;strong&gt;strong&lt;/strong&gt;, &lt;em&gt;emphasis&lt;/em&gt;, and &lt;code&gt;inline code&lt;/code&gt;. &lt;mark&gt;Highlighted text&lt;/mark&gt; and &lt;small class=&quot;text-muted&quot;&gt;muted small text&lt;/small&gt;.&lt;/p&gt;
+&lt;blockquote class=&quot;blockquote&quot;&gt;&lt;p&gt;A pastel design system that stays out of the way.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;const rosie = { primary: &#x27;#e97b98&#x27; };&lt;/code&gt;&lt;/pre&gt;</code></pre>
+  </div>
     </section>
 
     <section id="colors" class="ks-section">
       <h2>Color Palette</h2>
-      <div class="ks-label">Theme colors</div>
-      <div class="ks-row">
+  <div class="ks-example">
+    <div class="ks-example-title">Theme colors</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <span class="badge text-bg-primary">primary</span>
         <span class="badge text-bg-secondary">secondary</span>
         <span class="badge text-bg-success">success</span>
@@ -122,8 +734,22 @@
         <span class="badge text-bg-light">light</span>
         <span class="badge text-bg-dark">dark</span>
       </div>
-      <div class="ks-label">Rose ramp (primary)</div>
-      <div class="ks-row">
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;span class=&quot;badge text-bg-primary&quot;&gt;primary&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-secondary&quot;&gt;secondary&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-success&quot;&gt;success&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-info&quot;&gt;info&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-warning&quot;&gt;warning&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-danger&quot;&gt;danger&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-light&quot;&gt;light&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-dark&quot;&gt;dark&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Rose ramp (primary)</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <i style="width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-50)"></i>
         <i style="width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-100)"></i>
         <i style="width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-200)"></i>
@@ -132,8 +758,21 @@
         <i style="width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-700)"></i>
         <i style="width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-900)"></i>
       </div>
-      <div class="ks-label">Chart categorical</div>
-      <div class="ks-row">
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-50)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-100)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-200)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-300)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-500)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-700)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:40px;height:40px;border-radius:6px;background:var(--rosie-rose-900)&quot;&gt;&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Chart categorical</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-1)"></i>
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-2)"></i>
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-3)"></i>
@@ -143,11 +782,25 @@
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-7)"></i>
         <i style="width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-8)"></i>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-1)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-2)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-3)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-4)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-5)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-6)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-7)&quot;&gt;&lt;/i&gt;
+  &lt;i style=&quot;width:32px;height:32px;border-radius:6px;background:var(--rosie-chart-8)&quot;&gt;&lt;/i&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="icons" class="ks-section">
       <h2>Icons <small class="text-muted">(extended)</small></h2>
-      <p class="text-muted">Drawn on a 24&times;24 grid, 2px stroke, emitted as a CSS mask — so an icon
+  <div class="ks-example">
+    <div class="ks-preview">
+<p class="text-muted">Drawn on a 24&times;24 grid, 2px stroke, emitted as a CSS mask — so an icon
         inherits <code>color</code> and scales with <code>font-size</code>. No font, no sprite, no JavaScript.</p>
       <div class="ks-row" style="gap:1.5rem">
         <span style="font-size:.875rem"><i class="rosie-icon rosie-icon-chart-bar"></i> .875rem</span>
@@ -227,93 +880,95 @@
         <div class="ks-icon"><i class="rosie-icon rosie-icon-ellipsis-vertical"></i><span>ellipsis-vertical</span></div>
         <div class="ks-icon"><i class="rosie-icon rosie-icon-right-from-bracket"></i><span>right-from-bracket</span></div>
       </div>
-    </section>
-
-    <section id="buttons" class="ks-section">
-      <h2>Buttons</h2>
-      <div class="ks-row">
-        <button class="btn btn-primary">Primary</button>
-        <button class="btn btn-secondary">Secondary</button>
-        <button class="btn btn-success">Success</button>
-        <button class="btn btn-info">Info</button>
-        <button class="btn btn-warning">Warning</button>
-        <button class="btn btn-danger">Danger</button>
-        <button class="btn btn-light">Light</button>
-        <button class="btn btn-dark">Dark</button>
-        <button class="btn btn-link">Link</button>
-      </div>
-      <div class="ks-row">
-        <button class="btn btn-outline-primary">Primary</button>
-        <button class="btn btn-outline-secondary">Secondary</button>
-        <button class="btn btn-outline-success">Success</button>
-        <button class="btn btn-outline-danger">Danger</button>
-        <button class="btn btn-primary" disabled>Disabled</button>
-      </div>
-      <div class="ks-row">
-        <button class="btn btn-primary btn-sm">Small</button>
-        <button class="btn btn-primary">Default</button>
-        <button class="btn btn-primary btn-lg">Large</button>
-        <div class="btn-group" role="group">
-          <button class="btn btn-outline-secondary">Left</button>
-          <button class="btn btn-outline-secondary">Mid</button>
-          <button class="btn btn-outline-secondary">Right</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="badges" class="ks-section">
-      <h2>Badges</h2>
-      <div class="ks-row">
-        <span class="badge text-bg-primary">Primary</span>
-        <span class="badge text-bg-success">Success</span>
-        <span class="badge text-bg-danger">Danger</span>
-        <span class="badge rounded-pill text-bg-info">Pill</span>
-        <span class="badge rounded-pill text-bg-warning">7</span>
-        <button class="btn btn-primary">Inbox <span class="badge text-bg-light">99+</span></button>
-      </div>
-    </section>
-
-    <section id="alerts" class="ks-section">
-      <h2>Alerts</h2>
-      <div class="alert alert-primary" role="alert">A primary alert with an <a href="#" class="alert-link">example link</a>.</div>
-      <div class="alert alert-success" role="alert">Saved successfully.</div>
-      <div class="alert alert-warning" role="alert">Heads up — check your input.</div>
-      <div class="alert alert-danger" role="alert">Something went wrong.</div>
-    </section>
-
-    <section id="callouts" class="ks-section">
-      <h2>Callouts <small class="text-muted">(extended)</small></h2>
-      <div class="rosie-callout rosie-callout-info"><div class="rosie-callout-body">An informational callout with a soft tinted background.</div></div>
-      <div class="rosie-callout rosie-callout-tip"><div class="rosie-callout-body">Pro tip: tokens cascade at runtime.</div></div>
-      <div class="rosie-callout rosie-callout-warning"><div class="rosie-callout-body">This action cannot be undone.</div></div>
-      <div class="rosie-callout rosie-callout-danger"><div class="rosie-callout-body">Deleting removes all related records.</div></div>
-    </section>
-
-    <section id="cards" class="ks-section">
-      <h2>Cards</h2>
-      <div class="ks-grid">
-        <div class="card">
-          <div class="card-header">Featured</div>
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Subtitle</h6>
-            <p class="card-text">Soft shadow, rounded, on a white raised surface.</p>
-            <a href="#" class="btn btn-primary btn-sm">Action</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Plain card</h5>
-            <p class="card-text">Just a body with some supporting text.</p>
-          </div>
-          <div class="card-footer text-muted">Footer</div>
-        </div>
-      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;p class=&quot;text-muted&quot;&gt;Drawn on a 24&amp;times;24 grid, 2px stroke, emitted as a CSS mask — so an icon
+  inherits &lt;code&gt;color&lt;/code&gt; and scales with &lt;code&gt;font-size&lt;/code&gt;. No font, no sprite, no JavaScript.&lt;/p&gt;
+&lt;div class=&quot;ks-row&quot; style=&quot;gap:1.5rem&quot;&gt;
+  &lt;span style=&quot;font-size:.875rem&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-bar&quot;&gt;&lt;/i&gt; .875rem&lt;/span&gt;
+  &lt;span style=&quot;font-size:1rem&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-bar&quot;&gt;&lt;/i&gt; 1rem&lt;/span&gt;
+  &lt;span style=&quot;font-size:1.5rem&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-bar&quot;&gt;&lt;/i&gt; 1.5rem&lt;/span&gt;
+  &lt;span class=&quot;text-primary&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-bar&quot;&gt;&lt;/i&gt; currentColor&lt;/span&gt;
+  &lt;span class=&quot;text-danger&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-bar&quot;&gt;&lt;/i&gt; currentColor&lt;/span&gt;
+  &lt;span&gt;&lt;i class=&quot;rosie-icon rosie-icon-spinner rosie-icon-spin&quot;&gt;&lt;/i&gt; .rosie-icon-spin&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ks-icon-grid&quot;&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-bars&quot;&gt;&lt;/i&gt;&lt;span&gt;bars&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-down&quot;&gt;&lt;/i&gt;&lt;span&gt;chevron-down&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-up&quot;&gt;&lt;/i&gt;&lt;span&gt;chevron-up&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-left&quot;&gt;&lt;/i&gt;&lt;span&gt;chevron-left&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-right&quot;&gt;&lt;/i&gt;&lt;span&gt;chevron-right&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevrons-left&quot;&gt;&lt;/i&gt;&lt;span&gt;chevrons-left&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevrons-right&quot;&gt;&lt;/i&gt;&lt;span&gt;chevrons-right&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-arrow-left&quot;&gt;&lt;/i&gt;&lt;span&gt;arrow-left&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-arrow-right&quot;&gt;&lt;/i&gt;&lt;span&gt;arrow-right&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-arrow-up&quot;&gt;&lt;/i&gt;&lt;span&gt;arrow-up&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-arrow-down&quot;&gt;&lt;/i&gt;&lt;span&gt;arrow-down&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-caret-down&quot;&gt;&lt;/i&gt;&lt;span&gt;caret-down&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-caret-right&quot;&gt;&lt;/i&gt;&lt;span&gt;caret-right&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-house&quot;&gt;&lt;/i&gt;&lt;span&gt;house&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-plus&quot;&gt;&lt;/i&gt;&lt;span&gt;plus&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-minus&quot;&gt;&lt;/i&gt;&lt;span&gt;minus&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-xmark&quot;&gt;&lt;/i&gt;&lt;span&gt;xmark&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-check&quot;&gt;&lt;/i&gt;&lt;span&gt;check&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-pencil&quot;&gt;&lt;/i&gt;&lt;span&gt;pencil&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-pen-to-square&quot;&gt;&lt;/i&gt;&lt;span&gt;pen-to-square&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-trash&quot;&gt;&lt;/i&gt;&lt;span&gt;trash&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-copy&quot;&gt;&lt;/i&gt;&lt;span&gt;copy&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-download&quot;&gt;&lt;/i&gt;&lt;span&gt;download&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-upload&quot;&gt;&lt;/i&gt;&lt;span&gt;upload&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-magnifying-glass&quot;&gt;&lt;/i&gt;&lt;span&gt;magnifying-glass&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-link&quot;&gt;&lt;/i&gt;&lt;span&gt;link&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-rotate&quot;&gt;&lt;/i&gt;&lt;span&gt;rotate&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-share&quot;&gt;&lt;/i&gt;&lt;span&gt;share&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-paper-plane&quot;&gt;&lt;/i&gt;&lt;span&gt;paper-plane&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-expand&quot;&gt;&lt;/i&gt;&lt;span&gt;expand&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-compress&quot;&gt;&lt;/i&gt;&lt;span&gt;compress&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-circle-info&quot;&gt;&lt;/i&gt;&lt;span&gt;circle-info&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-circle-check&quot;&gt;&lt;/i&gt;&lt;span&gt;circle-check&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-circle-xmark&quot;&gt;&lt;/i&gt;&lt;span&gt;circle-xmark&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-triangle-exclamation&quot;&gt;&lt;/i&gt;&lt;span&gt;triangle-exclamation&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-bell&quot;&gt;&lt;/i&gt;&lt;span&gt;bell&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-clock&quot;&gt;&lt;/i&gt;&lt;span&gt;clock&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-spinner&quot;&gt;&lt;/i&gt;&lt;span&gt;spinner&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-bar&quot;&gt;&lt;/i&gt;&lt;span&gt;chart-bar&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-line&quot;&gt;&lt;/i&gt;&lt;span&gt;chart-line&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-area&quot;&gt;&lt;/i&gt;&lt;span&gt;chart-area&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-chart-pie&quot;&gt;&lt;/i&gt;&lt;span&gt;chart-pie&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-table&quot;&gt;&lt;/i&gt;&lt;span&gt;table&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-filter&quot;&gt;&lt;/i&gt;&lt;span&gt;filter&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-database&quot;&gt;&lt;/i&gt;&lt;span&gt;database&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-sigma&quot;&gt;&lt;/i&gt;&lt;span&gt;sigma&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-sliders&quot;&gt;&lt;/i&gt;&lt;span&gt;sliders&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-sort&quot;&gt;&lt;/i&gt;&lt;span&gt;sort&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-sort-up&quot;&gt;&lt;/i&gt;&lt;span&gt;sort-up&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-sort-down&quot;&gt;&lt;/i&gt;&lt;span&gt;sort-down&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-folder&quot;&gt;&lt;/i&gt;&lt;span&gt;folder&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-file&quot;&gt;&lt;/i&gt;&lt;span&gt;file&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-box&quot;&gt;&lt;/i&gt;&lt;span&gt;box&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-tag&quot;&gt;&lt;/i&gt;&lt;span&gt;tag&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-star&quot;&gt;&lt;/i&gt;&lt;span&gt;star&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-gear&quot;&gt;&lt;/i&gt;&lt;span&gt;gear&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-user&quot;&gt;&lt;/i&gt;&lt;span&gt;user&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-users&quot;&gt;&lt;/i&gt;&lt;span&gt;users&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-envelope&quot;&gt;&lt;/i&gt;&lt;span&gt;envelope&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-eye&quot;&gt;&lt;/i&gt;&lt;span&gt;eye&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-eye-slash&quot;&gt;&lt;/i&gt;&lt;span&gt;eye-slash&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-calendar&quot;&gt;&lt;/i&gt;&lt;span&gt;calendar&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-code&quot;&gt;&lt;/i&gt;&lt;span&gt;code&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-columns&quot;&gt;&lt;/i&gt;&lt;span&gt;columns&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-grip-vertical&quot;&gt;&lt;/i&gt;&lt;span&gt;grip-vertical&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-ellipsis&quot;&gt;&lt;/i&gt;&lt;span&gt;ellipsis&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-ellipsis-vertical&quot;&gt;&lt;/i&gt;&lt;span&gt;ellipsis-vertical&lt;/span&gt;&lt;/div&gt;
+  &lt;div class=&quot;ks-icon&quot;&gt;&lt;i class=&quot;rosie-icon rosie-icon-right-from-bracket&quot;&gt;&lt;/i&gt;&lt;span&gt;right-from-bracket&lt;/span&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="forms" class="ks-section">
       <h2>Forms</h2>
-      <div class="ks-grid">
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-grid">
         <div>
           <label class="form-label" for="i1">Email</label>
           <input type="email" class="form-control" id="i1" placeholder="you@example.com" />
@@ -352,11 +1007,210 @@
           <input type="range" class="form-range" id="rg" value="60" />
         </div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-grid&quot;&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;i1&quot;&gt;Email&lt;/label&gt;
+    &lt;input type=&quot;email&quot; class=&quot;form-control&quot; id=&quot;i1&quot; placeholder=&quot;you@example.com&quot; /&gt;
+    &lt;div class=&quot;form-text&quot;&gt;We&#x27;ll never share it.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;s1&quot;&gt;Select&lt;/label&gt;
+    &lt;select class=&quot;form-select&quot; id=&quot;s1&quot;&gt;&lt;option&gt;One&lt;/option&gt;&lt;option&gt;Two&lt;/option&gt;&lt;/select&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Sizes&lt;/label&gt;
+    &lt;input class=&quot;form-control form-control-sm mb-1&quot; placeholder=&quot;Small&quot; /&gt;
+    &lt;input class=&quot;form-control mb-1&quot; placeholder=&quot;Default&quot; /&gt;
+    &lt;input class=&quot;form-control form-control-lg&quot; placeholder=&quot;Large&quot; /&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Input group&lt;/label&gt;
+    &lt;div class=&quot;input-group&quot;&gt;
+      &lt;span class=&quot;input-group-text&quot;&gt;@&lt;/span&gt;
+      &lt;input class=&quot;form-control&quot; placeholder=&quot;username&quot; /&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Validation&lt;/label&gt;
+    &lt;input class=&quot;form-control is-invalid&quot; value=&quot;bad&quot; /&gt;
+    &lt;div class=&quot;invalid-feedback&quot;&gt;Please provide a valid value.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot;&gt;Checks &amp;amp; switches&lt;/label&gt;
+    &lt;div class=&quot;form-check&quot;&gt;&lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; id=&quot;c1&quot; checked /&gt;&lt;label class=&quot;form-check-label&quot; for=&quot;c1&quot;&gt;Checkbox&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;form-check&quot;&gt;&lt;input class=&quot;form-check-input&quot; type=&quot;radio&quot; name=&quot;r&quot; id=&quot;c2&quot; checked /&gt;&lt;label class=&quot;form-check-label&quot; for=&quot;c2&quot;&gt;Radio&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;form-check form-switch&quot;&gt;&lt;input class=&quot;form-check-input&quot; type=&quot;checkbox&quot; id=&quot;c3&quot; checked /&gt;&lt;label class=&quot;form-check-label&quot; for=&quot;c3&quot;&gt;Switch&lt;/label&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;label class=&quot;form-label&quot; for=&quot;rg&quot;&gt;Range&lt;/label&gt;
+    &lt;input type=&quot;range&quot; class=&quot;form-range&quot; id=&quot;rg&quot; value=&quot;60&quot; /&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+    </section>
+
+    <section id="buttons" class="ks-section">
+      <h2>Buttons</h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-row">
+        <button class="btn btn-primary">Primary</button>
+        <button class="btn btn-secondary">Secondary</button>
+        <button class="btn btn-success">Success</button>
+        <button class="btn btn-info">Info</button>
+        <button class="btn btn-warning">Warning</button>
+        <button class="btn btn-danger">Danger</button>
+        <button class="btn btn-light">Light</button>
+        <button class="btn btn-dark">Dark</button>
+        <button class="btn btn-link">Link</button>
+      </div>
+      <div class="ks-row">
+        <button class="btn btn-outline-primary">Primary</button>
+        <button class="btn btn-outline-secondary">Secondary</button>
+        <button class="btn btn-outline-success">Success</button>
+        <button class="btn btn-outline-danger">Danger</button>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+      <div class="ks-row">
+        <button class="btn btn-primary btn-sm">Small</button>
+        <button class="btn btn-primary">Default</button>
+        <button class="btn btn-primary btn-lg">Large</button>
+        <div class="btn-group" role="group">
+          <button class="btn btn-outline-secondary">Left</button>
+          <button class="btn btn-outline-secondary">Mid</button>
+          <button class="btn btn-outline-secondary">Right</button>
+        </div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;button class=&quot;btn btn-primary&quot;&gt;Primary&lt;/button&gt;
+  &lt;button class=&quot;btn btn-secondary&quot;&gt;Secondary&lt;/button&gt;
+  &lt;button class=&quot;btn btn-success&quot;&gt;Success&lt;/button&gt;
+  &lt;button class=&quot;btn btn-info&quot;&gt;Info&lt;/button&gt;
+  &lt;button class=&quot;btn btn-warning&quot;&gt;Warning&lt;/button&gt;
+  &lt;button class=&quot;btn btn-danger&quot;&gt;Danger&lt;/button&gt;
+  &lt;button class=&quot;btn btn-light&quot;&gt;Light&lt;/button&gt;
+  &lt;button class=&quot;btn btn-dark&quot;&gt;Dark&lt;/button&gt;
+  &lt;button class=&quot;btn btn-link&quot;&gt;Link&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;button class=&quot;btn btn-outline-primary&quot;&gt;Primary&lt;/button&gt;
+  &lt;button class=&quot;btn btn-outline-secondary&quot;&gt;Secondary&lt;/button&gt;
+  &lt;button class=&quot;btn btn-outline-success&quot;&gt;Success&lt;/button&gt;
+  &lt;button class=&quot;btn btn-outline-danger&quot;&gt;Danger&lt;/button&gt;
+  &lt;button class=&quot;btn btn-primary&quot; disabled&gt;Disabled&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;button class=&quot;btn btn-primary btn-sm&quot;&gt;Small&lt;/button&gt;
+  &lt;button class=&quot;btn btn-primary&quot;&gt;Default&lt;/button&gt;
+  &lt;button class=&quot;btn btn-primary btn-lg&quot;&gt;Large&lt;/button&gt;
+  &lt;div class=&quot;btn-group&quot; role=&quot;group&quot;&gt;
+    &lt;button class=&quot;btn btn-outline-secondary&quot;&gt;Left&lt;/button&gt;
+    &lt;button class=&quot;btn btn-outline-secondary&quot;&gt;Mid&lt;/button&gt;
+    &lt;button class=&quot;btn btn-outline-secondary&quot;&gt;Right&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+    </section>
+
+    <section id="badges" class="ks-section">
+      <h2>Badges</h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-row">
+        <span class="badge text-bg-primary">Primary</span>
+        <span class="badge text-bg-success">Success</span>
+        <span class="badge text-bg-danger">Danger</span>
+        <span class="badge rounded-pill text-bg-info">Pill</span>
+        <span class="badge rounded-pill text-bg-warning">7</span>
+        <button class="btn btn-primary">Inbox <span class="badge text-bg-light">99+</span></button>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;span class=&quot;badge text-bg-primary&quot;&gt;Primary&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-success&quot;&gt;Success&lt;/span&gt;
+  &lt;span class=&quot;badge text-bg-danger&quot;&gt;Danger&lt;/span&gt;
+  &lt;span class=&quot;badge rounded-pill text-bg-info&quot;&gt;Pill&lt;/span&gt;
+  &lt;span class=&quot;badge rounded-pill text-bg-warning&quot;&gt;7&lt;/span&gt;
+  &lt;button class=&quot;btn btn-primary&quot;&gt;Inbox &lt;span class=&quot;badge text-bg-light&quot;&gt;99+&lt;/span&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+    </section>
+
+    <section id="alerts" class="ks-section">
+      <h2>Alerts</h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="alert alert-primary" role="alert">A primary alert with an <a href="#" class="alert-link">example link</a>.</div>
+      <div class="alert alert-success" role="alert">Saved successfully.</div>
+      <div class="alert alert-warning" role="alert">Heads up — check your input.</div>
+      <div class="alert alert-danger" role="alert">Something went wrong.</div>
+      <div class="alert alert-secondary alert-dismissible" role="alert">
+        Dismissible — the close button removes this alert.
+        <button class="btn-close" aria-label="Close" data-rosie-dismiss="alert"></button>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;alert alert-primary&quot; role=&quot;alert&quot;&gt;A primary alert with an &lt;a href=&quot;#&quot; class=&quot;alert-link&quot;&gt;example link&lt;/a&gt;.&lt;/div&gt;
+&lt;div class=&quot;alert alert-success&quot; role=&quot;alert&quot;&gt;Saved successfully.&lt;/div&gt;
+&lt;div class=&quot;alert alert-warning&quot; role=&quot;alert&quot;&gt;Heads up — check your input.&lt;/div&gt;
+&lt;div class=&quot;alert alert-danger&quot; role=&quot;alert&quot;&gt;Something went wrong.&lt;/div&gt;
+&lt;div class=&quot;alert alert-secondary alert-dismissible&quot; role=&quot;alert&quot;&gt;
+  Dismissible — the close button removes this alert.
+  &lt;button class=&quot;btn-close&quot; aria-label=&quot;Close&quot; data-rosie-dismiss=&quot;alert&quot;&gt;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+    </section>
+
+    <section id="cards" class="ks-section">
+      <h2>Cards</h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-grid">
+        <div class="card">
+          <div class="card-header">Featured</div>
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Subtitle</h6>
+            <p class="card-text">Soft shadow, rounded, on a white raised surface.</p>
+            <a href="#" class="btn btn-primary btn-sm">Action</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Plain card</h5>
+            <p class="card-text">Just a body with some supporting text.</p>
+          </div>
+          <div class="card-footer text-muted">Footer</div>
+        </div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-grid&quot;&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-header&quot;&gt;Featured&lt;/div&gt;
+    &lt;div class=&quot;card-body&quot;&gt;
+      &lt;h5 class=&quot;card-title&quot;&gt;Card title&lt;/h5&gt;
+      &lt;h6 class=&quot;card-subtitle mb-2 text-muted&quot;&gt;Subtitle&lt;/h6&gt;
+      &lt;p class=&quot;card-text&quot;&gt;Soft shadow, rounded, on a white raised surface.&lt;/p&gt;
+      &lt;a href=&quot;#&quot; class=&quot;btn btn-primary btn-sm&quot;&gt;Action&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;card&quot;&gt;
+    &lt;div class=&quot;card-body&quot;&gt;
+      &lt;h5 class=&quot;card-title&quot;&gt;Plain card&lt;/h5&gt;
+      &lt;p class=&quot;card-text&quot;&gt;Just a body with some supporting text.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;card-footer text-muted&quot;&gt;Footer&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="tables" class="ks-section">
       <h2>Tables</h2>
-      <table class="table table-striped table-hover">
+  <div class="ks-example">
+    <div class="ks-preview">
+<table class="table table-striped table-hover">
         <thead><tr><th>#</th><th>Name</th><th>Role</th><th>Status</th></tr></thead>
         <tbody>
           <tr><td>1</td><td>Ada Lovelace</td><td>Engineer</td><td><span class="badge text-bg-success">Active</span></td></tr>
@@ -364,11 +1218,23 @@
           <tr><td>3</td><td>Grace Hopper</td><td>Admiral</td><td><span class="badge text-bg-secondary">Offline</span></td></tr>
         </tbody>
       </table>
+    </div>
+    <pre class="ks-code"><code>&lt;table class=&quot;table table-striped table-hover&quot;&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;#&lt;/th&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Role&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;Ada Lovelace&lt;/td&gt;&lt;td&gt;Engineer&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;badge text-bg-success&quot;&gt;Active&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;2&lt;/td&gt;&lt;td&gt;Alan Turing&lt;/td&gt;&lt;td&gt;Researcher&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;badge text-bg-warning&quot;&gt;Away&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;Grace Hopper&lt;/td&gt;&lt;td&gt;Admiral&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;badge text-bg-secondary&quot;&gt;Offline&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+  </div>
     </section>
 
     <section id="nav" class="ks-section">
       <h2>Nav &amp; Tabs</h2>
-      <ul class="nav nav-tabs mb-3">
+  <div class="ks-example">
+    <div class="ks-preview">
+<ul class="nav nav-tabs mb-3">
         <li class="nav-item"><a class="nav-link active" href="#">Active</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
         <li class="nav-item"><a class="nav-link disabled" aria-disabled="true">Disabled</a></li>
@@ -381,59 +1247,143 @@
         <li class="nav-item"><a class="nav-link active" href="#">Active</a></li>
         <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
       </ul>
+    </div>
+    <pre class="ks-code"><code>&lt;ul class=&quot;nav nav-tabs mb-3&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link disabled&quot; aria-disabled=&quot;true&quot;&gt;Disabled&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul class=&quot;nav nav-pills mb-3&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul class=&quot;nav nav-underline&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Active&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Tabs with panes</div>
+    <div class="ks-preview">
+<ul class="nav nav-tabs">
+        <li class="nav-item"><a class="nav-link active" href="#ks-tab-overview" data-rosie-toggle="tab" aria-selected="true">Overview</a></li>
+        <li class="nav-item"><a class="nav-link" href="#ks-tab-detail" data-rosie-toggle="tab" aria-selected="false">Detail</a></li>
+      </ul>
+      <div class="tab-content border border-top-0 p-3">
+        <div class="tab-pane active show" id="ks-tab-overview">Overview pane.</div>
+        <div class="tab-pane" id="ks-tab-detail">Detail pane.</div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;ul class=&quot;nav nav-tabs&quot;&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#ks-tab-overview&quot; data-rosie-toggle=&quot;tab&quot; aria-selected=&quot;true&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#ks-tab-detail&quot; data-rosie-toggle=&quot;tab&quot; aria-selected=&quot;false&quot;&gt;Detail&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;tab-content border border-top-0 p-3&quot;&gt;
+  &lt;div class=&quot;tab-pane active show&quot; id=&quot;ks-tab-overview&quot;&gt;Overview pane.&lt;/div&gt;
+  &lt;div class=&quot;tab-pane&quot; id=&quot;ks-tab-detail&quot;&gt;Detail pane.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="breadcrumb" class="ks-section">
       <h2>Breadcrumb</h2>
-      <nav><ol class="breadcrumb">
+  <div class="ks-example">
+    <div class="ks-preview">
+<nav><ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="#">Home</a></li>
         <li class="breadcrumb-item"><a href="#">Library</a></li>
         <li class="breadcrumb-item active" aria-current="page">Data</li>
       </ol></nav>
+    </div>
+    <pre class="ks-code"><code>&lt;nav&gt;&lt;ol class=&quot;breadcrumb&quot;&gt;
+  &lt;li class=&quot;breadcrumb-item&quot;&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;breadcrumb-item&quot;&gt;&lt;a href=&quot;#&quot;&gt;Library&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;breadcrumb-item active&quot; aria-current=&quot;page&quot;&gt;Data&lt;/li&gt;
+&lt;/ol&gt;&lt;/nav&gt;</code></pre>
+  </div>
     </section>
 
     <section id="pagination" class="ks-section">
       <h2>Pagination</h2>
-      <nav><ul class="pagination">
+  <div class="ks-example">
+    <div class="ks-preview">
+<nav><ul class="pagination">
         <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
         <li class="page-item active"><a class="page-link" href="#">1</a></li>
         <li class="page-item"><a class="page-link" href="#">2</a></li>
         <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
       </ul></nav>
+    </div>
+    <pre class="ks-code"><code>&lt;nav&gt;&lt;ul class=&quot;pagination&quot;&gt;
+  &lt;li class=&quot;page-item disabled&quot;&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;&amp;laquo;&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;page-item active&quot;&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;page-item&quot;&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;page-item&quot;&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
+  &lt;li class=&quot;page-item&quot;&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;&amp;raquo;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/nav&gt;</code></pre>
+  </div>
     </section>
 
     <section id="progress" class="ks-section">
       <h2>Progress</h2>
-      <div class="progress mb-2"><div class="progress-bar" style="width:25%"></div></div>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="progress mb-2"><div class="progress-bar" style="width:25%"></div></div>
       <div class="progress mb-2"><div class="progress-bar bg-success" style="width:50%"></div></div>
       <div class="progress"><div class="progress-bar bg-warning" style="width:75%"></div></div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;progress mb-2&quot;&gt;&lt;div class=&quot;progress-bar&quot; style=&quot;width:25%&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;progress mb-2&quot;&gt;&lt;div class=&quot;progress-bar bg-success&quot; style=&quot;width:50%&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;progress&quot;&gt;&lt;div class=&quot;progress-bar bg-warning&quot; style=&quot;width:75%&quot;&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="spinners" class="ks-section">
       <h2>Spinners</h2>
-      <div class="ks-row">
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-row">
         <div class="spinner-border text-primary" role="status"></div>
         <div class="spinner-border text-secondary spinner-border-sm" role="status"></div>
         <div class="spinner-grow text-danger" role="status"></div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;div class=&quot;spinner-border text-primary&quot; role=&quot;status&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;spinner-border text-secondary spinner-border-sm&quot; role=&quot;status&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;spinner-grow text-danger&quot; role=&quot;status&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="listgroup" class="ks-section">
       <h2>List group</h2>
-      <ul class="list-group" style="max-width:360px">
+  <div class="ks-example">
+    <div class="ks-preview">
+<ul class="list-group" style="max-width:360px">
         <li class="list-group-item active">Active item</li>
         <li class="list-group-item">Second item</li>
         <li class="list-group-item d-flex justify-content-between align-items-center">With badge <span class="badge text-bg-primary rounded-pill">14</span></li>
         <li class="list-group-item disabled">Disabled</li>
       </ul>
+    </div>
+    <pre class="ks-code"><code>&lt;ul class=&quot;list-group&quot; style=&quot;max-width:360px&quot;&gt;
+  &lt;li class=&quot;list-group-item active&quot;&gt;Active item&lt;/li&gt;
+  &lt;li class=&quot;list-group-item&quot;&gt;Second item&lt;/li&gt;
+  &lt;li class=&quot;list-group-item d-flex justify-content-between align-items-center&quot;&gt;With badge &lt;span class=&quot;badge text-bg-primary rounded-pill&quot;&gt;14&lt;/span&gt;&lt;/li&gt;
+  &lt;li class=&quot;list-group-item disabled&quot;&gt;Disabled&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+  </div>
     </section>
 
     <section id="dropdown" class="ks-section">
-      <h2>Dropdown <small class="text-muted">(shown open)</small></h2>
-      <div class="dropdown" style="position:relative;height:180px">
-        <button class="btn btn-primary dropdown-toggle">Menu</button>
-        <ul class="dropdown-menu show" style="position:static;display:block">
+      <h2>Dropdown</h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" data-rosie-toggle="dropdown">Menu</button>
+        <ul class="dropdown-menu">
           <li><h6 class="dropdown-header">Section</h6></li>
           <li><a class="dropdown-item active" href="#">Active action</a></li>
           <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -441,45 +1391,214 @@
           <li><a class="dropdown-item" href="#">Separated</a></li>
         </ul>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;dropdown&quot;&gt;
+  &lt;button class=&quot;btn btn-primary dropdown-toggle&quot; data-rosie-toggle=&quot;dropdown&quot;&gt;Menu&lt;/button&gt;
+  &lt;ul class=&quot;dropdown-menu&quot;&gt;
+    &lt;li&gt;&lt;h6 class=&quot;dropdown-header&quot;&gt;Section&lt;/h6&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;dropdown-item active&quot; href=&quot;#&quot;&gt;Active action&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;hr class=&quot;dropdown-divider&quot; /&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;dropdown-item&quot; href=&quot;#&quot;&gt;Separated&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Extended trigger &amp; menu</div>
+    <div class="ks-preview">
+<div class="ks-row" style="align-items:flex-start;gap:2rem">
+        <div style="width:260px">
+          <button class="dropdown-btn" data-rosie-toggle="dropdown">
+            <span class="dropdown-placeholder has-value">Asia/Ho_Chi_Minh</span>
+            <i class="rosie-icon rosie-icon-chevron-down"></i>
+          </button>
+          <div class="dropdown-menu">
+            <div class="dropdown-search"><input type="text" placeholder="Search…" /></div>
+            <div class="dropdown-item dropdown-select-all">
+              <span class="dropdown-item-label">Select all</span>
+              <i class="rosie-icon rosie-icon-minus"></i>
+            </div>
+            <div class="dropdown-list">
+              <div class="dropdown-item active">
+                <span class="dropdown-item-label">Asia/Ho_Chi_Minh</span>
+                <i class="rosie-icon rosie-icon-check"></i>
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-section">
+                <span>Europe (2)</span>
+                <i class="rosie-icon rosie-icon-chevron-up"></i>
+              </div>
+              <div class="dropdown-item"><span class="dropdown-item-label">Europe/London</span></div>
+              <div class="dropdown-item"><span class="dropdown-item-label">Europe/Paris</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="width:260px">
+          <button class="dropdown-btn" data-rosie-toggle="dropdown"><span class="dropdown-placeholder">Select</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+          <button class="dropdown-btn dropdown-btn-sm" style="margin-top:.5rem" data-rosie-toggle="dropdown"><span class="dropdown-placeholder">Small</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+          <button class="dropdown-btn" style="margin-top:.5rem" disabled><span class="dropdown-placeholder has-value">Disabled</span><i class="rosie-icon rosie-icon-chevron-down"></i></button>
+          <div class="dropdown-menu">
+            <div class="dropdown-empty">No options</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot; style=&quot;align-items:flex-start;gap:2rem&quot;&gt;
+  &lt;div style=&quot;width:260px&quot;&gt;
+    &lt;button class=&quot;dropdown-btn&quot; data-rosie-toggle=&quot;dropdown&quot;&gt;
+      &lt;span class=&quot;dropdown-placeholder has-value&quot;&gt;Asia/Ho_Chi_Minh&lt;/span&gt;
+      &lt;i class=&quot;rosie-icon rosie-icon-chevron-down&quot;&gt;&lt;/i&gt;
+    &lt;/button&gt;
+    &lt;div class=&quot;dropdown-menu&quot;&gt;
+      &lt;div class=&quot;dropdown-search&quot;&gt;&lt;input type=&quot;text&quot; placeholder=&quot;Search…&quot; /&gt;&lt;/div&gt;
+      &lt;div class=&quot;dropdown-item dropdown-select-all&quot;&gt;
+        &lt;span class=&quot;dropdown-item-label&quot;&gt;Select all&lt;/span&gt;
+        &lt;i class=&quot;rosie-icon rosie-icon-minus&quot;&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;dropdown-list&quot;&gt;
+        &lt;div class=&quot;dropdown-item active&quot;&gt;
+          &lt;span class=&quot;dropdown-item-label&quot;&gt;Asia/Ho_Chi_Minh&lt;/span&gt;
+          &lt;i class=&quot;rosie-icon rosie-icon-check&quot;&gt;&lt;/i&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;dropdown-section&quot;&gt;
+          &lt;span&gt;Europe (2)&lt;/span&gt;
+          &lt;i class=&quot;rosie-icon rosie-icon-chevron-up&quot;&gt;&lt;/i&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;dropdown-item&quot;&gt;&lt;span class=&quot;dropdown-item-label&quot;&gt;Europe/London&lt;/span&gt;&lt;/div&gt;
+        &lt;div class=&quot;dropdown-item&quot;&gt;&lt;span class=&quot;dropdown-item-label&quot;&gt;Europe/Paris&lt;/span&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:260px&quot;&gt;
+    &lt;button class=&quot;dropdown-btn&quot; data-rosie-toggle=&quot;dropdown&quot;&gt;&lt;span class=&quot;dropdown-placeholder&quot;&gt;Select&lt;/span&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-down&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;button class=&quot;dropdown-btn dropdown-btn-sm&quot; style=&quot;margin-top:.5rem&quot; data-rosie-toggle=&quot;dropdown&quot;&gt;&lt;span class=&quot;dropdown-placeholder&quot;&gt;Small&lt;/span&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-down&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;button class=&quot;dropdown-btn&quot; style=&quot;margin-top:.5rem&quot; disabled&gt;&lt;span class=&quot;dropdown-placeholder has-value&quot;&gt;Disabled&lt;/span&gt;&lt;i class=&quot;rosie-icon rosie-icon-chevron-down&quot;&gt;&lt;/i&gt;&lt;/button&gt;
+    &lt;div class=&quot;dropdown-menu&quot;&gt;
+      &lt;div class=&quot;dropdown-empty&quot;&gt;No options&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="accordion" class="ks-section">
       <h2>Accordion</h2>
-      <div class="accordion" id="acc">
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="accordion" id="acc">
         <div class="accordion-item">
-          <h2 class="accordion-header"><button class="accordion-button" type="button">Open item</button></h2>
-          <div class="accordion-collapse collapse show"><div class="accordion-body">Expanded body content.</div></div>
+          <h2 class="accordion-header"><button class="accordion-button" type="button" aria-expanded="true"
+              data-rosie-toggle="collapse" data-rosie-target="#acc-1" data-rosie-parent="#acc">Open item</button></h2>
+          <div class="accordion-collapse collapse show" id="acc-1"><div class="accordion-body">Expanded body content.</div></div>
         </div>
         <div class="accordion-item">
-          <h2 class="accordion-header"><button class="accordion-button collapsed" type="button">Collapsed item</button></h2>
-          <div class="accordion-collapse collapse"><div class="accordion-body">Hidden.</div></div>
+          <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" aria-expanded="false"
+              data-rosie-toggle="collapse" data-rosie-target="#acc-2" data-rosie-parent="#acc">Collapsed item</button></h2>
+          <div class="accordion-collapse collapse" id="acc-2"><div class="accordion-body">Opening this one closes the other, because both name the same <code>data-rosie-parent</code>.</div></div>
         </div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;accordion&quot; id=&quot;acc&quot;&gt;
+  &lt;div class=&quot;accordion-item&quot;&gt;
+    &lt;h2 class=&quot;accordion-header&quot;&gt;&lt;button class=&quot;accordion-button&quot; type=&quot;button&quot; aria-expanded=&quot;true&quot;
+        data-rosie-toggle=&quot;collapse&quot; data-rosie-target=&quot;#acc-1&quot; data-rosie-parent=&quot;#acc&quot;&gt;Open item&lt;/button&gt;&lt;/h2&gt;
+    &lt;div class=&quot;accordion-collapse collapse show&quot; id=&quot;acc-1&quot;&gt;&lt;div class=&quot;accordion-body&quot;&gt;Expanded body content.&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;accordion-item&quot;&gt;
+    &lt;h2 class=&quot;accordion-header&quot;&gt;&lt;button class=&quot;accordion-button collapsed&quot; type=&quot;button&quot; aria-expanded=&quot;false&quot;
+        data-rosie-toggle=&quot;collapse&quot; data-rosie-target=&quot;#acc-2&quot; data-rosie-parent=&quot;#acc&quot;&gt;Collapsed item&lt;/button&gt;&lt;/h2&gt;
+    &lt;div class=&quot;accordion-collapse collapse&quot; id=&quot;acc-2&quot;&gt;&lt;div class=&quot;accordion-body&quot;&gt;Opening this one closes the other, because both name the same &lt;code&gt;data-rosie-parent&lt;/code&gt;.&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="modal" class="ks-section">
-      <h2>Modal <small class="text-muted">(static render)</small></h2>
-      <div class="modal-content" style="max-width:500px;box-shadow:var(--rosie-box-shadow-lg)">
-        <div class="modal-header"><h5 class="modal-title">Confirm</h5><button class="btn-close"></button></div>
-        <div class="modal-body">Are you sure you want to proceed?</div>
-        <div class="modal-footer"><button class="btn btn-light">Cancel</button><button class="btn btn-primary">Confirm</button></div>
+      <h2>Modal</h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<p class="text-muted">In React the <code>Dialog</code> component renders this markup into a portal on <code>document.body</code>. On a plain page the bundle does the same work from data attributes.</p>
+      <button class="btn btn-primary" data-rosie-toggle="modal" data-rosie-target="#ks-modal">Open modal</button>
+      <div class="modal" id="ks-modal" tabindex="-1" role="dialog" aria-modal="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirm</h5>
+              <button class="btn-close" aria-label="Close" data-rosie-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">Are you sure you want to proceed? Escape, the backdrop and the close button all dismiss this.</div>
+            <div class="modal-footer">
+              <button class="btn btn-light" data-rosie-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" data-rosie-dismiss="modal">Confirm</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;p class=&quot;text-muted&quot;&gt;In React the &lt;code&gt;Dialog&lt;/code&gt; component renders this markup into a portal on &lt;code&gt;document.body&lt;/code&gt;. On a plain page the bundle does the same work from data attributes.&lt;/p&gt;
+&lt;button class=&quot;btn btn-primary&quot; data-rosie-toggle=&quot;modal&quot; data-rosie-target=&quot;#ks-modal&quot;&gt;Open modal&lt;/button&gt;
+&lt;div class=&quot;modal&quot; id=&quot;ks-modal&quot; tabindex=&quot;-1&quot; role=&quot;dialog&quot; aria-modal=&quot;true&quot;&gt;
+  &lt;div class=&quot;modal-dialog modal-dialog-centered&quot;&gt;
+    &lt;div class=&quot;modal-content&quot;&gt;
+      &lt;div class=&quot;modal-header&quot;&gt;
+        &lt;h5 class=&quot;modal-title&quot;&gt;Confirm&lt;/h5&gt;
+        &lt;button class=&quot;btn-close&quot; aria-label=&quot;Close&quot; data-rosie-dismiss=&quot;modal&quot;&gt;&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;modal-body&quot;&gt;Are you sure you want to proceed? Escape, the backdrop and the close button all dismiss this.&lt;/div&gt;
+      &lt;div class=&quot;modal-footer&quot;&gt;
+        &lt;button class=&quot;btn btn-light&quot; data-rosie-dismiss=&quot;modal&quot;&gt;Cancel&lt;/button&gt;
+        &lt;button class=&quot;btn btn-primary&quot; data-rosie-dismiss=&quot;modal&quot;&gt;Confirm&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="tooltip" class="ks-section">
-      <h2>Tooltip &amp; Popover <small class="text-muted">(static render)</small></h2>
-      <div class="ks-row" style="gap:2rem">
-        <div class="tooltip show" style="position:relative"><div class="tooltip-inner">A tooltip</div></div>
+      <h2>Tooltip &amp; Popover <small class="text-muted">(popover shown static)</small></h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-row" style="gap:2rem;align-items:flex-start">
+        <button class="btn btn-outline-secondary" data-rosie-tooltip="Revenue net of refunds">Hover me</button>
         <div class="popover show" style="position:relative;max-width:240px">
           <div class="popover-header">Popover title</div>
           <div class="popover-body">Popover body content sits here.</div>
         </div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot; style=&quot;gap:2rem;align-items:flex-start&quot;&gt;
+  &lt;button class=&quot;btn btn-outline-secondary&quot; data-rosie-tooltip=&quot;Revenue net of refunds&quot;&gt;Hover me&lt;/button&gt;
+  &lt;div class=&quot;popover show&quot; style=&quot;position:relative;max-width:240px&quot;&gt;
+    &lt;div class=&quot;popover-header&quot;&gt;Popover title&lt;/div&gt;
+    &lt;div class=&quot;popover-body&quot;&gt;Popover body content sits here.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+    </section>
+
+    <section id="callouts" class="ks-section">
+      <h2>Callouts <small class="text-muted">(extended)</small></h2>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="rosie-callout rosie-callout-info"><div class="rosie-callout-body">An informational callout with a soft tinted background.</div></div>
+      <div class="rosie-callout rosie-callout-tip"><div class="rosie-callout-body">Pro tip: tokens cascade at runtime.</div></div>
+      <div class="rosie-callout rosie-callout-warning"><div class="rosie-callout-body">This action cannot be undone.</div></div>
+      <div class="rosie-callout rosie-callout-danger"><div class="rosie-callout-body">Deleting removes all related records.</div></div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-callout rosie-callout-info&quot;&gt;&lt;div class=&quot;rosie-callout-body&quot;&gt;An informational callout with a soft tinted background.&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;rosie-callout rosie-callout-tip&quot;&gt;&lt;div class=&quot;rosie-callout-body&quot;&gt;Pro tip: tokens cascade at runtime.&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;rosie-callout rosie-callout-warning&quot;&gt;&lt;div class=&quot;rosie-callout-body&quot;&gt;This action cannot be undone.&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;rosie-callout rosie-callout-danger&quot;&gt;&lt;div class=&quot;rosie-callout-body&quot;&gt;Deleting removes all related records.&lt;/div&gt;&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="avatar" class="ks-section">
       <h2>Avatars <small class="text-muted">(extended)</small></h2>
-      <div class="ks-row">
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-row">
         <span class="rosie-avatar rosie-avatar-sm">AB</span>
         <span class="rosie-avatar">CD</span>
         <span class="rosie-avatar rosie-avatar-lg">EF</span>
@@ -489,34 +1608,71 @@
       <div class="rosie-avatar-group ks-row" style="margin-top:.5rem">
         <span class="rosie-avatar">A</span><span class="rosie-avatar">B</span><span class="rosie-avatar">C</span>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;span class=&quot;rosie-avatar rosie-avatar-sm&quot;&gt;AB&lt;/span&gt;
+  &lt;span class=&quot;rosie-avatar&quot;&gt;CD&lt;/span&gt;
+  &lt;span class=&quot;rosie-avatar rosie-avatar-lg&quot;&gt;EF&lt;/span&gt;
+  &lt;span class=&quot;rosie-avatar rosie-avatar-xl rosie-avatar-square&quot;&gt;GH&lt;/span&gt;
+  &lt;span class=&quot;rosie-avatar rosie-avatar-status rosie-avatar-status-online&quot;&gt;IJ&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class=&quot;rosie-avatar-group ks-row&quot; style=&quot;margin-top:.5rem&quot;&gt;
+  &lt;span class=&quot;rosie-avatar&quot;&gt;A&lt;/span&gt;&lt;span class=&quot;rosie-avatar&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;rosie-avatar&quot;&gt;C&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="stepper" class="ks-section">
       <h2>Stepper <small class="text-muted">(extended)</small></h2>
-      <div class="rosie-stepper">
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="rosie-stepper">
         <div class="rosie-stepper-item is-complete"><div class="rosie-stepper-step">1</div><div class="rosie-stepper-label">Account</div></div>
         <div class="rosie-stepper-item is-active"><div class="rosie-stepper-step">2</div><div class="rosie-stepper-label">Profile</div></div>
         <div class="rosie-stepper-item"><div class="rosie-stepper-step">3</div><div class="rosie-stepper-label">Review</div></div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-stepper&quot;&gt;
+  &lt;div class=&quot;rosie-stepper-item is-complete&quot;&gt;&lt;div class=&quot;rosie-stepper-step&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;rosie-stepper-label&quot;&gt;Account&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;rosie-stepper-item is-active&quot;&gt;&lt;div class=&quot;rosie-stepper-step&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;rosie-stepper-label&quot;&gt;Profile&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;rosie-stepper-item&quot;&gt;&lt;div class=&quot;rosie-stepper-step&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;rosie-stepper-label&quot;&gt;Review&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="rating" class="ks-section">
       <h2>Rating <small class="text-muted">(extended)</small></h2>
-      <div class="rosie-rating" data-value="3">★★★☆☆</div>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="rosie-rating" data-value="3">★★★☆☆</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-rating&quot; data-value=&quot;3&quot;&gt;★★★☆☆&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="widget" class="ks-section">
       <h2>Widgets <small class="text-muted">(extended)</small></h2>
-      <div class="rosie-widget-grid ks-grid">
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="rosie-widget-grid ks-grid">
         <div class="rosie-widget"><div class="rosie-widget-label">Revenue</div><div class="rosie-widget-value">$48.2k</div><div class="rosie-widget-trend is-positive">▲ 12.4%</div></div>
         <div class="rosie-widget"><div class="rosie-widget-label">Churn</div><div class="rosie-widget-value">2.1%</div><div class="rosie-widget-trend is-negative">▼ 0.3%</div></div>
         <div class="rosie-widget"><div class="rosie-widget-label">Sessions</div><div class="rosie-widget-value">12,908</div><div class="rosie-widget-trend is-neutral">—</div></div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-widget-grid ks-grid&quot;&gt;
+  &lt;div class=&quot;rosie-widget&quot;&gt;&lt;div class=&quot;rosie-widget-label&quot;&gt;Revenue&lt;/div&gt;&lt;div class=&quot;rosie-widget-value&quot;&gt;$48.2k&lt;/div&gt;&lt;div class=&quot;rosie-widget-trend is-positive&quot;&gt;▲ 12.4%&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;rosie-widget&quot;&gt;&lt;div class=&quot;rosie-widget-label&quot;&gt;Churn&lt;/div&gt;&lt;div class=&quot;rosie-widget-value&quot;&gt;2.1%&lt;/div&gt;&lt;div class=&quot;rosie-widget-trend is-negative&quot;&gt;▼ 0.3%&lt;/div&gt;&lt;/div&gt;
+  &lt;div class=&quot;rosie-widget&quot;&gt;&lt;div class=&quot;rosie-widget-label&quot;&gt;Sessions&lt;/div&gt;&lt;div class=&quot;rosie-widget-value&quot;&gt;12,908&lt;/div&gt;&lt;div class=&quot;rosie-widget-trend is-neutral&quot;&gt;—&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="misc" class="ks-section">
       <h2>Kbd · Empty state · Skeleton <small class="text-muted">(extended)</small></h2>
-      <div class="ks-row">Press <span class="rosie-kbd">⌘</span> <span class="rosie-kbd">K</span> to open the palette.</div>
+  <div class="ks-example">
+    <div class="ks-preview">
+<div class="ks-row">Press <span class="rosie-kbd">⌘</span> <span class="rosie-kbd">K</span> to open the palette.</div>
       <div class="rosie-empty-state" style="max-width:420px">
         <div class="rosie-empty-state-icon">📭</div>
         <div class="rosie-empty-state-title">No results</div>
@@ -528,32 +1684,77 @@
         <div class="rosie-skeleton rosie-skeleton-text"></div>
         <div class="rosie-skeleton rosie-skeleton-text" style="width:70%"></div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;Press &lt;span class=&quot;rosie-kbd&quot;&gt;⌘&lt;/span&gt; &lt;span class=&quot;rosie-kbd&quot;&gt;K&lt;/span&gt; to open the palette.&lt;/div&gt;
+&lt;div class=&quot;rosie-empty-state&quot; style=&quot;max-width:420px&quot;&gt;
+  &lt;div class=&quot;rosie-empty-state-icon&quot;&gt;📭&lt;/div&gt;
+  &lt;div class=&quot;rosie-empty-state-title&quot;&gt;No results&lt;/div&gt;
+  &lt;div class=&quot;rosie-empty-state-description&quot;&gt;Try adjusting your filters.&lt;/div&gt;
+  &lt;div class=&quot;rosie-empty-state-actions&quot;&gt;&lt;button class=&quot;btn btn-primary btn-sm&quot;&gt;Reset filters&lt;/button&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;rosie-skeleton-card&quot; style=&quot;max-width:420px;margin-top:1rem&quot;&gt;
+  &lt;div class=&quot;rosie-skeleton rosie-skeleton-circle&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;rosie-skeleton rosie-skeleton-text&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;rosie-skeleton rosie-skeleton-text&quot; style=&quot;width:70%&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
     <section id="utilities" class="ks-section">
       <h2>Utilities</h2>
-      <div class="ks-label">Spacing / display / flex</div>
-      <div class="d-flex gap-2 p-3 mb-3 rounded" style="background:var(--rosie-surface-sunken)">
+  <div class="ks-example">
+    <div class="ks-example-title">Spacing / display / flex</div>
+    <div class="ks-preview">
+<div class="d-flex gap-2 p-3 mb-3 rounded" style="background:var(--rosie-surface-sunken)">
         <div class="p-2 bg-primary text-white rounded">.p-2</div>
         <div class="p-3 bg-success text-white rounded">.p-3</div>
         <div class="ms-auto p-2 bg-dark text-white rounded">.ms-auto</div>
       </div>
-      <div class="ks-label">Text &amp; background</div>
-      <div class="ks-row">
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;d-flex gap-2 p-3 mb-3 rounded&quot; style=&quot;background:var(--rosie-surface-sunken)&quot;&gt;
+  &lt;div class=&quot;p-2 bg-primary text-white rounded&quot;&gt;.p-2&lt;/div&gt;
+  &lt;div class=&quot;p-3 bg-success text-white rounded&quot;&gt;.p-3&lt;/div&gt;
+  &lt;div class=&quot;ms-auto p-2 bg-dark text-white rounded&quot;&gt;.ms-auto&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Text &amp; background</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <span class="text-primary">.text-primary</span>
         <span class="text-success">.text-success</span>
         <span class="text-muted">.text-muted</span>
         <span class="fw-bold">.fw-bold</span>
         <span class="text-bg-primary rounded px-2">.text-bg-primary</span>
       </div>
-      <div class="ks-label">Borders &amp; radius</div>
-      <div class="ks-row">
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;span class=&quot;text-primary&quot;&gt;.text-primary&lt;/span&gt;
+  &lt;span class=&quot;text-success&quot;&gt;.text-success&lt;/span&gt;
+  &lt;span class=&quot;text-muted&quot;&gt;.text-muted&lt;/span&gt;
+  &lt;span class=&quot;fw-bold&quot;&gt;.fw-bold&lt;/span&gt;
+  &lt;span class=&quot;text-bg-primary rounded px-2&quot;&gt;.text-bg-primary&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+  <div class="ks-example">
+    <div class="ks-example-title">Borders &amp; radius</div>
+    <div class="ks-preview">
+<div class="ks-row">
         <div class="border p-3">.border</div>
         <div class="border border-primary rounded-pill px-3 py-2">.rounded-pill</div>
         <div class="p-3 shadow rounded">.shadow</div>
       </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-row&quot;&gt;
+  &lt;div class=&quot;border p-3&quot;&gt;.border&lt;/div&gt;
+  &lt;div class=&quot;border border-primary rounded-pill px-3 py-2&quot;&gt;.rounded-pill&lt;/div&gt;
+  &lt;div class=&quot;p-3 shadow rounded&quot;&gt;.shadow&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
     </section>
 
   </main>
+
+  <script src="dist/js/rosie.bundle.js"></script>
 </body>
 </html>

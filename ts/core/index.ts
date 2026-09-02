@@ -10,3 +10,6 @@ export * from './types';
 export * from './ajax';
 export * from './observable';
 export * from './data';
+export * from './behavior';
+export * from './plugin';
+export * from './grid';

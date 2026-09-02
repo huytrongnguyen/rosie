@@ -1,6 +1,9 @@
 @use '../variables' as *;
 @use '../mixins/border-radius' as *;
 
+.dropdown-menu.rosie-date-range-picker { display: none; }
+.dropdown-menu.rosie-date-range-picker.show { display: flex; }
+
 .rosie-date-range-picker {
   display: inline-flex;
   background-color: $white;
@@ -11,38 +14,111 @@
 }
 
 .rosie-date-range-presets {
-  width: 8.5rem;
-  padding: .5rem 0;
-  background-color: $neutral-25;
-  border-right: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  width: 7.5rem;
+  flex-shrink: 0;
+  padding: .375rem 0;
+  border-right: 1px solid $neutral-100;
 
   .rosie-date-range-preset {
-    display: block;
-    width: 100%;
-    padding: .375rem .75rem;
+    padding: .3125rem .875rem;
     font-size: $font-size-sm;
-    color: $body-color;
+    color: $body-secondary-color;
     text-align: left;
+    white-space: nowrap;
     background: transparent;
     border: 0;
     cursor: pointer;
 
-    &:hover, &.is-active {
-      background-color: $rose-50;
-      color: $rose-700;
+    &:hover { color: $body-color; }
+
+    &.is-active {
+      color: $primary;
+      font-weight: $font-weight-medium;
     }
   }
 }
 
-.rosie-date-range-calendars {
+.rosie-date-range-main {
   display: flex;
-  padding: .5rem;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  padding: .875rem 1rem .75rem;
+}
+
+.rosie-date-range-fields {
+  display: flex;
+  gap: 1rem;
+
+  > .rosie-date-range-field { flex: 1; min-width: 0; }
+}
+
+.rosie-date-range-field { margin-bottom: .875rem; }
+
+.rosie-date-range-field-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: .375rem;
+}
+
+.rosie-date-range-label {
+  font-size: .6875rem;
+  font-weight: $font-weight-semibold;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: $body-secondary-color;
+}
+
+.rosie-date-range-modes {
+  display: inline-flex;
+  padding: .125rem;
+  background: $neutral-50;
+  @include border-radius($border-radius-sm);
+
+  .rosie-date-range-mode {
+    padding: .1875rem .625rem;
+    font-size: .75rem;
+    color: $body-secondary-color;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    @include border-radius($border-radius-sm);
+
+    &:hover { color: $body-color; }
+
+    &.is-active {
+      background: $primary;
+      color: $white;
+      font-weight: $font-weight-medium;
+    }
+  }
+}
+
+.rosie-date-range-rolling {
+  display: flex;
+  align-items: center;
   gap: .5rem;
 
+  .form-control { width: 4.5rem; }
+}
+
+.rosie-date-range-calendars {
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+  padding-bottom: .75rem;
+
   > .rosie-date-picker {
-    box-shadow: none;
+    --rosie-date-picker-cell-size: 1.875rem;
+
+    flex: 1;
+    padding: 0;
     border: 0;
-    padding: .25rem;
+    box-shadow: none;
   }
 }
 
@@ -51,7 +127,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: .5rem;
-  padding: .5rem .75rem;
-  border-top: 1px solid $border-color;
-  background: $white;
+  margin: auto -1rem -.75rem;
+  padding: .75rem 1rem;
+  border-top: 1px solid $neutral-100;
 }
