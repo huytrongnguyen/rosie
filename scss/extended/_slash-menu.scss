@@ -1,8 +1,9 @@
 @use '../variables' as *;
 @use '../mixins/border-radius' as *;
+@use '../mixins/glass' as *;
 
 .rosie-slash-menu {
-  --rosie-slash-menu-bg: #{$white};
+  --rosie-slash-menu-bg: var(--rosie-glass-tint-strong);
   --rosie-slash-menu-border-color: #{$border-color};
   --rosie-slash-menu-width: 300px;
 
@@ -12,10 +13,12 @@
   max-height: 320px;
   padding: .25rem;
   overflow-y: auto;
+  @include glass-surface;
+
   background-color: var(--rosie-slash-menu-bg);
   border: 1px solid var(--rosie-slash-menu-border-color);
   @include border-radius($border-radius-lg);
-  box-shadow: $box-shadow-lg;
+  box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
 }
 
 .rosie-slash-menu-section {

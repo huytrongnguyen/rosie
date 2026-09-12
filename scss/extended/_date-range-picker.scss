@@ -1,15 +1,18 @@
 @use '../variables' as *;
 @use '../mixins/border-radius' as *;
+@use '../mixins/glass' as *;
 
 .dropdown-menu.rosie-date-range-picker { display: none; }
 .dropdown-menu.rosie-date-range-picker.show { display: flex; }
 
 .rosie-date-range-picker {
   display: inline-flex;
-  background-color: $white;
+  @include glass-surface;
+
+  background-color: var(--rosie-glass-tint-strong);
   border: 1px solid $border-color;
   @include border-radius($border-radius-lg);
-  box-shadow: $box-shadow-lg;
+  box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
   overflow: hidden;
 }
 
@@ -101,9 +104,21 @@
 .rosie-date-range-rolling {
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: .375rem;
 
-  .form-control { width: 4.5rem; }
+  .form-control { flex: none; width: 3.75rem; }
+
+  > .dropdown { flex: 1; min-width: 0; }
+
+  // The unit menu stays in flow and opaque: it opens over a glass panel, which both clips a
+  // fixed-positioned child and leaves a second translucent layer nothing to sample.
+  .dropdown-menu {
+    top: 100%;
+    left: 0;
+    min-width: 100%;
+    margin-top: .25rem;
+    @include glass-opaque;
+  }
 }
 
 .rosie-date-range-calendars {
@@ -112,8 +127,10 @@
   gap: .5rem;
   padding-bottom: .75rem;
 
+  // Part of the picker's own sheet, not a layer floating on it.
   > .rosie-date-picker {
     --rosie-date-picker-cell-size: 1.875rem;
+    --rosie-date-picker-bg: transparent;
 
     flex: 1;
     padding: 0;

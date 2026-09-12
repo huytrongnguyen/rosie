@@ -4,8 +4,8 @@
   --rosie-grid-header-color: var(--rosie-text-muted);
   --rosie-grid-header-font-size: .75rem;
   --rosie-grid-row-line: var(--rosie-neutral-100);
-  --rosie-grid-row-hover-bg: var(--rosie-neutral-50);
-  --rosie-grid-row-selected-bg: var(--rosie-rose-50);
+  --rosie-grid-row-hover-bg: var(--rosie-fill-4);
+  --rosie-grid-row-selected-bg: var(--rosie-fill-accent);
 
   display: flex;
   flex-direction: column;

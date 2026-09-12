@@ -2,6 +2,48 @@
 
 ## Next
 
+## 0.6.0
+> 2026-09-12
+
+**New Features**
+
+- Add the **Liquid Glass material system** — a translucent surface for chrome that floats above content, plus the fill scale that does the same job everywhere else without the cost
+  - **Two materials, and they are not interchangeable.** *Fill* is translucent colour with no blur, cheap enough for row states and control backgrounds. *Glass* adds backdrop blur, saturation, brightness and a specular rim, and belongs only on layers floating above other content. Every `backdrop-filter` element is its own compositor pass, which is why the grid and table rows use fills and never glass
+  - Utilities: `.rosie-glass`, `.rosie-glass-thin`, `.rosie-glass-strong`, `.rosie-glass-accent`; `.rosie-fill-1` through `.rosie-fill-4` and `.rosie-fill-accent`; `.rosie-text-secondary` / `-tertiary` / `-quaternary`; `.rounded-glass`
+  - Tokens: `--rosie-glass-backdrop` (the whole filter, as one overridable value), `--rosie-glass-blur` / `-saturate` / `-brightness`, the four `--rosie-glass-tint*` levels, `--rosie-glass-border` / `-rim` / `-shade` / `-shadow` / `-opaque`, `--rosie-fill-1..4`, `--rosie-separator` and `--rosie-radius-glass`
+  - Mixins for building your own: `glass()` for the full material, `glass-surface` for the material without touching a component's own background, border and shadow. Components adopt it by pointing their existing `--rosie-<component>-*` tokens at the glass ones, so every component keeps its public token API and stays overridable
+  - Adopted by `.dropdown-menu`, `.popover`, `.toast`, `.rosie-header`, `.rosie-slash-menu`, `.rosie-multi-select-menu`, `.rosie-date-picker`, `.rosie-date-range-picker` and `.rosie-time-picker`. Deliberately not adopted by `.modal-content`, `.offcanvas` or `.rosie-command-palette` — each draws its own dimming backdrop, and a translucent surface over a scrim only resolves to a wash of that scrim
+  - **Glass never sits on glass, and you do not have to remember it.** A glass component nested inside another resolves to a fill with a plain shadow and no second backdrop pass, automatically
+  - Falls back to an opaque surface where `backdrop-filter` is unsupported and under `prefers-reduced-transparency`, and becomes a plain surface with a contrasting border and opaque text under `prefers-contrast: more`
+  - Not attempted: lensing and refraction (the only web path fails in Safari and Firefox today), a material that reads its own backdrop luminance (CSS cannot sample it), motion and deformation, and squircle corners
+- Add **scroll-edge effects** — `.rosie-scroll-edge`, `.rosie-scroll-edge-above`, `.rosie-scroll-edge-hard`, `.rosie-scroll-edge-hard-above`, and the `scroll-edge()` / `scroll-edge-hard()` mixins behind them
+  - Keeping a floating bar legible is a separate problem from the material, and the answer is not to make the bar more opaque. Content is blurred and faded as it passes *underneath*, so the bar can stay as transparent as it looks
+  - Soft is the default progressive blur; hard separates with the surface colour instead, for a pinned header over text that must stay crisp. One per edge, and the two styles are never mixed on the same edge
+  - Sized by `--rosie-scroll-edge-size` / `-blur` / `-extra`, and removed entirely under `prefers-reduced-transparency`
+  - The mixin sets no `position` of its own — the host element establishes the containing block, so including it cannot unfix a `position: fixed` bar
+- Every hover, selected, disabled and grouping surface now comes from the **fill scale** instead of an opaque grey
+  - `.rosie-grid` row hover and selection, `.dropdown-item` hover and active, `.list-group-item-action` hover, the disabled `.form-control` / `.form-select` / `.dropdown-btn`, and `.input-group-text`
+  - A fill composites over whatever is beneath it, so a hover can no longer come out the same colour as the surface it sits on — which is what made the grid's header, striped rows and hover indistinguishable before
+  - The Sass variables stay the customisation point: `$dropdown-link-hover-bg`, `$dropdown-link-active-bg`, `$list-group-hover-bg`, `$input-disabled-bg`, `$input-group-addon-bg` and `$form-select-disabled-bg` now default to a fill token rather than a flat grey
+  - Badges are unchanged. Their backgrounds carry status meaning, and translucency would cost contrast they do not have to spare
+- Add **concentric radius** — `.rounded-concentric` and the `concentric-container($radius, $padding)` / `concentric-radius` mixins
+  - A nested shape's corner radius is its container's radius less the padding between them, recursively — not an independent value picked off the scale. `concentric-container()` publishes `--rosie-radius-parent` and `--rosie-radius-inset` to its children; `concentric-radius` consumes them
+  - The fixed `--rosie-radius-*` scale is unchanged. This is for nested chrome — a panel inside a panel, a pill inside a bar — not a replacement for it
+
+**Improvements**
+
+- `DateRangePicker` rolling points now carry a **unit** — days, weeks, months, quarters or years — beside the amount, so a range can be stated in calendar periods instead of only in days
+  - A calendar unit resolves **by position**: the first day of the period at the start of a range, the last day at the end. `1 month` therefore reads as last month at both ends, and picking `Last Month` keeps meaning last month rather than the dates it was picked on
+  - Every preset is now rolling. `This Week`, `Last Week`, `This Month` and `Last Month` used to resolve to literal dates the moment they were clicked, which pinned a saved range to those dates forever
+  - `This Month` composes the two: start of this month, end yesterday — a "so far this month" window a day-only range could not express
+  - `startUnit` / `endUnit` are optional on `DateRangeValue` and absent means days, so a value stored before this release keeps its meaning
+- Add `Date.rollingStart(amount, unit?, today?)` and `Date.rollingEnd(amount, unit?, today?)` to core, which is where that resolution lives — a consumer turning a stored range into query dates uses the same two functions the picker does. An unknown unit falls back to days
+- Add `Date.prototype.startOfQuarter()` and `Date.prototype.startOfYear()`
+- Export `resolveStart(value)` and `resolveEnd(value)` from `DateRangePicker`, so a stored range can be turned into its two dates without reaching for the label formatter
+- `kitchen-sink.html` gains a **Materials** section under Foundations: the six rules for using the two materials, then the four glass levels over a colour bed, the scroll edge on a scrolling panel, glass-inside-glass resolving to a fill, the fill scale, concentric radius and the text hierarchy — each with its markup
+- The `demo/` app is rebuilt around the layer model rather than around panels: the sidebar and topbar are inset floating glass, content runs edge to edge and scrolls underneath them, and the grid is a bounded panel on the page. It is the arrangement the material is designed for, and the demo did not show the material at all without it
+- The unit menu inside the picker is a plain in-flow dropdown rather than an anchored popover. A panel with `backdrop-filter` becomes the containing block for a `position: fixed` child, so the shared `usePopover` anchoring lands the menu at panel-relative coordinates and the panel's `overflow: hidden` then clips it
+
 ## 0.5.0
 > 2026-09-02
 

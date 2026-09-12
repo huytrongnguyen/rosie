@@ -47,6 +47,15 @@
     .ks-form-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .75rem 1rem; }
     .ks-form-columns .form-label { margin: .5rem 0 .125rem; }
     .ks-form-columns > div > .form-label:first-child { margin-top: 0; }
+    .ks-glass-bed { padding: 1.25rem; border-radius: var(--rosie-radius); background: linear-gradient(135deg, var(--rosie-chart-1), var(--rosie-chart-4) 40%, var(--rosie-chart-2) 70%, var(--rosie-chart-5)); }
+    .ks-glass-bed > * { margin-bottom: .75rem; }
+    .ks-glass-bed > :last-child { margin-bottom: 0; }
+    .ks-scroller { position: relative; height: 260px; overflow: auto; border-radius: var(--rosie-radius); }
+    .ks-scroller-bar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; padding: .625rem 1rem; font-weight: 600; }
+    .ks-scroller-bed { padding: 1rem; background: linear-gradient(160deg, var(--rosie-chart-1), var(--rosie-chart-4) 30%, var(--rosie-chart-2) 60%, var(--rosie-chart-3)); }
+    .ks-scroller-bed p { color: var(--rosie-white); font-weight: 600; }
+    .ks-fill-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .ks-fill-row > div { flex: 1 1 120px; padding: .75rem; border-radius: var(--rosie-radius-sm); font-size: .75rem; font-family: var(--rosie-font-monospace); }
     .ks-fieldset { padding: .75rem; border: 1px solid var(--rosie-border-color); border-radius: var(--rosie-radius-sm); }
     .ks-fieldset legend { padding: 0 .375rem; font-size: .8125rem; color: var(--rosie-text-muted); float: none; width: auto; }
     .ks-collapse-toggle { cursor: pointer; }
@@ -62,6 +71,7 @@
     <a href="#theme">Theme viewer</a>
     <div class="ks-nav-group">Foundations</div>
     <a href="#tokens">Tokens</a>
+    <a href="#materials">Materials</a>
     <a href="#typography">Typography</a>
     <a href="#colors">Colors</a>
     <a href="#icons">Icons</a>
@@ -688,6 +698,138 @@ group by 1 order by 1 desc</code></pre>
   &lt;div style=&quot;width:70px;height:44px;background:var(--rosie-surface-raised);border-radius:var(--rosie-radius);box-shadow:var(--rosie-box-shadow)&quot;&gt;&lt;/div&gt;
   &lt;div style=&quot;width:70px;height:44px;background:var(--rosie-surface-raised);border-radius:var(--rosie-radius);box-shadow:var(--rosie-box-shadow-lg)&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;</code></pre>
+  </div>
+    </section>
+
+    <section id="materials" class="ks-section">
+      <h2>Materials</h2>
+      <p>Two materials, and they are not interchangeable. <strong>Fill</strong> is translucent colour with
+      no blur — cheap enough for row states and control backgrounds. <strong>Glass</strong> adds blur,
+      backdrop saturation and a specular rim, and belongs only on layers that float above live content:
+      bars, menus, popovers, toasts. It falls back to an opaque surface where
+      <code>backdrop-filter</code> is unsupported and under <code>prefers-reduced-transparency</code>, and becomes a
+      plain surface with a contrasting border under <code>prefers-contrast: more</code>. Glass never sits on glass.</p>
+
+      <ol style="max-width: 76ch; color: var(--rosie-text-secondary); padding-left: 1.25rem;">
+        <li><strong>Glass is for chrome with real content behind it.</strong> Bars, menus, popovers, toasts. Not for
+        content itself — a grid, a card, a table row uses fills. And not for a panel that draws its own dimming
+        backdrop, such as a dialog or an offcanvas: a translucent surface over a scrim only resolves to a wash of
+        that scrim.</li>
+        <li><strong>Glass never sits on glass.</strong> Handled for you — a glass component nested inside another
+        resolves to a fill. Nothing to remember, but do not try to defeat it.</li>
+        <li><strong>An embedded component is part of its parent's sheet.</strong> A component that carries glass when
+        it floats must drop its surface when it is embedded in another.</li>
+        <li><strong>One scroll edge per edge</strong>, and never a soft and a hard edge on the same one.</li>
+        <li><strong>Tint is emphasis, not decoration.</strong> One or two tinted elements per view — the single
+        primary action — applied to the background, not the label. Tinting every control emphasises nothing.</li>
+        <li><strong>Reach for a fill first.</strong> It costs nothing, works on any background, and is the right
+        answer for every hover, selection, disabled and grouping surface in the system.</li>
+      </ol>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Glass</div>
+    <div class="ks-preview">
+      <div class="ks-glass-bed">
+        <div class="rosie-glass rounded-glass p-3"><strong>.rosie-glass</strong><div class="rosie-text-secondary">Default. Bars and docks.</div></div>
+        <div class="rosie-glass-thin rounded-glass p-3"><strong>.rosie-glass-thin</strong><div class="rosie-text-secondary">Barely there. Large type only.</div></div>
+        <div class="rosie-glass-strong rounded-glass p-3"><strong>.rosie-glass-strong</strong><div class="rosie-text-secondary">Panels carrying body text.</div></div>
+        <div class="rosie-glass-accent rounded-glass p-3"><strong>.rosie-glass-accent</strong><div class="rosie-text-secondary">Selected, still translucent.</div></div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-glass rounded-glass p-3&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-glass-thin rounded-glass p-3&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-glass-strong rounded-glass p-3&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-glass-accent rounded-glass p-3&quot;&gt;…&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Scroll edge</div>
+    <div class="ks-preview">
+      <p style="color: var(--rosie-text-secondary);">Legibility over translucency is a separate system from the material. Content is
+      blurred and faded as it passes beneath floating chrome, instead of the chrome being made more opaque to compensate.
+      One per edge, and the soft and hard styles are never mixed on the same edge. Scroll the panel.</p>
+      <div class="ks-scroller">
+        <div class="ks-scroller-bar rosie-glass rosie-scroll-edge">Campaigns</div>
+        <div class="ks-scroller-bed">
+          <p>Content passes under the bar.</p>
+          <p>The edge blurs it progressively.</p>
+          <p>The bar itself stays as transparent as it was.</p>
+          <p>Nothing here is dimmed by an overlay.</p>
+          <p>Keep scrolling.</p>
+          <p>The bar never gains a solid background.</p>
+          <p>End of the bed.</p>
+        </div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;ks-scroller&quot;&gt;
+  &lt;div class=&quot;ks-scroller-bar rosie-glass rosie-scroll-edge&quot;&gt;Campaigns&lt;/div&gt;
+  &lt;div class=&quot;ks-scroller-bed&quot;&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Glass never sits on glass</div>
+    <div class="ks-preview">
+      <div class="ks-glass-bed">
+        <div class="rosie-glass rounded-glass p-3">
+          <strong>Outer glass</strong>
+          <div class="rosie-text-secondary mb-2">A nested glass element drops to a fill automatically — no second backdrop pass.</div>
+          <div class="rosie-glass rounded-glass p-2"><strong>Nested</strong> — asked for glass, resolved to a fill.</div>
+        </div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-glass rounded-glass p-3&quot;&gt;
+  &lt;div class=&quot;rosie-glass rounded-glass p-2&quot;&gt;Nested&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Fill</div>
+    <div class="ks-preview">
+      <p style="color: var(--rosie-text-secondary);">Every row hover, selected row, disabled control and input-group
+      addon in rosie is drawn from this scale. A fill composites over whatever is beneath it, so a hover can never
+      come out the same colour as the surface it sits on.</p>
+      <div class="ks-fill-row">
+        <div class="rosie-fill-1">.rosie-fill-1</div>
+        <div class="rosie-fill-2">.rosie-fill-2</div>
+        <div class="rosie-fill-3">.rosie-fill-3</div>
+        <div class="rosie-fill-4">.rosie-fill-4</div>
+        <div class="rosie-fill-accent">.rosie-fill-accent</div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-fill-1&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-fill-2&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-fill-3&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-fill-4&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;rosie-fill-accent&quot;&gt;…&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Concentric radius</div>
+    <div class="ks-preview">
+      <p style="color: var(--rosie-text-secondary);">A nested shape's radius is its container's radius less the padding between
+      them, not an independent scale value. <code>concentric-container()</code> publishes both to its children;
+      <code>.rounded-concentric</code> consumes them.</p>
+      <div class="rosie-glass" style="border-radius: var(--rosie-radius-glass); padding: .75rem; --rosie-radius-parent: var(--rosie-radius-glass); --rosie-radius-inset: .75rem;">
+        <div class="rounded-concentric rosie-fill-3 p-3">Inner radius derives from the parent</div>
+      </div>
+    </div>
+    <pre class="ks-code"><code>.panel { @include concentric-container(var(--rosie-radius-glass), .75rem); }
+.panel &gt; .row { @include concentric-radius; }</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Text hierarchy</div>
+    <div class="ks-preview">
+      <p class="mb-1">Primary label — <code>--rosie-text</code></p>
+      <p class="mb-1 rosie-text-secondary">Secondary — <code>--rosie-text-secondary</code></p>
+      <p class="mb-1 rosie-text-tertiary">Tertiary — <code>--rosie-text-tertiary</code></p>
+      <p class="mb-0 rosie-text-quaternary">Quaternary — <code>--rosie-text-quaternary</code></p>
+    </div>
+    <pre class="ks-code"><code>&lt;p&gt;Primary label&lt;/p&gt;
+&lt;p class=&quot;rosie-text-secondary&quot;&gt;Secondary&lt;/p&gt;
+&lt;p class=&quot;rosie-text-tertiary&quot;&gt;Tertiary&lt;/p&gt;
+&lt;p class=&quot;rosie-text-quaternary&quot;&gt;Quaternary&lt;/p&gt;</code></pre>
   </div>
     </section>
 

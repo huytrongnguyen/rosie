@@ -1,8 +1,9 @@
 @use '../variables' as *;
 @use '../mixins/border-radius' as *;
+@use '../mixins/glass' as *;
 
 .rosie-date-picker {
-  --rosie-date-picker-bg: #{$white};
+  --rosie-date-picker-bg: var(--rosie-glass-tint-strong);
   --rosie-date-picker-border-color: #{$border-color};
   --rosie-date-picker-cell-size: 2.25rem;
   --rosie-date-picker-cell-color: #{$body-color};
@@ -15,10 +16,12 @@
 
   display: inline-block;
   padding: .75rem;
+  @include glass-surface;
+
   background-color: var(--rosie-date-picker-bg);
   border: 1px solid var(--rosie-date-picker-border-color);
   @include border-radius($border-radius-lg);
-  box-shadow: $box-shadow-lg;
+  box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
   font-size: $font-size-sm;
 }
 

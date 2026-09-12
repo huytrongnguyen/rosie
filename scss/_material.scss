@@ -1,0 +1,77 @@
+// Liquid-glass materials, in two tiers that are deliberately not the same thing.
+//   fill  — translucent colour, no blur. Free to use anywhere, including rows and cells.
+//   glass — fill plus blur, backdrop saturation and a specular rim. Floating layers only.
+// On a near-white canvas the saturation and the rim carry the effect; blur alone reads grey.
+@use 'functions' as *;
+@use 'variables' as *;
+@use 'mixins' as *;
+
+:root {
+  // Base channels the translucent scales are mixed from.
+  --rosie-fill-rgb: #{to-rgb($neutral-500)};
+  --rosie-label-rgb: #{to-rgb($neutral-900)};
+
+  --rosie-fill-1: rgba(var(--rosie-fill-rgb), .20);
+  --rosie-fill-2: rgba(var(--rosie-fill-rgb), .16);
+  --rosie-fill-3: rgba(var(--rosie-fill-rgb), .12);
+  --rosie-fill-4: rgba(var(--rosie-fill-rgb), .08);
+  --rosie-fill-accent: rgba(var(--rosie-primary-rgb), .12);
+
+  --rosie-text-secondary: rgba(var(--rosie-label-rgb), .60);
+  --rosie-text-tertiary: rgba(var(--rosie-label-rgb), .34);
+  --rosie-text-quaternary: rgba(var(--rosie-label-rgb), .20);
+  --rosie-separator: rgba(var(--rosie-label-rgb), .16);
+
+  --rosie-glass-blur: 32px;
+  --rosie-glass-saturate: 220%;
+  --rosie-glass-brightness: 1.08;
+  --rosie-glass-backdrop: blur(var(--rosie-glass-blur)) saturate(var(--rosie-glass-saturate)) brightness(var(--rosie-glass-brightness));
+  --rosie-glass-tint: rgba(var(--rosie-white-rgb), .18);
+  --rosie-glass-tint-thin: rgba(var(--rosie-white-rgb), .08);
+  --rosie-glass-tint-strong: rgba(var(--rosie-white-rgb), .45);
+  --rosie-glass-tint-accent: rgba(var(--rosie-primary-rgb), .18);
+  --rosie-glass-opaque: #{$white};
+  --rosie-glass-border: rgba(var(--rosie-white-rgb), .60);
+  --rosie-glass-rim: inset 0 1px 0 rgba(var(--rosie-white-rgb), 1), inset 0 0 0 1px rgba(var(--rosie-white-rgb), .35);
+  --rosie-glass-shade: inset 0 -1px 0 rgba(var(--rosie-black-rgb), .06);
+  --rosie-glass-shadow: 0 .625rem 2rem rgba(var(--rosie-black-rgb), .13), 0 .125rem .375rem rgba(var(--rosie-black-rgb), .07);
+  --rosie-radius-glass: 1.25rem;
+
+  --rosie-scroll-edge-size: 2.5rem;
+  --rosie-scroll-edge-blur: 12px;
+  --rosie-scroll-edge-extra: saturate(var(--rosie-glass-saturate));
+}
+
+.rosie-glass {
+  @include glass();
+}
+
+.rosie-glass-thin {
+  @include glass(var(--rosie-glass-tint-thin));
+}
+
+.rosie-glass-strong {
+  @include glass(var(--rosie-glass-tint-strong));
+}
+
+.rosie-glass-accent {
+  @include glass(var(--rosie-glass-tint-accent));
+}
+
+.rosie-fill-1 { background-color: var(--rosie-fill-1); }
+.rosie-fill-2 { background-color: var(--rosie-fill-2); }
+.rosie-fill-3 { background-color: var(--rosie-fill-3); }
+.rosie-fill-4 { background-color: var(--rosie-fill-4); }
+.rosie-fill-accent { background-color: var(--rosie-fill-accent); }
+
+.rosie-text-secondary { color: var(--rosie-text-secondary); }
+.rosie-text-tertiary { color: var(--rosie-text-tertiary); }
+.rosie-text-quaternary { color: var(--rosie-text-quaternary); }
+
+.rosie-scroll-edge { position: relative; @include scroll-edge(); }
+.rosie-scroll-edge-above { position: relative; @include scroll-edge(above); }
+.rosie-scroll-edge-hard { position: relative; @include scroll-edge-hard(); }
+.rosie-scroll-edge-hard-above { position: relative; @include scroll-edge-hard(above); }
+
+.rounded-glass { border-radius: var(--rosie-radius-glass); }
+.rounded-concentric { @include concentric-radius; }

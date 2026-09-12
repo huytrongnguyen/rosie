@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Rosie } from '../../core';
+import { useEffect, useRef, useState } from 'react';
+import { Rosie, onEscape, onOutsideClick } from '../../core';
 import { usePopover } from '../use-popover';
 import { CalendarMonth } from './calendar-month.component';
 import { DATE_MODE } from './date-picker.component';
@@ -11,13 +11,21 @@ export type DateRangeValue = {
   endDaysAgo: number,
   startDate: string,
   endDate: string,
+  startUnit?: string,
+  endUnit?: string,
 }
 
-type RollingPreset = { label: string, from: number, to: number };
-type ExactPreset = { label: string, resolve: () => [string, string] };
-type Preset = RollingPreset | ExactPreset;
+export const ROLLING_UNIT = { day: 'day', week: 'week', month: 'month', quarter: 'quarter', year: 'year' };
 
-const WEEK_STARTS_MONDAY = 1;
+type Preset = { label: string, from: number, to: number, fromUnit?: string, toUnit?: string };
+
+const UNIT_OPTIONS = [
+  { name: 'days', value: ROLLING_UNIT.day },
+  { name: 'weeks', value: ROLLING_UNIT.week },
+  { name: 'months', value: ROLLING_UNIT.month },
+  { name: 'quarters', value: ROLLING_UNIT.quarter },
+  { name: 'years', value: ROLLING_UNIT.year },
+];
 
 const PRESETS: Preset[] = [
   { label: 'Today', from: 0, to: 0 },
@@ -26,10 +34,10 @@ const PRESETS: Preset[] = [
   { label: 'Recent 7D', from: 7, to: 0 },
   { label: 'Last 30D', from: 30, to: 1 },
   { label: 'Recent 30D', from: 30, to: 0 },
-  { label: 'This Week', resolve: () => weekFrom(Date.currentDate()) },
-  { label: 'Last Week', resolve: () => weekFrom(Date.currentDate().minus(1, 'week')) },
-  { label: 'This Month', resolve: () => [Date.currentDate().startOfMonth().format(), Date.currentDate().format()] },
-  { label: 'Last Month', resolve: () => monthOf(Date.currentDate().minus(1, 'month')) },
+  { label: 'This Week', from: 0, to: 0, fromUnit: ROLLING_UNIT.week, toUnit: ROLLING_UNIT.week },
+  { label: 'Last Week', from: 1, to: 1, fromUnit: ROLLING_UNIT.week, toUnit: ROLLING_UNIT.week },
+  { label: 'This Month', from: 0, to: 1, fromUnit: ROLLING_UNIT.month },
+  { label: 'Last Month', from: 1, to: 1, fromUnit: ROLLING_UNIT.month, toUnit: ROLLING_UNIT.month },
 ];
 
 const PANEL_WIDTH_PX = 660;
@@ -41,6 +49,8 @@ export const DEFAULT_DATE_RANGE: DateRangeValue = {
   endDaysAgo: 0,
   startDate: '',
   endDate: '',
+  startUnit: ROLLING_UNIT.day,
+  endUnit: ROLLING_UNIT.day,
 };
 
 type DateRangePickerProps = {
@@ -50,26 +60,17 @@ type DateRangePickerProps = {
   btnClassName?: string,
 }
 
-function weekFrom(date: Date): [string, string] {
-  const start = date.startOfWeek(WEEK_STARTS_MONDAY);
-  return [start.format(), start.plus(6).format()];
+export function resolveStart({ startMode, startDaysAgo, startUnit, startDate }: DateRangeValue) {
+  return startMode === DATE_MODE.rolling ? Date.rollingStart(startDaysAgo, startUnit).format() : startDate;
 }
 
-function monthOf(date: Date): [string, string] {
-  return [date.startOfMonth().format(), date.endOfMonth().format()];
-}
-
-function isRolling(preset: Preset): preset is RollingPreset {
-  return (preset as RollingPreset).from !== undefined;
-}
-
-function resolvePoint(mode: string, daysAgo: number, date: string) {
-  return mode === DATE_MODE.rolling ? Date.currentDate().minus(daysAgo).format() : date;
+export function resolveEnd({ endMode, endDaysAgo, endUnit, endDate }: DateRangeValue) {
+  return endMode === DATE_MODE.rolling ? Date.rollingEnd(endDaysAgo, endUnit).format() : endDate;
 }
 
 export function formatDateRange(value: DateRangeValue) {
-  const start = resolvePoint(value.startMode, value.startDaysAgo, value.startDate),
-        end = resolvePoint(value.endMode, value.endDaysAgo, value.endDate);
+  const start = resolveStart(value),
+        end = resolveEnd(value);
   return start === end ? start : `${start || '…'} → ${end || '…'}`;
 }
 
@@ -80,9 +81,13 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
         [hoverDate, setHoverDate] = useState(''),
         [visibleMonth, setVisibleMonth] = useState(() => Date.currentDate().startOfMonth().minus(1, 'month'));
 
-  const rangeStart = resolvePoint(draft.startMode, draft.startDaysAgo, draft.startDate),
-        rangeEnd = resolvePoint(draft.endMode, draft.endDaysAgo, draft.endDate),
+  const rangeStart = resolveStart(draft),
+        rangeEnd = resolveEnd(draft),
         nextMonth = visibleMonth.plus(1, 'month');
+
+  function unitOf(unit?: string) {
+    return unit ?? ROLLING_UNIT.day;
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -93,22 +98,19 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
   }, [open]);
 
   function applyPreset(preset: Preset) {
-    setDraft(previous => isRolling(preset)
-      ? { ...previous, startMode: DATE_MODE.rolling, endMode: DATE_MODE.rolling, startDaysAgo: preset.from, endDaysAgo: preset.to }
-      : exactRange(previous, preset.resolve()));
+    setDraft(previous => ({ ...previous,
+      startMode: DATE_MODE.rolling, endMode: DATE_MODE.rolling,
+      startDaysAgo: preset.from, endDaysAgo: preset.to,
+      startUnit: unitOf(preset.fromUnit), endUnit: unitOf(preset.toUnit) }));
     setPickingEnd(false);
     setHoverDate('');
   }
 
   function isPresetActive(preset: Preset) {
-    if (isRolling(preset)) {
-      return draft.startMode === DATE_MODE.rolling && draft.endMode === DATE_MODE.rolling
-          && draft.startDaysAgo === preset.from && draft.endDaysAgo === preset.to;
-    }
-
-    const [start, end] = preset.resolve();
-    return draft.startMode === DATE_MODE.exact && draft.endMode === DATE_MODE.exact
-        && draft.startDate === start && draft.endDate === end;
+    return draft.startMode === DATE_MODE.rolling && draft.endMode === DATE_MODE.rolling
+        && draft.startDaysAgo === preset.from && draft.endDaysAgo === preset.to
+        && unitOf(draft.startUnit) === unitOf(preset.fromUnit)
+        && unitOf(draft.endUnit) === unitOf(preset.toUnit);
   }
 
   function pickDay(date: string) {
@@ -127,11 +129,14 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
     setDraft(previous => {
       const modeKey = side === 'start' ? 'startMode' : 'endMode',
             daysKey = side === 'start' ? 'startDaysAgo' : 'endDaysAgo',
-            dateKey = side === 'start' ? 'startDate' : 'endDate';
+            dateKey = side === 'start' ? 'startDate' : 'endDate',
+            unitKey = side === 'start' ? 'startUnit' : 'endUnit';
 
       return mode === DATE_MODE.rolling
-        ? { ...previous, [modeKey]: mode, [daysKey]: previous[dateKey] ? Date.daysAgo(previous[dateKey]) : previous[daysKey] }
-        : { ...previous, [modeKey]: mode, [dateKey]: Date.currentDate().minus(previous[daysKey]).format() };
+        ? { ...previous, [modeKey]: mode, [unitKey]: ROLLING_UNIT.day,
+            [daysKey]: previous[dateKey] ? Date.daysAgo(previous[dateKey]) : previous[daysKey] }
+        : { ...previous, [modeKey]: mode,
+            [dateKey]: side === 'start' ? resolveStart(previous) : resolveEnd(previous) };
     });
     setPickingEnd(false);
     setHoverDate('');
@@ -168,8 +173,10 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
             const mode = side === 'start' ? draft.startMode : draft.endMode,
                   daysAgo = side === 'start' ? draft.startDaysAgo : draft.endDaysAgo,
                   date = side === 'start' ? draft.startDate : draft.endDate,
+                  unit = unitOf(side === 'start' ? draft.startUnit : draft.endUnit),
                   daysKey = side === 'start' ? 'startDaysAgo' : 'endDaysAgo',
-                  dateKey = side === 'start' ? 'startDate' : 'endDate';
+                  dateKey = side === 'start' ? 'startDate' : 'endDate',
+                  unitKey = side === 'start' ? 'startUnit' : 'endUnit';
 
             return <div key={side} className="rosie-date-range-field">
               <div className="rosie-date-range-field-head">
@@ -189,9 +196,10 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
               {mode === DATE_MODE.rolling
                 ? <div className="rosie-date-range-rolling">
                     <input type="number" min={0} max={730} className="form-control form-control-sm"
-                           name={daysKey} aria-label={`${side} days ago`} value={daysAgo}
+                           name={daysKey} aria-label={`${side} amount`} value={daysAgo}
                            onChange={event => setDraft(previous => ({ ...previous, [daysKey]: Number(event.target.value) }))} />
-                    <span className="text-muted">days ago</span>
+                    <UnitSelect value={unit} onChange={picked => setDraft(previous => ({ ...previous, [unitKey]: picked }))} />
+                    <span className="text-muted">ago</span>
                   </div>
                 : <input type="text" className="form-control form-control-sm" placeholder="YYYY-MM-DD"
                          name={dateKey} aria-label={`${side} date`} value={date}
@@ -225,6 +233,55 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
           <button type="button" className="btn btn-primary btn-sm" onClick={apply}>Apply</button>
         </div>
       </div>
+    </div>
+  </div>
+}
+
+type UnitSelectProps = {
+  value: string,
+  onChange: (unit: string) => void,
+}
+
+// rosie's own Dropdown anchors its menu with position: fixed, which resolves against the picker
+// panel rather than the viewport because the panel's backdrop-filter makes it a containing block.
+// Inside a glass surface the menu has to stay in flow.
+function UnitSelect({ value, onChange }: Readonly<UnitSelectProps>) {
+  const [open, setOpen] = useState(false),
+        rootRef = useRef<HTMLDivElement>(null);
+
+  const selected = UNIT_OPTIONS.find(option => option.value === value) ?? UNIT_OPTIONS[0];
+
+  useEffect(() => {
+    if (!open) return;
+
+    const releaseEscape = onEscape(() => setOpen(false)),
+          releaseOutsideClick = onOutsideClick([rootRef.current], () => setOpen(false));
+
+    return () => {
+      releaseEscape();
+      releaseOutsideClick();
+    };
+  }, [open]);
+
+  function pick(unit: string) {
+    onChange(unit);
+    setOpen(false);
+  }
+
+  return <div ref={rootRef} className="dropdown">
+    <button type="button" aria-haspopup="listbox" aria-expanded={open}
+            className={Rosie.classNames('dropdown-btn dropdown-btn-sm', { show: open })}
+            onClick={() => setOpen(!open)}>
+      <span className="dropdown-placeholder has-value">{selected.name}</span>
+      <i className="rosie-icon rosie-icon-chevron-down" />
+    </button>
+
+    <div className={Rosie.classNames('dropdown-menu', { show: open })}>
+      {UNIT_OPTIONS.map(option =>
+        <button key={option.value} type="button" onClick={() => pick(option.value)}
+                className={Rosie.classNames('dropdown-item', { active: option.value === value })}>
+          {option.name}
+        </button>)}
     </div>
   </div>
 }

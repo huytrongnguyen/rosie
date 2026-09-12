@@ -1,0 +1,155 @@
+@use '../variables' as *;
+
+// The liquid-glass material. Blur is the expensive half, so it is applied only
+// here — surfaces that do not float use the fill tokens instead.
+//
+// glass-surface() gives a component the material without touching its own
+// background, border or shadow tokens, so a component keeps its public token
+// API and just points those tokens at the glass ones.
+
+@mixin glass-opaque {
+  --rosie-glass-backdrop: none;
+  --rosie-glass-tint: var(--rosie-glass-opaque);
+  --rosie-glass-tint-thin: var(--rosie-glass-opaque);
+  --rosie-glass-tint-strong: var(--rosie-glass-opaque);
+  --rosie-glass-tint-accent: var(--rosie-primary-bg-subtle);
+  --rosie-glass-border: var(--rosie-border-color);
+}
+
+// Increase Contrast: a glass element becomes a plain surface with a border that
+// carries the separation the material used to.
+@mixin glass-contrast {
+  @include glass-opaque;
+
+  --rosie-glass-border: var(--rosie-body-color);
+  --rosie-glass-rim: 0 0 transparent;
+  --rosie-glass-shade: 0 0 transparent;
+  --rosie-text-secondary: var(--rosie-body-color);
+  --rosie-text-tertiary: var(--rosie-body-color);
+  --rosie-text-quaternary: var(--rosie-body-color);
+}
+
+// Glass never sits on glass. A glass component nested inside another drops to a
+// fill, which is what Apple substitutes and also what keeps the second
+// compositor pass from happening.
+@mixin glass-nested {
+  --rosie-glass-backdrop: none;
+  --rosie-glass-tint: var(--rosie-fill-4);
+  --rosie-glass-tint-thin: var(--rosie-fill-4);
+  --rosie-glass-tint-strong: var(--rosie-fill-3);
+  --rosie-glass-tint-accent: var(--rosie-fill-accent);
+  --rosie-glass-border: var(--rosie-separator);
+  --rosie-glass-rim: 0 0 transparent;
+  --rosie-glass-shade: 0 0 transparent;
+  --rosie-glass-shadow: var(--rosie-box-shadow);
+}
+
+@mixin glass-surface {
+  // Muted text is translucent by design, which leaves its contrast undefined
+  // once the surface behind it is see-through. On glass it resolves to opaque.
+  --rosie-text-secondary: #{$neutral-700};
+  --rosie-text-tertiary: #{$neutral-600};
+  --rosie-text-quaternary: #{$neutral-500};
+
+  @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    -webkit-backdrop-filter: var(--rosie-glass-backdrop);
+    backdrop-filter: var(--rosie-glass-backdrop);
+  }
+
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    @include glass-opaque;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    @include glass-opaque;
+  }
+
+  @media (prefers-contrast: more) {
+    @include glass-contrast;
+  }
+
+  // Set on the children rather than here so the element keeps its own material.
+  // Inheritance carries it the rest of the way down.
+  > * { @include glass-nested; }
+}
+
+@mixin glass($tint: var(--rosie-glass-tint)) {
+  @include glass-surface;
+
+  background-color: $tint;
+  border: var(--rosie-border-width) solid var(--rosie-glass-border);
+  box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
+}
+
+// Legibility over translucency is a separate system from the material: content
+// is blurred and faded as it passes beneath floating chrome, rather than the
+// chrome being made more opaque to compensate. One per edge, and the soft and
+// hard styles are never mixed on the same edge.
+// The host must establish a containing block of its own; every floating bar
+// already does, and overriding its position here would silently unfix it.
+@mixin scroll-edge($placement: below) {
+  &::after {
+    position: absolute;
+    inset-inline: 0;
+    height: var(--rosie-scroll-edge-size);
+    content: '';
+    pointer-events: none;
+
+    @if $placement == below {
+      top: 100%;
+      -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0), rgb(0 0 0 / 0));
+      mask-image: linear-gradient(to bottom, rgb(0 0 0), rgb(0 0 0 / 0));
+    } @else {
+      bottom: 100%;
+      -webkit-mask-image: linear-gradient(to top, rgb(0 0 0), rgb(0 0 0 / 0));
+      mask-image: linear-gradient(to top, rgb(0 0 0), rgb(0 0 0 / 0));
+    }
+
+    @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      -webkit-backdrop-filter: blur(var(--rosie-scroll-edge-blur)) var(--rosie-scroll-edge-extra);
+      backdrop-filter: blur(var(--rosie-scroll-edge-blur)) var(--rosie-scroll-edge-extra);
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      display: none;
+    }
+  }
+}
+
+// A hard edge separates chrome from content with the surface colour instead of
+// a progressive blur — for pinned headers over text that must stay crisp.
+@mixin scroll-edge-hard($placement: below) {
+  &::after {
+    position: absolute;
+    inset-inline: 0;
+    height: var(--rosie-scroll-edge-size);
+    content: '';
+    pointer-events: none;
+
+    @if $placement == below {
+      top: 100%;
+      background: linear-gradient(to bottom, var(--rosie-surface), rgba(var(--rosie-body-bg-rgb), 0));
+    } @else {
+      bottom: 100%;
+      background: linear-gradient(to top, var(--rosie-surface), rgba(var(--rosie-body-bg-rgb), 0));
+    }
+  }
+}
+
+// Apple's concentric rule: a nested shape's radius is its container's radius
+// less the padding between them, recursively — not an independent scale value.
+@mixin concentric-container($radius, $padding) {
+  border-radius: $radius;
+
+  > * {
+    --rosie-radius-parent: #{$radius};
+    --rosie-radius-inset: #{$padding};
+  }
+}
+
+@mixin concentric-radius {
+  border-radius: max(
+    0px,
+    calc(var(--rosie-radius-parent, var(--rosie-radius)) - var(--rosie-radius-inset, 0px))
+  );
+}

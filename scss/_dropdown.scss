@@ -1,6 +1,7 @@
 @use 'variables' as *;
 @use 'mixins/border-radius' as *;
 @use 'mixins/caret' as *;
+@use 'mixins/glass' as *;
 
 .dropup,
 .dropend,
@@ -26,14 +27,14 @@
   --rosie-dropdown-spacer: #{$dropdown-spacer};
   --rosie-dropdown-font-size: #{$dropdown-font-size};
   --rosie-dropdown-color: #{$dropdown-color};
-  --rosie-dropdown-bg: #{$dropdown-bg};
-  --rosie-dropdown-border-color: #{$dropdown-border-color};
+  --rosie-dropdown-bg: var(--rosie-glass-tint-strong);
+  --rosie-dropdown-border-color: var(--rosie-glass-border);
   --rosie-dropdown-border-radius: #{$dropdown-border-radius};
   --rosie-dropdown-border-width: #{$dropdown-border-width};
   --rosie-dropdown-inner-border-radius: #{$dropdown-inner-border-radius};
   --rosie-dropdown-divider-bg: #{$dropdown-divider-bg};
   --rosie-dropdown-divider-margin-y: #{$dropdown-divider-margin-y};
-  --rosie-dropdown-box-shadow: #{$dropdown-box-shadow};
+  --rosie-dropdown-box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
   --rosie-dropdown-link-color: #{$dropdown-link-color};
   --rosie-dropdown-link-hover-color: #{$dropdown-link-hover-color};
   --rosie-dropdown-link-hover-bg: #{$dropdown-link-hover-bg};
@@ -57,6 +58,8 @@
   color: var(--rosie-dropdown-color);
   text-align: left;
   list-style: none;
+  @include glass-surface;
+
   background-color: var(--rosie-dropdown-bg);
   background-clip: padding-box;
   border: var(--rosie-dropdown-border-width) solid var(--rosie-dropdown-border-color);

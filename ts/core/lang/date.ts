@@ -6,6 +6,8 @@ interface DateConstructor {
   currentDate(): Date,
   parseDate(value: string): Date
   daysAgo(value: string): number,
+  rollingStart(amount: number, unit?: string, today?: Date): Date,
+  rollingEnd(amount: number, unit?: string, today?: Date): Date,
   // difference(dateAfter: Date, dateBefore: Date, unit?: TemporalUnit): number,
   // differenceInCalendarWeeks(dateAfter: Date, dateBefore: Date, weekStartsOn?: number): number,
   // createTimeline(startDate: Date, endDate: Date, pattern: string): string[],
@@ -17,6 +19,9 @@ Date.MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June',
 Date.DOW_NAMES = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
 const MILLISECONDS_IN_DAY = 24 * 60 * 60 * 1000;
+const MONTHS_IN_QUARTER = 3;
+const DAYS_IN_WEEK = 7;
+const WEEK_STARTS_MONDAY = 1;
 
 Date.currentDate = function() {
   const value = new Date();
@@ -30,6 +35,30 @@ Date.parseDate = function(str: string) {
 
 Date.daysAgo = function(value: string) {
   return Math.round((Date.currentDate().getTime() - Date.parseDate(value).getTime()) / MILLISECONDS_IN_DAY);
+}
+
+// A calendar unit resolves by position: the first day of the period at the start of a range, the
+// last day at the end. That is what makes a saved `1 month` keep meaning last month, rather than the
+// dates it happened to be picked on.
+Date.rollingStart = function(amount: number, unit?: string, today = Date.currentDate()) {
+  switch (unit) {
+    case 'week': return today.startOfWeek(WEEK_STARTS_MONDAY).minus(amount, 'week');
+    case 'month': return today.startOfMonth().minus(amount, 'month');
+    case 'quarter': return today.startOfQuarter().minus(amount * MONTHS_IN_QUARTER, 'month');
+    case 'year': return today.startOfYear().minus(amount, 'year');
+    default: return today.minus(amount);
+  }
+}
+
+Date.rollingEnd = function(amount: number, unit?: string, today = Date.currentDate()) {
+  const start = Date.rollingStart(amount, unit, today);
+  switch (unit) {
+    case 'week': return start.plus(DAYS_IN_WEEK - 1);
+    case 'month': return start.endOfMonth();
+    case 'quarter': return start.plus(MONTHS_IN_QUARTER, 'month').minus(1);
+    case 'year': return start.plus(1, 'year').minus(1);
+    default: return start;
+  }
 }
 
 // const MILLISECONDS_IN_SECOND = 1000,
@@ -78,6 +107,8 @@ interface Date {
   lengthOfMonth(): number,
 
   startOfWeek(weekStartsOn?: number): Date,
+  startOfQuarter(): Date,
+  startOfYear(): Date,
 
   // getWeeksInMonth(): number,
 
@@ -102,6 +133,9 @@ Date.prototype.format = function(this: Date, pattern?: string) {
 Date.prototype.startOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth(), 1); }
 Date.prototype.endOfMonth = function(this: Date) { return new Date(this.getFullYear(), this.getMonth() + 1, 0); }
 Date.prototype.lengthOfMonth = function(this: Date) { return this.endOfMonth().getDate(); }
+
+Date.prototype.startOfQuarter = function(this: Date) { return new Date(this.getFullYear(), Math.floor(this.getMonth() / MONTHS_IN_QUARTER) * MONTHS_IN_QUARTER, 1); }
+Date.prototype.startOfYear = function(this: Date) { return new Date(this.getFullYear(), 0, 1); }
 
 Date.prototype.startOfWeek = function(this: Date, weekStartsOn = 0) {
   const day = this.getDay(),
