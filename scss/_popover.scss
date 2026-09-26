@@ -1,17 +1,16 @@
 @use 'variables' as *;
 @use 'mixins/border-radius' as *;
-@use 'mixins/glass' as *;
 
 .popover {
   --rosie-popover-zindex: #{$zindex-popover};
   --rosie-popover-max-width: #{$popover-max-width};
   --rosie-popover-font-size: #{$popover-font-size};
-  --rosie-popover-bg: var(--rosie-glass-tint-strong);
+  --rosie-popover-bg: #{$popover-bg};
   --rosie-popover-border-width: #{$popover-border-width};
-  --rosie-popover-border-color: var(--rosie-glass-border);
+  --rosie-popover-border-color: #{$popover-border-color};
   --rosie-popover-border-radius: #{$popover-border-radius};
   --rosie-popover-inner-border-radius: #{$popover-inner-border-radius};
-  --rosie-popover-box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
+  --rosie-popover-box-shadow: #{$popover-box-shadow};
   --rosie-popover-header-padding-x: #{$popover-header-padding-x};
   --rosie-popover-header-padding-y: #{$popover-header-padding-y};
   --rosie-popover-header-font-size: #{$popover-header-font-size};
@@ -43,8 +42,6 @@
   line-break: auto;
   font-size: var(--rosie-popover-font-size);
   word-wrap: break-word;
-  @include glass-surface;
-
   background-color: var(--rosie-popover-bg);
   background-clip: padding-box;
   border: var(--rosie-popover-border-width) solid var(--rosie-popover-border-color);

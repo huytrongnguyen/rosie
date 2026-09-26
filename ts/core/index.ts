@@ -13,3 +13,4 @@ export * from './data';
 export * from './behavior';
 export * from './plugin';
 export * from './grid';
+export * from './chart';

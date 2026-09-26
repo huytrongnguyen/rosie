@@ -67,6 +67,8 @@ export function SettingsView() {
       <div className="modal-body">
         <div className="form-label">Display name</div>
         <input type="text" name="displayName" className="form-control" defaultValue="Rosie Console" />
+        <div className="form-label">Timezone</div>
+        <Dropdown options={TIMEZONES} value={timezone} onChange={setTimezone} />
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-outline-secondary" onClick={() => setEditingProfile(false)}>Cancel</button>

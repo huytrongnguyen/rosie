@@ -1,3 +1,4 @@
+import { initChart } from './chart';
 import { initClose } from './close';
 import { initCollapse } from './collapse';
 import { initDropdown } from './dropdown';
@@ -14,6 +15,7 @@ export * from './tab';
 export * from './modal';
 export * from './close';
 export * from './tooltip';
+export * from './chart';
 
 export function initPlugins() {
   initCollapse();
@@ -23,4 +25,5 @@ export function initPlugins() {
   initClose();
   initTooltip();
   initGrid();
+  initChart();
 }

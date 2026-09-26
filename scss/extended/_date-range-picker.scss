@@ -1,18 +1,15 @@
 @use '../variables' as *;
 @use '../mixins/border-radius' as *;
-@use '../mixins/glass' as *;
 
 .dropdown-menu.rosie-date-range-picker { display: none; }
 .dropdown-menu.rosie-date-range-picker.show { display: flex; }
 
 .rosie-date-range-picker {
   display: inline-flex;
-  @include glass-surface;
-
-  background-color: var(--rosie-glass-tint-strong);
+  background-color: $white;
   border: 1px solid $border-color;
   @include border-radius($border-radius-lg);
-  box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
+  box-shadow: $box-shadow-lg;
   overflow: hidden;
 }
 
@@ -110,14 +107,13 @@
 
   > .dropdown { flex: 1; min-width: 0; }
 
-  // The unit menu stays in flow and opaque: it opens over a glass panel, which both clips a
-  // fixed-positioned child and leaves a second translucent layer nothing to sample.
+  // In flow rather than anchored: a portalled child panel falls outside the picker, and the
+  // picker's own outside-click check would then dismiss it on the first option clicked.
   .dropdown-menu {
     top: 100%;
     left: 0;
     min-width: 100%;
     margin-top: .25rem;
-    @include glass-opaque;
   }
 }
 
@@ -127,10 +123,8 @@
   gap: .5rem;
   padding-bottom: .75rem;
 
-  // Part of the picker's own sheet, not a layer floating on it.
   > .rosie-date-picker {
     --rosie-date-picker-cell-size: 1.875rem;
-    --rosie-date-picker-bg: transparent;
 
     flex: 1;
     padding: 0;

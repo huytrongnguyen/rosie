@@ -99,6 +99,7 @@
     <a href="#stepper">Stepper</a>
     <a href="#rating">Rating</a>
     <a href="#widget">Widgets</a>
+    <a href="#charts">Charts</a>
     <a href="#misc">Kbd · Empty · Skeleton</a>
     <div class="ks-nav-group">Utilities</div>
     <a href="#utilities">Utilities</a>
@@ -705,25 +706,37 @@ group by 1 order by 1 desc</code></pre>
       <h2>Materials</h2>
       <p>Two materials, and they are not interchangeable. <strong>Fill</strong> is translucent colour with
       no blur — cheap enough for row states and control backgrounds. <strong>Glass</strong> adds blur,
-      backdrop saturation and a specular rim, and belongs only on layers that float above live content:
-      bars, menus, popovers, toasts. It falls back to an opaque surface where
+      backdrop saturation and a specular rim. It falls back to an opaque surface where
       <code>backdrop-filter</code> is unsupported and under <code>prefers-reduced-transparency</code>, and becomes a
-      plain surface with a contrasting border under <code>prefers-contrast: more</code>. Glass never sits on glass.</p>
+      plain surface with a contrasting border under <code>prefers-contrast: more</code>.</p>
+
+      <div class="rosie-callout rosie-callout-warning" style="max-width: 76ch;">
+        <div class="rosie-callout-body">
+          <strong>No rosie component applies glass.</strong> It was adopted across menus, popovers, pickers and the
+          header in 0.6.0 and withdrawn after review: translucency costs readability on exactly the data-dense
+          screens rosie is built for, and the floating layout it implies spends space a table wants. The material
+          ships as tokens, mixins and the four classes below, and where it goes is a decision per surface rather
+          than a default. The fill scale ships the same way — defined, not applied.
+        </div>
+      </div>
 
       <ol style="max-width: 76ch; color: var(--rosie-text-secondary); padding-left: 1.25rem;">
-        <li><strong>Glass is for chrome with real content behind it.</strong> Bars, menus, popovers, toasts. Not for
-        content itself — a grid, a card, a table row uses fills. And not for a panel that draws its own dimming
-        backdrop, such as a dialog or an offcanvas: a translucent surface over a scrim only resolves to a wash of
-        that scrim.</li>
-        <li><strong>Glass never sits on glass.</strong> Handled for you — a glass component nested inside another
-        resolves to a fill. Nothing to remember, but do not try to defeat it.</li>
-        <li><strong>An embedded component is part of its parent's sheet.</strong> A component that carries glass when
-        it floats must drop its surface when it is embedded in another.</li>
-        <li><strong>One scroll edge per edge</strong>, and never a soft and a hard edge on the same one.</li>
+        <li><strong>Glass is for chrome with real content behind it.</strong> A bar with the page scrolling under
+        it. Not for content itself — a grid, a card, a table row uses a fill. Not for a panel that draws its own
+        dimming backdrop, such as a dialog or an offcanvas: a translucent surface over a scrim only resolves to a
+        wash of that scrim. And not for a menu or popover parked over dense content, which is the case that
+        failed review — what shows through is noise behind the text you are trying to read.</li>
+        <li><strong>Glass never sits on glass.</strong> Handled for you once you opt in — a glass surface nested
+        inside another resolves to a fill. Nothing to remember, but do not try to defeat it.</li>
+        <li><strong>An embedded component is part of its parent's sheet.</strong> A component that carries glass
+        when it floats must drop its surface when it is embedded in another.</li>
+        <li><strong>Pair a glass bar with a scroll edge.</strong> Translucency alone does not stay legible over
+        moving content; the edge is what keeps it readable. One per edge, and never a soft and a hard edge on the
+        same one. A surface that cannot have a scroll edge is usually a surface that should not have glass.</li>
         <li><strong>Tint is emphasis, not decoration.</strong> One or two tinted elements per view — the single
         primary action — applied to the background, not the label. Tinting every control emphasises nothing.</li>
         <li><strong>Reach for a fill first.</strong> It costs nothing, works on any background, and is the right
-        answer for every hover, selection, disabled and grouping surface in the system.</li>
+        answer for every hover, selection, disabled and grouping surface.</li>
       </ol>
 
   <div class="ks-example">
@@ -1810,6 +1823,1450 @@ group by 1 order by 1 desc</code></pre>
   </div>
     </section>
 
+    <section id="charts" class="ks-section">
+      <h2>Charts <small class="text-muted">(extended)</small></h2>
+      <p class="text-muted">One example per chart type, each rendered by the page adapter from a <code>[data-rosie-chart]</code> element with an inline JSON config — no build step, no framework. Markup added after load renders by calling <code>Rosie.chart(el, config)</code> directly or by re-running <code>Rosie.initPlugins()</code>; there is no <code>MutationObserver</code> watching the page for it.</p>
+  <div class="ks-example">
+    <div class="ks-example-title">Line</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "day",
+      "series": [
+        {
+          "type": "line",
+          "field": "installs",
+          "title": "Installs"
+        }
+      ],
+      "data": [
+        {
+          "day": "05/01",
+          "paidSearch": 320,
+          "paidSocial": 210,
+          "owned": 140,
+          "installs": 670,
+          "revenue": 980
+        },
+        {
+          "day": "05/02",
+          "paidSearch": 340,
+          "paidSocial": 225,
+          "owned": 150,
+          "installs": 715,
+          "revenue": 1040
+        },
+        {
+          "day": "05/03",
+          "paidSearch": 310,
+          "paidSocial": 240,
+          "owned": 145,
+          "installs": 695,
+          "revenue": 1010
+        },
+        {
+          "day": "05/04",
+          "paidSearch": 360,
+          "paidSocial": 255,
+          "owned": 160,
+          "installs": 775,
+          "revenue": 1120
+        },
+        {
+          "day": "05/05",
+          "paidSearch": 385,
+          "paidSocial": 270,
+          "owned": 165,
+          "installs": 820,
+          "revenue": 1205
+        },
+        {
+          "day": "05/06",
+          "paidSearch": 375,
+          "paidSocial": 290,
+          "owned": 175,
+          "installs": 840,
+          "revenue": 1260
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;day&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;line&quot;,
+          &quot;field&quot;: &quot;installs&quot;,
+          &quot;title&quot;: &quot;Installs&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;day&quot;: &quot;05/01&quot;,
+          &quot;paidSearch&quot;: 320,
+          &quot;paidSocial&quot;: 210,
+          &quot;owned&quot;: 140,
+          &quot;installs&quot;: 670,
+          &quot;revenue&quot;: 980
+        },
+        {
+          &quot;day&quot;: &quot;05/02&quot;,
+          &quot;paidSearch&quot;: 340,
+          &quot;paidSocial&quot;: 225,
+          &quot;owned&quot;: 150,
+          &quot;installs&quot;: 715,
+          &quot;revenue&quot;: 1040
+        },
+        {
+          &quot;day&quot;: &quot;05/03&quot;,
+          &quot;paidSearch&quot;: 310,
+          &quot;paidSocial&quot;: 240,
+          &quot;owned&quot;: 145,
+          &quot;installs&quot;: 695,
+          &quot;revenue&quot;: 1010
+        },
+        {
+          &quot;day&quot;: &quot;05/04&quot;,
+          &quot;paidSearch&quot;: 360,
+          &quot;paidSocial&quot;: 255,
+          &quot;owned&quot;: 160,
+          &quot;installs&quot;: 775,
+          &quot;revenue&quot;: 1120
+        },
+        {
+          &quot;day&quot;: &quot;05/05&quot;,
+          &quot;paidSearch&quot;: 385,
+          &quot;paidSocial&quot;: 270,
+          &quot;owned&quot;: 165,
+          &quot;installs&quot;: 820,
+          &quot;revenue&quot;: 1205
+        },
+        {
+          &quot;day&quot;: &quot;05/06&quot;,
+          &quot;paidSearch&quot;: 375,
+          &quot;paidSocial&quot;: 290,
+          &quot;owned&quot;: 175,
+          &quot;installs&quot;: 840,
+          &quot;revenue&quot;: 1260
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Area</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "day",
+      "series": [
+        {
+          "type": "area",
+          "field": "revenue",
+          "title": "Revenue",
+          "format": "compact"
+        }
+      ],
+      "data": [
+        {
+          "day": "05/01",
+          "paidSearch": 320,
+          "paidSocial": 210,
+          "owned": 140,
+          "installs": 670,
+          "revenue": 980
+        },
+        {
+          "day": "05/02",
+          "paidSearch": 340,
+          "paidSocial": 225,
+          "owned": 150,
+          "installs": 715,
+          "revenue": 1040
+        },
+        {
+          "day": "05/03",
+          "paidSearch": 310,
+          "paidSocial": 240,
+          "owned": 145,
+          "installs": 695,
+          "revenue": 1010
+        },
+        {
+          "day": "05/04",
+          "paidSearch": 360,
+          "paidSocial": 255,
+          "owned": 160,
+          "installs": 775,
+          "revenue": 1120
+        },
+        {
+          "day": "05/05",
+          "paidSearch": 385,
+          "paidSocial": 270,
+          "owned": 165,
+          "installs": 820,
+          "revenue": 1205
+        },
+        {
+          "day": "05/06",
+          "paidSearch": 375,
+          "paidSocial": 290,
+          "owned": 175,
+          "installs": 840,
+          "revenue": 1260
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;day&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;area&quot;,
+          &quot;field&quot;: &quot;revenue&quot;,
+          &quot;title&quot;: &quot;Revenue&quot;,
+          &quot;format&quot;: &quot;compact&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;day&quot;: &quot;05/01&quot;,
+          &quot;paidSearch&quot;: 320,
+          &quot;paidSocial&quot;: 210,
+          &quot;owned&quot;: 140,
+          &quot;installs&quot;: 670,
+          &quot;revenue&quot;: 980
+        },
+        {
+          &quot;day&quot;: &quot;05/02&quot;,
+          &quot;paidSearch&quot;: 340,
+          &quot;paidSocial&quot;: 225,
+          &quot;owned&quot;: 150,
+          &quot;installs&quot;: 715,
+          &quot;revenue&quot;: 1040
+        },
+        {
+          &quot;day&quot;: &quot;05/03&quot;,
+          &quot;paidSearch&quot;: 310,
+          &quot;paidSocial&quot;: 240,
+          &quot;owned&quot;: 145,
+          &quot;installs&quot;: 695,
+          &quot;revenue&quot;: 1010
+        },
+        {
+          &quot;day&quot;: &quot;05/04&quot;,
+          &quot;paidSearch&quot;: 360,
+          &quot;paidSocial&quot;: 255,
+          &quot;owned&quot;: 160,
+          &quot;installs&quot;: 775,
+          &quot;revenue&quot;: 1120
+        },
+        {
+          &quot;day&quot;: &quot;05/05&quot;,
+          &quot;paidSearch&quot;: 385,
+          &quot;paidSocial&quot;: 270,
+          &quot;owned&quot;: 165,
+          &quot;installs&quot;: 820,
+          &quot;revenue&quot;: 1205
+        },
+        {
+          &quot;day&quot;: &quot;05/06&quot;,
+          &quot;paidSearch&quot;: 375,
+          &quot;paidSocial&quot;: 290,
+          &quot;owned&quot;: 175,
+          &quot;installs&quot;: 840,
+          &quot;revenue&quot;: 1260
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Stacked area</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "day",
+      "series": [
+        {
+          "type": "area",
+          "field": "paidSearch",
+          "title": "Paid Search",
+          "stack": "installs"
+        },
+        {
+          "type": "area",
+          "field": "paidSocial",
+          "title": "Paid Social",
+          "stack": "installs"
+        },
+        {
+          "type": "area",
+          "field": "owned",
+          "title": "Owned",
+          "stack": "installs"
+        }
+      ],
+      "data": [
+        {
+          "day": "05/01",
+          "paidSearch": 320,
+          "paidSocial": 210,
+          "owned": 140,
+          "installs": 670,
+          "revenue": 980
+        },
+        {
+          "day": "05/02",
+          "paidSearch": 340,
+          "paidSocial": 225,
+          "owned": 150,
+          "installs": 715,
+          "revenue": 1040
+        },
+        {
+          "day": "05/03",
+          "paidSearch": 310,
+          "paidSocial": 240,
+          "owned": 145,
+          "installs": 695,
+          "revenue": 1010
+        },
+        {
+          "day": "05/04",
+          "paidSearch": 360,
+          "paidSocial": 255,
+          "owned": 160,
+          "installs": 775,
+          "revenue": 1120
+        },
+        {
+          "day": "05/05",
+          "paidSearch": 385,
+          "paidSocial": 270,
+          "owned": 165,
+          "installs": 820,
+          "revenue": 1205
+        },
+        {
+          "day": "05/06",
+          "paidSearch": 375,
+          "paidSocial": 290,
+          "owned": 175,
+          "installs": 840,
+          "revenue": 1260
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;day&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;area&quot;,
+          &quot;field&quot;: &quot;paidSearch&quot;,
+          &quot;title&quot;: &quot;Paid Search&quot;,
+          &quot;stack&quot;: &quot;installs&quot;
+        },
+        {
+          &quot;type&quot;: &quot;area&quot;,
+          &quot;field&quot;: &quot;paidSocial&quot;,
+          &quot;title&quot;: &quot;Paid Social&quot;,
+          &quot;stack&quot;: &quot;installs&quot;
+        },
+        {
+          &quot;type&quot;: &quot;area&quot;,
+          &quot;field&quot;: &quot;owned&quot;,
+          &quot;title&quot;: &quot;Owned&quot;,
+          &quot;stack&quot;: &quot;installs&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;day&quot;: &quot;05/01&quot;,
+          &quot;paidSearch&quot;: 320,
+          &quot;paidSocial&quot;: 210,
+          &quot;owned&quot;: 140,
+          &quot;installs&quot;: 670,
+          &quot;revenue&quot;: 980
+        },
+        {
+          &quot;day&quot;: &quot;05/02&quot;,
+          &quot;paidSearch&quot;: 340,
+          &quot;paidSocial&quot;: 225,
+          &quot;owned&quot;: 150,
+          &quot;installs&quot;: 715,
+          &quot;revenue&quot;: 1040
+        },
+        {
+          &quot;day&quot;: &quot;05/03&quot;,
+          &quot;paidSearch&quot;: 310,
+          &quot;paidSocial&quot;: 240,
+          &quot;owned&quot;: 145,
+          &quot;installs&quot;: 695,
+          &quot;revenue&quot;: 1010
+        },
+        {
+          &quot;day&quot;: &quot;05/04&quot;,
+          &quot;paidSearch&quot;: 360,
+          &quot;paidSocial&quot;: 255,
+          &quot;owned&quot;: 160,
+          &quot;installs&quot;: 775,
+          &quot;revenue&quot;: 1120
+        },
+        {
+          &quot;day&quot;: &quot;05/05&quot;,
+          &quot;paidSearch&quot;: 385,
+          &quot;paidSocial&quot;: 270,
+          &quot;owned&quot;: 165,
+          &quot;installs&quot;: 820,
+          &quot;revenue&quot;: 1205
+        },
+        {
+          &quot;day&quot;: &quot;05/06&quot;,
+          &quot;paidSearch&quot;: 375,
+          &quot;paidSocial&quot;: 290,
+          &quot;owned&quot;: 175,
+          &quot;installs&quot;: 840,
+          &quot;revenue&quot;: 1260
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Bar</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "channel",
+      "series": [
+        {
+          "type": "bar",
+          "field": "installs",
+          "title": "Installs",
+          "format": "compact"
+        }
+      ],
+      "data": [
+        {
+          "channel": "Paid Search",
+          "installs": 42800,
+          "revenue": 61200
+        },
+        {
+          "channel": "Paid Social",
+          "installs": 31500,
+          "revenue": 38900
+        },
+        {
+          "channel": "Owned",
+          "installs": 16700,
+          "revenue": 24300
+        },
+        {
+          "channel": "Partnership",
+          "installs": 9800,
+          "revenue": 17600
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;channel&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;bar&quot;,
+          &quot;field&quot;: &quot;installs&quot;,
+          &quot;title&quot;: &quot;Installs&quot;,
+          &quot;format&quot;: &quot;compact&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;channel&quot;: &quot;Paid Search&quot;,
+          &quot;installs&quot;: 42800,
+          &quot;revenue&quot;: 61200
+        },
+        {
+          &quot;channel&quot;: &quot;Paid Social&quot;,
+          &quot;installs&quot;: 31500,
+          &quot;revenue&quot;: 38900
+        },
+        {
+          &quot;channel&quot;: &quot;Owned&quot;,
+          &quot;installs&quot;: 16700,
+          &quot;revenue&quot;: 24300
+        },
+        {
+          &quot;channel&quot;: &quot;Partnership&quot;,
+          &quot;installs&quot;: 9800,
+          &quot;revenue&quot;: 17600
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Horizontal bar</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "channel",
+      "axes": [
+        {
+          "type": "category",
+          "position": "left"
+        }
+      ],
+      "series": [
+        {
+          "type": "bar",
+          "field": "revenue",
+          "title": "Revenue",
+          "format": "compact"
+        }
+      ],
+      "data": [
+        {
+          "channel": "Paid Search",
+          "installs": 42800,
+          "revenue": 61200
+        },
+        {
+          "channel": "Paid Social",
+          "installs": 31500,
+          "revenue": 38900
+        },
+        {
+          "channel": "Owned",
+          "installs": 16700,
+          "revenue": 24300
+        },
+        {
+          "channel": "Partnership",
+          "installs": 9800,
+          "revenue": 17600
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;channel&quot;,
+      &quot;axes&quot;: [
+        {
+          &quot;type&quot;: &quot;category&quot;,
+          &quot;position&quot;: &quot;left&quot;
+        }
+      ],
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;bar&quot;,
+          &quot;field&quot;: &quot;revenue&quot;,
+          &quot;title&quot;: &quot;Revenue&quot;,
+          &quot;format&quot;: &quot;compact&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;channel&quot;: &quot;Paid Search&quot;,
+          &quot;installs&quot;: 42800,
+          &quot;revenue&quot;: 61200
+        },
+        {
+          &quot;channel&quot;: &quot;Paid Social&quot;,
+          &quot;installs&quot;: 31500,
+          &quot;revenue&quot;: 38900
+        },
+        {
+          &quot;channel&quot;: &quot;Owned&quot;,
+          &quot;installs&quot;: 16700,
+          &quot;revenue&quot;: 24300
+        },
+        {
+          &quot;channel&quot;: &quot;Partnership&quot;,
+          &quot;installs&quot;: 9800,
+          &quot;revenue&quot;: 17600
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Stacked bar</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "day",
+      "series": [
+        {
+          "type": "bar",
+          "field": "paidSearch",
+          "title": "Paid Search",
+          "stack": "installs"
+        },
+        {
+          "type": "bar",
+          "field": "paidSocial",
+          "title": "Paid Social",
+          "stack": "installs"
+        },
+        {
+          "type": "bar",
+          "field": "owned",
+          "title": "Owned",
+          "stack": "installs"
+        }
+      ],
+      "data": [
+        {
+          "day": "05/01",
+          "paidSearch": 320,
+          "paidSocial": 210,
+          "owned": 140,
+          "installs": 670,
+          "revenue": 980
+        },
+        {
+          "day": "05/02",
+          "paidSearch": 340,
+          "paidSocial": 225,
+          "owned": 150,
+          "installs": 715,
+          "revenue": 1040
+        },
+        {
+          "day": "05/03",
+          "paidSearch": 310,
+          "paidSocial": 240,
+          "owned": 145,
+          "installs": 695,
+          "revenue": 1010
+        },
+        {
+          "day": "05/04",
+          "paidSearch": 360,
+          "paidSocial": 255,
+          "owned": 160,
+          "installs": 775,
+          "revenue": 1120
+        },
+        {
+          "day": "05/05",
+          "paidSearch": 385,
+          "paidSocial": 270,
+          "owned": 165,
+          "installs": 820,
+          "revenue": 1205
+        },
+        {
+          "day": "05/06",
+          "paidSearch": 375,
+          "paidSocial": 290,
+          "owned": 175,
+          "installs": 840,
+          "revenue": 1260
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;day&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;bar&quot;,
+          &quot;field&quot;: &quot;paidSearch&quot;,
+          &quot;title&quot;: &quot;Paid Search&quot;,
+          &quot;stack&quot;: &quot;installs&quot;
+        },
+        {
+          &quot;type&quot;: &quot;bar&quot;,
+          &quot;field&quot;: &quot;paidSocial&quot;,
+          &quot;title&quot;: &quot;Paid Social&quot;,
+          &quot;stack&quot;: &quot;installs&quot;
+        },
+        {
+          &quot;type&quot;: &quot;bar&quot;,
+          &quot;field&quot;: &quot;owned&quot;,
+          &quot;title&quot;: &quot;Owned&quot;,
+          &quot;stack&quot;: &quot;installs&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;day&quot;: &quot;05/01&quot;,
+          &quot;paidSearch&quot;: 320,
+          &quot;paidSocial&quot;: 210,
+          &quot;owned&quot;: 140,
+          &quot;installs&quot;: 670,
+          &quot;revenue&quot;: 980
+        },
+        {
+          &quot;day&quot;: &quot;05/02&quot;,
+          &quot;paidSearch&quot;: 340,
+          &quot;paidSocial&quot;: 225,
+          &quot;owned&quot;: 150,
+          &quot;installs&quot;: 715,
+          &quot;revenue&quot;: 1040
+        },
+        {
+          &quot;day&quot;: &quot;05/03&quot;,
+          &quot;paidSearch&quot;: 310,
+          &quot;paidSocial&quot;: 240,
+          &quot;owned&quot;: 145,
+          &quot;installs&quot;: 695,
+          &quot;revenue&quot;: 1010
+        },
+        {
+          &quot;day&quot;: &quot;05/04&quot;,
+          &quot;paidSearch&quot;: 360,
+          &quot;paidSocial&quot;: 255,
+          &quot;owned&quot;: 160,
+          &quot;installs&quot;: 775,
+          &quot;revenue&quot;: 1120
+        },
+        {
+          &quot;day&quot;: &quot;05/05&quot;,
+          &quot;paidSearch&quot;: 385,
+          &quot;paidSocial&quot;: 270,
+          &quot;owned&quot;: 165,
+          &quot;installs&quot;: 820,
+          &quot;revenue&quot;: 1205
+        },
+        {
+          &quot;day&quot;: &quot;05/06&quot;,
+          &quot;paidSearch&quot;: 375,
+          &quot;paidSocial&quot;: 290,
+          &quot;owned&quot;: 175,
+          &quot;installs&quot;: 840,
+          &quot;revenue&quot;: 1260
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Bar + line combo</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "day",
+      "series": [
+        {
+          "type": "bar",
+          "field": "installs",
+          "title": "Installs"
+        },
+        {
+          "type": "line",
+          "field": "revenue",
+          "title": "Revenue",
+          "format": "compact"
+        }
+      ],
+      "data": [
+        {
+          "day": "05/01",
+          "paidSearch": 320,
+          "paidSocial": 210,
+          "owned": 140,
+          "installs": 670,
+          "revenue": 980
+        },
+        {
+          "day": "05/02",
+          "paidSearch": 340,
+          "paidSocial": 225,
+          "owned": 150,
+          "installs": 715,
+          "revenue": 1040
+        },
+        {
+          "day": "05/03",
+          "paidSearch": 310,
+          "paidSocial": 240,
+          "owned": 145,
+          "installs": 695,
+          "revenue": 1010
+        },
+        {
+          "day": "05/04",
+          "paidSearch": 360,
+          "paidSocial": 255,
+          "owned": 160,
+          "installs": 775,
+          "revenue": 1120
+        },
+        {
+          "day": "05/05",
+          "paidSearch": 385,
+          "paidSocial": 270,
+          "owned": 165,
+          "installs": 820,
+          "revenue": 1205
+        },
+        {
+          "day": "05/06",
+          "paidSearch": 375,
+          "paidSocial": 290,
+          "owned": 175,
+          "installs": 840,
+          "revenue": 1260
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;day&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;bar&quot;,
+          &quot;field&quot;: &quot;installs&quot;,
+          &quot;title&quot;: &quot;Installs&quot;
+        },
+        {
+          &quot;type&quot;: &quot;line&quot;,
+          &quot;field&quot;: &quot;revenue&quot;,
+          &quot;title&quot;: &quot;Revenue&quot;,
+          &quot;format&quot;: &quot;compact&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;day&quot;: &quot;05/01&quot;,
+          &quot;paidSearch&quot;: 320,
+          &quot;paidSocial&quot;: 210,
+          &quot;owned&quot;: 140,
+          &quot;installs&quot;: 670,
+          &quot;revenue&quot;: 980
+        },
+        {
+          &quot;day&quot;: &quot;05/02&quot;,
+          &quot;paidSearch&quot;: 340,
+          &quot;paidSocial&quot;: 225,
+          &quot;owned&quot;: 150,
+          &quot;installs&quot;: 715,
+          &quot;revenue&quot;: 1040
+        },
+        {
+          &quot;day&quot;: &quot;05/03&quot;,
+          &quot;paidSearch&quot;: 310,
+          &quot;paidSocial&quot;: 240,
+          &quot;owned&quot;: 145,
+          &quot;installs&quot;: 695,
+          &quot;revenue&quot;: 1010
+        },
+        {
+          &quot;day&quot;: &quot;05/04&quot;,
+          &quot;paidSearch&quot;: 360,
+          &quot;paidSocial&quot;: 255,
+          &quot;owned&quot;: 160,
+          &quot;installs&quot;: 775,
+          &quot;revenue&quot;: 1120
+        },
+        {
+          &quot;day&quot;: &quot;05/05&quot;,
+          &quot;paidSearch&quot;: 385,
+          &quot;paidSocial&quot;: 270,
+          &quot;owned&quot;: 165,
+          &quot;installs&quot;: 820,
+          &quot;revenue&quot;: 1205
+        },
+        {
+          &quot;day&quot;: &quot;05/06&quot;,
+          &quot;paidSearch&quot;: 375,
+          &quot;paidSocial&quot;: 290,
+          &quot;owned&quot;: 175,
+          &quot;installs&quot;: 840,
+          &quot;revenue&quot;: 1260
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Pie</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:220px">
+  <script type="application/json">
+    {
+      "xField": "channel",
+      "legend": {
+        "position": "right"
+      },
+      "series": [
+        {
+          "type": "pie",
+          "field": "installs",
+          "title": "Installs"
+        }
+      ],
+      "data": [
+        {
+          "channel": "Paid Search",
+          "installs": 42800,
+          "revenue": 61200
+        },
+        {
+          "channel": "Paid Social",
+          "installs": 31500,
+          "revenue": 38900
+        },
+        {
+          "channel": "Owned",
+          "installs": 16700,
+          "revenue": 24300
+        },
+        {
+          "channel": "Partnership",
+          "installs": 9800,
+          "revenue": 17600
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:220px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;channel&quot;,
+      &quot;legend&quot;: {
+        &quot;position&quot;: &quot;right&quot;
+      },
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;pie&quot;,
+          &quot;field&quot;: &quot;installs&quot;,
+          &quot;title&quot;: &quot;Installs&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;channel&quot;: &quot;Paid Search&quot;,
+          &quot;installs&quot;: 42800,
+          &quot;revenue&quot;: 61200
+        },
+        {
+          &quot;channel&quot;: &quot;Paid Social&quot;,
+          &quot;installs&quot;: 31500,
+          &quot;revenue&quot;: 38900
+        },
+        {
+          &quot;channel&quot;: &quot;Owned&quot;,
+          &quot;installs&quot;: 16700,
+          &quot;revenue&quot;: 24300
+        },
+        {
+          &quot;channel&quot;: &quot;Partnership&quot;,
+          &quot;installs&quot;: 9800,
+          &quot;revenue&quot;: 17600
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Donut</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:220px">
+  <script type="application/json">
+    {
+      "xField": "channel",
+      "legend": {
+        "position": "right"
+      },
+      "series": [
+        {
+          "type": "donut",
+          "field": "revenue",
+          "title": "Revenue",
+          "innerRadius": 0.62
+        }
+      ],
+      "data": [
+        {
+          "channel": "Paid Search",
+          "installs": 42800,
+          "revenue": 61200
+        },
+        {
+          "channel": "Paid Social",
+          "installs": 31500,
+          "revenue": 38900
+        },
+        {
+          "channel": "Owned",
+          "installs": 16700,
+          "revenue": 24300
+        },
+        {
+          "channel": "Partnership",
+          "installs": 9800,
+          "revenue": 17600
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:220px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;channel&quot;,
+      &quot;legend&quot;: {
+        &quot;position&quot;: &quot;right&quot;
+      },
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;donut&quot;,
+          &quot;field&quot;: &quot;revenue&quot;,
+          &quot;title&quot;: &quot;Revenue&quot;,
+          &quot;innerRadius&quot;: 0.62
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;channel&quot;: &quot;Paid Search&quot;,
+          &quot;installs&quot;: 42800,
+          &quot;revenue&quot;: 61200
+        },
+        {
+          &quot;channel&quot;: &quot;Paid Social&quot;,
+          &quot;installs&quot;: 31500,
+          &quot;revenue&quot;: 38900
+        },
+        {
+          &quot;channel&quot;: &quot;Owned&quot;,
+          &quot;installs&quot;: 16700,
+          &quot;revenue&quot;: 24300
+        },
+        {
+          &quot;channel&quot;: &quot;Partnership&quot;,
+          &quot;installs&quot;: 9800,
+          &quot;revenue&quot;: 17600
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Scatter</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "cost",
+      "series": [
+        {
+          "type": "scatter",
+          "field": "revenue",
+          "title": "Revenue"
+        }
+      ],
+      "data": [
+        {
+          "cost": 0,
+          "revenue": 14200,
+          "installs": 6100
+        },
+        {
+          "cost": 3100,
+          "revenue": 9800,
+          "installs": 2600
+        },
+        {
+          "cost": 8600,
+          "revenue": 19400,
+          "installs": 4300
+        },
+        {
+          "cost": 11200,
+          "revenue": 15100,
+          "installs": 3100
+        },
+        {
+          "cost": 14600,
+          "revenue": 27800,
+          "installs": 5900
+        },
+        {
+          "cost": 17300,
+          "revenue": 12900,
+          "installs": 2200
+        },
+        {
+          "cost": 21950,
+          "revenue": 33600,
+          "installs": 7400
+        },
+        {
+          "cost": 28900,
+          "revenue": 24700,
+          "installs": 4800
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;cost&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;scatter&quot;,
+          &quot;field&quot;: &quot;revenue&quot;,
+          &quot;title&quot;: &quot;Revenue&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;cost&quot;: 0,
+          &quot;revenue&quot;: 14200,
+          &quot;installs&quot;: 6100
+        },
+        {
+          &quot;cost&quot;: 3100,
+          &quot;revenue&quot;: 9800,
+          &quot;installs&quot;: 2600
+        },
+        {
+          &quot;cost&quot;: 8600,
+          &quot;revenue&quot;: 19400,
+          &quot;installs&quot;: 4300
+        },
+        {
+          &quot;cost&quot;: 11200,
+          &quot;revenue&quot;: 15100,
+          &quot;installs&quot;: 3100
+        },
+        {
+          &quot;cost&quot;: 14600,
+          &quot;revenue&quot;: 27800,
+          &quot;installs&quot;: 5900
+        },
+        {
+          &quot;cost&quot;: 17300,
+          &quot;revenue&quot;: 12900,
+          &quot;installs&quot;: 2200
+        },
+        {
+          &quot;cost&quot;: 21950,
+          &quot;revenue&quot;: 33600,
+          &quot;installs&quot;: 7400
+        },
+        {
+          &quot;cost&quot;: 28900,
+          &quot;revenue&quot;: 24700,
+          &quot;installs&quot;: 4800
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Bubble</div>
+    <div class="ks-preview">
+<div class="rosie-chart" data-rosie-chart style="--rosie-chart-height:200px">
+  <script type="application/json">
+    {
+      "xField": "cost",
+      "series": [
+        {
+          "type": "bubble",
+          "field": "revenue",
+          "title": "Revenue",
+          "sizeField": "installs"
+        }
+      ],
+      "data": [
+        {
+          "cost": 0,
+          "revenue": 14200,
+          "installs": 6100
+        },
+        {
+          "cost": 3100,
+          "revenue": 9800,
+          "installs": 2600
+        },
+        {
+          "cost": 8600,
+          "revenue": 19400,
+          "installs": 4300
+        },
+        {
+          "cost": 11200,
+          "revenue": 15100,
+          "installs": 3100
+        },
+        {
+          "cost": 14600,
+          "revenue": 27800,
+          "installs": 5900
+        },
+        {
+          "cost": 17300,
+          "revenue": 12900,
+          "installs": 2200
+        },
+        {
+          "cost": 21950,
+          "revenue": 33600,
+          "installs": 7400
+        },
+        {
+          "cost": 28900,
+          "revenue": 24700,
+          "installs": 4800
+        }
+      ]
+    }
+  </script>
+</div>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; data-rosie-chart style=&quot;--rosie-chart-height:200px&quot;&gt;
+  &lt;script type=&quot;application/json&quot;&gt;
+    {
+      &quot;xField&quot;: &quot;cost&quot;,
+      &quot;series&quot;: [
+        {
+          &quot;type&quot;: &quot;bubble&quot;,
+          &quot;field&quot;: &quot;revenue&quot;,
+          &quot;title&quot;: &quot;Revenue&quot;,
+          &quot;sizeField&quot;: &quot;installs&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;cost&quot;: 0,
+          &quot;revenue&quot;: 14200,
+          &quot;installs&quot;: 6100
+        },
+        {
+          &quot;cost&quot;: 3100,
+          &quot;revenue&quot;: 9800,
+          &quot;installs&quot;: 2600
+        },
+        {
+          &quot;cost&quot;: 8600,
+          &quot;revenue&quot;: 19400,
+          &quot;installs&quot;: 4300
+        },
+        {
+          &quot;cost&quot;: 11200,
+          &quot;revenue&quot;: 15100,
+          &quot;installs&quot;: 3100
+        },
+        {
+          &quot;cost&quot;: 14600,
+          &quot;revenue&quot;: 27800,
+          &quot;installs&quot;: 5900
+        },
+        {
+          &quot;cost&quot;: 17300,
+          &quot;revenue&quot;: 12900,
+          &quot;installs&quot;: 2200
+        },
+        {
+          &quot;cost&quot;: 21950,
+          &quot;revenue&quot;: 33600,
+          &quot;installs&quot;: 7400
+        },
+        {
+          &quot;cost&quot;: 28900,
+          &quot;revenue&quot;: 24700,
+          &quot;installs&quot;: 4800
+        }
+      ]
+    }
+  &lt;/script&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="ks-example">
+    <div class="ks-example-title">Rosie.chart(el, config)</div>
+    <div class="ks-preview">
+<div class="rosie-chart" id="ks-chart-js" style="--rosie-chart-height:200px"></div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    Rosie.chart(document.getElementById('ks-chart-js'), {
+      xField: 'day',
+      series: [{ type: 'line', field: 'installs', title: 'Installs' }],
+      data: [
+        {
+          "day": "05/01",
+          "paidSearch": 320,
+          "paidSocial": 210,
+          "owned": 140,
+          "installs": 670,
+          "revenue": 980
+        },
+        {
+          "day": "05/02",
+          "paidSearch": 340,
+          "paidSocial": 225,
+          "owned": 150,
+          "installs": 715,
+          "revenue": 1040
+        },
+        {
+          "day": "05/03",
+          "paidSearch": 310,
+          "paidSocial": 240,
+          "owned": 145,
+          "installs": 695,
+          "revenue": 1010
+        },
+        {
+          "day": "05/04",
+          "paidSearch": 360,
+          "paidSocial": 255,
+          "owned": 160,
+          "installs": 775,
+          "revenue": 1120
+        },
+        {
+          "day": "05/05",
+          "paidSearch": 385,
+          "paidSocial": 270,
+          "owned": 165,
+          "installs": 820,
+          "revenue": 1205
+        },
+        {
+          "day": "05/06",
+          "paidSearch": 375,
+          "paidSocial": 290,
+          "owned": 175,
+          "installs": 840,
+          "revenue": 1260
+        }
+      ]
+    });
+  });
+</script>
+    </div>
+    <pre class="ks-code"><code>&lt;div class=&quot;rosie-chart&quot; id=&quot;ks-chart-js&quot; style=&quot;--rosie-chart-height:200px&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', function () {
+    Rosie.chart(document.getElementById('ks-chart-js'), {
+      xField: 'day',
+      series: [{ type: 'line', field: 'installs', title: 'Installs' }],
+      data: [
+        {
+          &quot;day&quot;: &quot;05/01&quot;,
+          &quot;paidSearch&quot;: 320,
+          &quot;paidSocial&quot;: 210,
+          &quot;owned&quot;: 140,
+          &quot;installs&quot;: 670,
+          &quot;revenue&quot;: 980
+        },
+        {
+          &quot;day&quot;: &quot;05/02&quot;,
+          &quot;paidSearch&quot;: 340,
+          &quot;paidSocial&quot;: 225,
+          &quot;owned&quot;: 150,
+          &quot;installs&quot;: 715,
+          &quot;revenue&quot;: 1040
+        },
+        {
+          &quot;day&quot;: &quot;05/03&quot;,
+          &quot;paidSearch&quot;: 310,
+          &quot;paidSocial&quot;: 240,
+          &quot;owned&quot;: 145,
+          &quot;installs&quot;: 695,
+          &quot;revenue&quot;: 1010
+        },
+        {
+          &quot;day&quot;: &quot;05/04&quot;,
+          &quot;paidSearch&quot;: 360,
+          &quot;paidSocial&quot;: 255,
+          &quot;owned&quot;: 160,
+          &quot;installs&quot;: 775,
+          &quot;revenue&quot;: 1120
+        },
+        {
+          &quot;day&quot;: &quot;05/05&quot;,
+          &quot;paidSearch&quot;: 385,
+          &quot;paidSocial&quot;: 270,
+          &quot;owned&quot;: 165,
+          &quot;installs&quot;: 820,
+          &quot;revenue&quot;: 1205
+        },
+        {
+          &quot;day&quot;: &quot;05/06&quot;,
+          &quot;paidSearch&quot;: 375,
+          &quot;paidSocial&quot;: 290,
+          &quot;owned&quot;: 175,
+          &quot;installs&quot;: 840,
+          &quot;revenue&quot;: 1260
+        }
+      ]
+    });
+  });
+&lt;/script&gt;</code></pre>
+  </div>
+
+    </section>
     <section id="misc" class="ks-section">
       <h2>Kbd · Empty state · Skeleton <small class="text-muted">(extended)</small></h2>
   <div class="ks-example">

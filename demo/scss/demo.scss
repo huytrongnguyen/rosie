@@ -1,30 +1,25 @@
 @use 'scss/index';
-@use 'scss/mixins/glass' as *;
 
 .demo-app {
-  --demo-inset: .75rem;
-  --demo-rail: 13.5rem;
-  --demo-bar: 3rem;
-
+  display: grid;
+  grid-template-columns: 216px 1fr;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: var(--rosie-surface);
+  background: var(--rosie-surface-sunken);
 }
 
 .demo-sidebar {
-  position: fixed;
-  top: var(--demo-inset);
-  bottom: var(--demo-inset);
-  left: var(--demo-inset);
-  z-index: 20;
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: .125rem;
-  width: var(--demo-rail);
   padding: 1rem .75rem;
-  @include glass(var(--rosie-glass-tint-strong));
-  @include concentric-container(var(--rosie-radius-glass), .75rem);
+  border-right: 1px solid var(--rosie-border-color);
+  background: var(--rosie-surface-raised);
 }
 
 .demo-brand {
@@ -50,37 +45,24 @@
   font-size: .8125rem;
   text-decoration: none;
 
-  @include concentric-radius;
-
   &:hover,
-  &:focus { background: var(--rosie-fill-4); color: var(--rosie-text); text-decoration: none; }
+  &:focus { background: var(--rosie-surface-sunken); color: var(--rosie-text); text-decoration: none; }
   &.active,
   &.active:hover { background: var(--rosie-primary); color: #fff; }
 }
 
-.demo-main {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-width: 0;
-  min-height: 0;
-  padding-left: calc(var(--demo-rail) + var(--demo-inset));
-}
+.demo-main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
 
 .demo-topbar {
-  position: fixed;
-  top: var(--demo-inset);
-  right: var(--demo-inset);
-  left: calc(var(--demo-rail) + var(--demo-inset) * 2);
-  z-index: 10;
+  position: sticky;
+  top: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: .75rem;
-  height: var(--demo-bar);
-  padding: 0 .75rem;
-  @include glass();
-  @include concentric-container(var(--rosie-radius-glass), .75rem);
-  @include scroll-edge();
+  padding: .75rem 1.5rem;
+  border-bottom: 1px solid var(--rosie-border-color);
+  background: var(--rosie-surface-raised);
 
   .breadcrumb { margin: 0; font-size: .875rem; flex-wrap: nowrap; }
   .breadcrumb-item { white-space: nowrap; }
@@ -93,11 +75,11 @@
   width: 2rem;
   height: 2rem;
   padding: 0;
-  border: 0;
-  background: var(--rosie-fill-4);
+  border: 1px solid var(--rosie-border-color);
+  border-radius: var(--rosie-radius-sm);
+  background: var(--rosie-surface-raised);
   color: var(--rosie-text);
   cursor: pointer;
-  @include concentric-radius;
 }
 
 .demo-scrim { display: none; }
@@ -108,18 +90,13 @@
   flex: 1;
   min-width: 0;
   min-height: 0;
-  padding: calc(var(--demo-bar) + var(--demo-inset) * 2) var(--demo-inset) var(--demo-inset);
-  overflow: auto;
+  padding: 1.5rem;
 }
 
 .demo-grid {
   flex: 1;
   min-width: 0;
   min-height: 0;
-  background: var(--rosie-surface-raised);
-  border: var(--rosie-border-width) solid var(--rosie-border-color);
-  border-radius: var(--rosie-radius-glass);
-  overflow: hidden;
 }
 
 .demo-placeholder {
@@ -129,9 +106,39 @@
   .rosie-icon { font-size: 2rem; }
 }
 
+.demo-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.demo-overview-trend .rosie-chart { --rosie-chart-height: 16rem; }
+
+.rosie-chart-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+  overflow: auto;
+}
+
+.rosie-chart-card .rosie-chart { --rosie-chart-height: 14rem; }
+
+.demo-chart-preview-toggle {
+  margin-bottom: .5rem;
+
+  .btn { text-transform: capitalize; }
+}
+
 @media (max-width: 768px) {
+  .demo-app { grid-template-columns: 1fr; }
+
   .demo-sidebar {
-    transform: translateX(calc(-100% - var(--demo-inset)));
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 20;
+    width: 15rem;
+    box-shadow: var(--rosie-box-shadow-lg);
+    transform: translateX(-100%);
     transition: transform .2s ease;
   }
 
@@ -141,15 +148,15 @@
     display: block;
     position: fixed;
     inset: 0;
-    z-index: 15;
+    z-index: 10;
     padding: 0;
     border: 0;
     background: rgba(var(--rosie-black-rgb), .4);
   }
 
   .demo-menu-toggle { display: inline-flex; }
-  .demo-main { padding-left: 0; }
-  .demo-topbar { left: var(--demo-inset); }
+  .demo-topbar { padding: .625rem 1rem; }
+  .demo-view { padding: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

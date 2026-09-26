@@ -1,0 +1,8 @@
+@use '../variables' as *;
+
+.rosie-popover-layer {
+  --rosie-popover-layer-zindex: #{$zindex-popover};
+
+  position: relative;
+  z-index: var(--rosie-popover-layer-zindex);
+}

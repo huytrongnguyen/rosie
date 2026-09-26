@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'rosie-ui';
 import { AppLayout } from './components/app-layout.component';
 import { OverviewView } from './views/overview.view';
 import { ReportsView } from './views/reports.view';
+import { ChartsView } from './views/charts.view';
 import { CohortView } from './views/cohort.view';
 import { SettingsView } from './views/settings.view';
 
@@ -11,6 +12,7 @@ function App() {
     <Route path="/" element={<AppLayout />}>
       <Route index element={<OverviewView />} />
       <Route path="reports" element={<ReportsView />} />
+      <Route path="charts" element={<ChartsView />} />
       <Route path="cohort" element={<CohortView />} />
       <Route path="settings" element={<SettingsView />} />
       <Route path="*" element={<Navigate to="/" />} />

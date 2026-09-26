@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Rosie, onEscape, onOutsideClick } from '../../core';
+import { PopoverPanel } from '../popover-panel.component';
 import { usePopover } from '../use-popover';
 import { CalendarMonth } from './calendar-month.component';
 import { DATE_MODE } from './date-picker.component';
@@ -157,8 +158,8 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
       <i className="rosie-icon rosie-icon-calendar" />
     </button>
 
-    <div ref={panelRef} style={panelStyle}
-         className={Rosie.classNames('dropdown-menu rosie-date-range-picker', { show: open })}>
+    <PopoverPanel ref={panelRef} style={panelStyle}
+                  className={Rosie.classNames('dropdown-menu rosie-date-range-picker', { show: open })}>
       <div className="rosie-date-range-presets">
         {PRESETS.map(preset =>
           <button key={preset.label} type="button" onClick={() => applyPreset(preset)}
@@ -233,7 +234,7 @@ export function DateRangePicker({ value, onChange, placeholder = 'Date range', b
           <button type="button" className="btn btn-primary btn-sm" onClick={apply}>Apply</button>
         </div>
       </div>
-    </div>
+    </PopoverPanel>
   </div>
 }
 

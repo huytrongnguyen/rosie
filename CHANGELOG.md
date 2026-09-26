@@ -1,6 +1,41 @@
 # Changelog
 
-## Next
+## 0.7.0
+> 2026-09-26
+
+**New Features**
+
+- Add **`rosie-chart`**, rosie's own chart gallery on SVG. It aims to look and behave like ECharts and is configured the way the Grid is. The first set is line, area, stacked area, bar, horizontal bar, stacked bar, bar + line combo, pie, donut, scatter and bubble
+  - One config object: `xField` names the dimension, and each `series` entry is `{ type, field, title, format, stack, … }`. `axes` are inferred from the data when you leave them out. `legend` and `tooltip` are on by default where they help. Type-like fields are `string` with exported const maps (`CHART_TYPE`, `AXIS_TYPE`, `AXIS_POSITION`, `TOOLTIP_TRIGGER`, `LEGEND_POSITION`), so a persisted config survives new values
+  - An axis tooltip, with a crosshair that lists every series at the hovered point, on line, area and bar. An item tooltip on pie, donut, scatter and bubble. A legend that hides a series on click and highlights it on hover. Colour follows the series, never its rank, so hiding one never repaints another
+  - Value axes always end on a nice tick at or above the data. Category labels thin out only when they would actually collide. Line and area on a category axis run edge to edge. Horizontal bar lists its first record at the top
+  - Resizes with its container, animates on enter and on data change, and stays still under `prefers-reduced-motion`. `loading` and `empty` states match the Grid
+  - Colour and chrome are CSS. Marks carry `rosie-chart-color-N` classes mapped to `--rosie-chart-N` in `scss/extended/_chart.scss`, and a series `color` override lands as `--rosie-chart-mark-color`. Height comes from `--rosie-chart-height`
+  - Two adapters over one engine. `ts/core/chart/` turns config + records + size into a keyed scene of SVG primitives. The React `<Chart store={…} />` renders it, and so does the page adapter, from `<div class="rosie-chart" data-rosie-chart>` markup with an inline JSON config or from `Rosie.chart(el, config)`, which returns `{ update, destroy }`. Both emit the same DOM
+- **rosie's first runtime dependencies**, exact-pinned: `d3-scale`, `d3-shape`, `d3-array`, `d3-interpolate`, `d3-time` and `d3-format`. Only d3's math is used. `d3-selection`, `d3-transition` and `d3-axis` are never imported, because rosie owns the DOM
+- **Chart palette:** `--rosie-chart-1..8` is now pastel in rosie's own hues: rose (the primary), sky, apricot, mint, lilac, sage, lavender and teal, with saturation lifted just enough that no two neighbours in the order collapse under colour-blind vision. A ninth series takes `--rosie-chart-other`. **Breaking:** `--rosie-chart-9` to `--rosie-chart-12` and `$chart-9` to `$chart-12` are removed
+- Add a **`compact`** `ColumnFormat` (`1.2k`, `3.4M`), shared by Grid columns and chart axes
+- `kitchen-sink.html` gains a **Charts** section with one example per chart type and a `Rosie.chart(el, config)` example. `demo/` gains a Charts gallery view, and its Overview becomes stat tiles over an installs-by-channel trend, all drawn from one dataset
+
+**Improvements**
+
+- **The Liquid Glass material is no longer applied by any component.** 0.6.0 put glass on `.dropdown-menu`, `.popover`, `.toast`, `.rosie-header`, `.rosie-slash-menu`, `.rosie-multi-select-menu` and all three pickers; every one is back to the opaque surface it had in 0.5.0
+  - Review found two costs that tuning could not fix. A translucent menu or picker parked over a grid shows the rows through it, which is noise behind the text you are reading — and Apple's own answer to legibility over translucency, the scroll edge, only works for a bar with content moving under it, not for a panel sitting still over a table. The floating layout the material implies also spends a gutter on every side and vertical space clearing the bar, which a data-dense screen wants back
+  - **Nothing was removed.** The tokens, the six mixins and the `.rosie-glass`, `.rosie-glass-thin`, `.rosie-glass-strong`, `.rosie-glass-accent`, `.rosie-fill-*`, `.rosie-text-*`, `.rosie-scroll-edge*`, `.rounded-glass` and `.rounded-concentric` classes all still ship. Opt a surface in with a class or `@include glass()`; where it belongs is now a decision per surface rather than a default
+  - The state surfaces added in 0.6.0 are reverted with it: grid row hover and selection, `.dropdown-item` hover and active, `.list-group-item-action` hover, `.input-group-text`, and the disabled `.form-control` / `.form-select` / `.dropdown-btn` are opaque greys again, and `$input-disabled-bg`, `$input-group-addon-bg`, `$form-select-disabled-bg`, `$dropdown-link-hover-bg`, `$dropdown-link-active-bg` and `$list-group-hover-bg` are back to their 0.5.0 values
+  - The demo returns to a bordered sidebar beside the content with a full-bleed topbar above it
+  - `kitchen-sink.html`'s Materials section now says plainly that nothing applies the material, and why
+
+
+**Bug Fixes**
+
+- Anchored panels — `Dropdown`, `DatePicker`, `DateRangePicker` — render into a `.rosie-popover-layer` on the body instead of in place. A panel is positioned against the viewport, which only holds while no ancestor is a containing block for it, and `backdrop-filter` makes every glass surface one. A menu opened inside a glass panel, topbar or sidebar was placed against that element's corner rather than the viewport's, then clipped by its `overflow: hidden`
+  - The layer sits at `$zindex-popover`, above `$zindex-modal`, so a `Dropdown` inside a `Dialog` now opens over the dialog and may extend past its edges
+
+**Notes**
+
+- A popover nested inside another popover has to stay in flow. Outside-click dismissal asks whether the click landed inside the trigger or the panel, and a portalled child menu is in neither, so the parent closes the moment an option is clicked. The unit menu in `DateRangePicker` is an in-flow dropdown for that reason
+- `demo/` — the Edit profile dialog gains a `Dropdown`, which is the combination the portal layer exists for
 
 ## 0.6.0
 > 2026-09-12
@@ -42,7 +77,7 @@
 - Export `resolveStart(value)` and `resolveEnd(value)` from `DateRangePicker`, so a stored range can be turned into its two dates without reaching for the label formatter
 - `kitchen-sink.html` gains a **Materials** section under Foundations: the six rules for using the two materials, then the four glass levels over a colour bed, the scroll edge on a scrolling panel, glass-inside-glass resolving to a fill, the fill scale, concentric radius and the text hierarchy — each with its markup
 - The `demo/` app is rebuilt around the layer model rather than around panels: the sidebar and topbar are inset floating glass, content runs edge to edge and scrolls underneath them, and the grid is a bounded panel on the page. It is the arrangement the material is designed for, and the demo did not show the material at all without it
-- The unit menu inside the picker is a plain in-flow dropdown rather than an anchored popover. A panel with `backdrop-filter` becomes the containing block for a `position: fixed` child, so the shared `usePopover` anchoring lands the menu at panel-relative coordinates and the panel's `overflow: hidden` then clips it
+- The unit menu inside the picker is a plain in-flow dropdown rather than an anchored popover, so it is not affected by where its parent panel sits
 
 ## 0.5.0
 > 2026-09-02

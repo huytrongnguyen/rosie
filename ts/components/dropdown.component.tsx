@@ -1,5 +1,6 @@
 import { CSSProperties, Fragment, MouseEvent, ReactNode, useEffect, useRef, useState } from 'react';
 import { DataStore, Rosie } from '../core';
+import { PopoverPanel } from './popover-panel.component';
 import { usePopover } from './use-popover';
 
 export type DropdownOption = {
@@ -163,8 +164,8 @@ export function InputDropdown<T = any>({
       <i className="rosie-icon rosie-icon-chevron-down" />
     </button>
 
-    <div ref={panelRef} role="listbox" style={panelStyle}
-         className={Rosie.classNames('dropdown-menu', { show: open, 'dropdown-menu-end': menuAlign === 'end' })}>
+    <PopoverPanel ref={panelRef} role="listbox" style={panelStyle}
+                  className={Rosie.classNames('dropdown-menu', { show: open, 'dropdown-menu-end': menuAlign === 'end' })}>
       {searchable && <div className="dropdown-search">
         <input ref={searchRef} type="text" name="search" aria-label="Search options"
                placeholder="Search…" value={search}
@@ -178,7 +179,7 @@ export function InputDropdown<T = any>({
 
       {!records.length && <div className="dropdown-empty">No options</div>}
       {!!records.length && <div className="dropdown-list">{list}</div>}
-    </div>
+    </PopoverPanel>
   </Fragment>
 }
 

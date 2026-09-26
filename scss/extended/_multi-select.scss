@@ -1,6 +1,5 @@
 @use '../variables' as *;
 @use '../mixins/border-radius' as *;
-@use '../mixins/glass' as *;
 
 .rosie-multi-select {
   --rosie-multi-select-padding-y: #{$input-padding-y};
@@ -78,12 +77,10 @@
   max-height: 240px;
   margin-top: .25rem;
   overflow-y: auto;
-  @include glass-surface;
-
-  background: var(--rosie-glass-tint-strong);
-  border: 1px solid var(--rosie-glass-border);
+  background: $white;
+  border: 1px solid $border-color;
   @include border-radius($border-radius);
-  box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
+  box-shadow: $box-shadow-lg;
 
   .rosie-multi-select-option {
     display: flex;

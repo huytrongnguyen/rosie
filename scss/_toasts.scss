@@ -1,6 +1,5 @@
 @use 'variables' as *;
 @use 'mixins/border-radius' as *;
-@use 'mixins/glass' as *;
 
 .toast {
   --rosie-toast-zindex: #{$zindex-toast};
@@ -10,11 +9,11 @@
   --rosie-toast-max-width: #{$toast-max-width};
   --rosie-toast-font-size: #{$toast-font-size};
   --rosie-toast-color: #{$toast-color};
-  --rosie-toast-bg: var(--rosie-glass-tint-strong);
+  --rosie-toast-bg: #{$toast-background-color};
   --rosie-toast-border-width: #{$toast-border-width};
-  --rosie-toast-border-color: var(--rosie-glass-border);
+  --rosie-toast-border-color: #{$toast-border-color};
   --rosie-toast-border-radius: #{$toast-border-radius};
-  --rosie-toast-box-shadow: var(--rosie-glass-rim), var(--rosie-glass-shade), var(--rosie-glass-shadow);
+  --rosie-toast-box-shadow: #{$toast-box-shadow};
   --rosie-toast-header-color: #{$toast-header-color};
   --rosie-toast-header-bg: #{$toast-header-background-color};
   --rosie-toast-header-border-color: #{$toast-header-border-color};
@@ -24,8 +23,6 @@
   font-size: var(--rosie-toast-font-size);
   color: var(--rosie-toast-color);
   pointer-events: auto;
-  @include glass-surface;
-
   background-color: var(--rosie-toast-bg);
   background-clip: padding-box;
   border: var(--rosie-toast-border-width) solid var(--rosie-toast-border-color);

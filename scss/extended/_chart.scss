@@ -1,0 +1,222 @@
+@use '../variables' as *;
+@use '../mixins/border-radius' as *;
+
+$chart-color-count: 8;
+
+.rosie-chart {
+  --rosie-chart-height: 20rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 100%;
+  min-height: 0;
+}
+
+.rosie-chart-legend-right {
+  flex-direction: row;
+  align-items: stretch;
+
+  .rosie-chart-legend {
+    flex: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+}
+
+// Sized purely by CSS (flex + min-height), never by its own children — the
+// ResizeObserver reads this box, and the svg's pixel width/height are written
+// from that reading, so the two must not be able to feed back into each other.
+.rosie-chart-plot {
+  position: relative;
+  flex: 1;
+  min-height: var(--rosie-chart-height);
+  min-width: 0;
+}
+
+.rosie-chart-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.rosie-chart-loading .rosie-skeleton-card { height: 100%; }
+
+.rosie-chart-grid-line {
+  stroke: var(--rosie-border-color);
+  stroke-width: 1;
+}
+
+.rosie-chart-hairline {
+  stroke: var(--rosie-text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+  pointer-events: none;
+}
+
+.rosie-chart-axis-label {
+  fill: var(--rosie-text-muted);
+  font-size: .6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+@for $i from 1 through $chart-color-count {
+  .rosie-chart-color-#{$i} { --rosie-chart-color: var(--rosie-chart-#{$i}); }
+}
+.rosie-chart-color-other { --rosie-chart-color: var(--rosie-chart-other); }
+
+.rosie-chart-series,
+.rosie-chart-slice {
+  transition: opacity .15s ease-in-out;
+
+  &.is-dimmed { opacity: .25; }
+}
+
+.rosie-chart-line {
+  fill: none;
+  stroke: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rosie-chart-area {
+  fill: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+  fill-opacity: .14;
+  stroke: none;
+}
+
+// A brightness lift washes out against these pastels — they're already light, so hover darkens
+// instead, which stays visible at every step of the palette.
+.rosie-chart-bar {
+  fill: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+  transition: filter .1s ease-in-out;
+
+  &:hover { filter: brightness(.9); }
+}
+
+.rosie-chart-point {
+  fill: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+  stroke: var(--rosie-surface-raised);
+  stroke-width: 2;
+  transition: r .1s ease-in-out, filter .1s ease-in-out;
+}
+
+// Bubbles overlap heavily — a translucent fill keeps overlaps readable, while the ring (opaque,
+// via stroke) still gives each circle a crisp edge.
+.rosie-chart-point-bubble {
+  fill-opacity: .55;
+}
+
+.rosie-chart-hit {
+  fill: transparent;
+  stroke: none;
+  cursor: pointer;
+
+  &:hover + .rosie-chart-point { filter: brightness(.9); }
+}
+
+.rosie-chart-slice {
+  fill: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+  cursor: pointer;
+  transition: filter .1s ease-in-out;
+
+  &:hover { filter: brightness(.9); }
+}
+
+.rosie-chart-slice-label {
+  fill: var(--rosie-white);
+  font-size: .6875rem;
+  font-weight: $font-weight-semibold;
+  pointer-events: none;
+}
+
+.rosie-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem .75rem;
+  justify-content: center;
+}
+
+.rosie-chart-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: $font-size-sm;
+  color: var(--rosie-text);
+  cursor: pointer;
+
+  &.is-hidden { color: var(--rosie-text-muted); text-decoration: line-through; }
+  &.is-hidden .rosie-chart-legend-swatch { opacity: .35; }
+  &.is-active { font-weight: $font-weight-semibold; }
+}
+
+.rosie-chart-legend-swatch {
+  width: .625rem;
+  height: .625rem;
+  flex: none;
+  border-radius: 2px;
+  background: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+}
+
+// A line series is keyed by a short stroke, not a swatch — the key mirrors the mark it stands for.
+.rosie-chart-legend-swatch-line {
+  width: .75rem;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.rosie-chart-tooltip {
+  position: absolute;
+  z-index: 1;
+  min-width: 10rem;
+  padding: .5rem .625rem;
+  border: var(--rosie-border-width) var(--rosie-border-style) var(--rosie-border-color);
+  background: var(--rosie-surface-raised);
+  box-shadow: var(--rosie-box-shadow-lg);
+  font-size: $font-size-sm;
+  pointer-events: none;
+  @include border-radius($border-radius);
+}
+
+.rosie-chart-tooltip-label {
+  margin-bottom: .25rem;
+  color: var(--rosie-text-muted);
+  font-size: .75rem;
+}
+
+.rosie-chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: .375rem;
+
+  & + & { margin-top: .1875rem; }
+}
+
+.rosie-chart-tooltip-swatch {
+  width: .5rem;
+  height: .5rem;
+  flex: none;
+  border-radius: 2px;
+  background: var(--rosie-chart-mark-color, var(--rosie-chart-color));
+}
+
+.rosie-chart-tooltip-swatch-line {
+  width: .625rem;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.rosie-chart-tooltip-value {
+  font-weight: $font-weight-semibold;
+  font-variant-numeric: tabular-nums;
+}
+
+.rosie-chart-tooltip-title {
+  color: var(--rosie-text-muted);
+}

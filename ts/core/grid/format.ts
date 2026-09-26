@@ -1,6 +1,10 @@
-export type ColumnFormat = 'integer' | 'decimal' | 'percent' | 'number';
+import { format as d3Format } from 'd3-format';
+
+export type ColumnFormat = 'integer' | 'decimal' | 'percent' | 'number' | 'compact';
 
 export const EMPTY_CELL_TEXT = '—';
+
+const compactFormat = d3Format('~s');
 
 export function isEmptyValue(value: any) {
   return value === null || value === undefined;
@@ -15,6 +19,7 @@ export function formatCellText(value: any, format?: ColumnFormat): string {
     case 'decimal': return value.format(2);
     case 'percent': return `${(value * 100).format(2)}%`;
     case 'number': return value.format();
+    case 'compact': return compactFormat(value).replace('G', 'B');
     default: return String(value);
   }
 }
