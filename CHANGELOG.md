@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.8.0
+> 2026-10-16
+
+**New Features**
+
+- Add **`SegmentedControl`**, one choice out of a few as a React component over Bootstrap's button group. `options` are `{ name, value, title?, icon?, disabled? }`, `value` is the chosen one and `onChange` fires only when another option is picked. The chosen button is `.active` and `aria-pressed`, the others are outlined in `variant` (`primary` by default). It also takes `size` (`sm`, `lg`), `vertical`, `disabled` and `label` (the group's `aria-label`)
+- Nine icons for maps and spatial tools: `map`, `layers`, `compass`, `location-crosshairs`, `location-dot`, `route`, `mountain`, `cube`, `stairs-down`. `kitchen-sink.html` lists them
+
+**Notes**
+
+- A toolbar on a card needs no new class. `.card` is a column by design, as in Bootstrap; put the row in its body with Bootstrap's own classes: `<div class="card shadow-sm"><div class="card-body btn-toolbar gap-2 align-items-center p-2">…</div></div>`
+- `demo/` — the chart preview toggle uses `SegmentedControl`
+
 ## 0.7.0
 > 2026-09-26
 

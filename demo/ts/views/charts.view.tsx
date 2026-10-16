@@ -1,5 +1,5 @@
 import { PropsWithChildren, useState } from 'react';
-import { Chart, DataStore, Rosie } from 'rosie-ui';
+import { Chart, DataStore, SegmentedControl } from 'rosie-ui';
 import { CAMPAIGNS, Campaign } from '../data/campaigns';
 import { CHANNEL_SERIES, CHANNEL_SERIES_STACK, CHANNEL_SUMMARY, ChannelSummary, DAILY_METRICS, DailyMetric } from '../data/analytics';
 
@@ -71,13 +71,8 @@ export function ChartsView() {
     </ChartCard>
 
     <ChartCard title="Installs over time (loading / empty)">
-      <div className="btn-group btn-group-sm demo-chart-preview-toggle" role="group">
-        {Object.values(PREVIEW_STATE).map(value =>
-          <button key={value} type="button" onClick={() => setPreviewState(value)}
-                  className={Rosie.classNames('btn btn-outline-secondary', { active: previewState === value })}>
-            {value}
-          </button>)}
-      </div>
+      <SegmentedControl options={Object.values(PREVIEW_STATE).map(value => ({ name: value, value }))} value={previewState}
+                        onChange={setPreviewState} size="sm" variant="secondary" label="Preview state" className="demo-chart-preview-toggle" />
 
       <Chart store={previewState === PREVIEW_STATE.empty ? emptyStore : dailyStore}
              loading={previewState === PREVIEW_STATE.loading}
