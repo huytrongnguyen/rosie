@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.1
+> 2026-10-17
+
+**Enhancements**
+
+- **`Grid` selects a row.** With `selectable`, a click on a row selects that record (one at a time, through `DataModel.select()`), draws it with the existing `.selected` row style and calls `onSelectionChange([record])`. Selectable rows show a pointer. `selectable` and `onSelectionChange` were already in `GridProps` but did nothing
+- **`PagingToolbar` pages.** A new `onChange(page)` prop makes the first, previous, next and last buttons work; without it they stay disabled. The buttons are `<button class="page-link">` with rosie's own chevron icons instead of FontAwesome classes, which rosie does not ship. `PagingToolbarProps` is exported
+
 ## 0.8.0
 > 2026-10-16
 

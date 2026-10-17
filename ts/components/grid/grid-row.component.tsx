@@ -7,10 +7,12 @@ type GridRowProps = {
   widths: number[],
   record: DataModel<any>,
   rowIndex: number,
+  onClick?: (record: DataModel<any>) => void,
 }
 
-export function GridRow({ columns, widths, record, rowIndex }: Readonly<GridRowProps>) {
-  return <div className={Rosie.classNames('rosie-grid-row', { selected: record.selected })}>
+export function GridRow({ columns, widths, record, rowIndex, onClick }: Readonly<GridRowProps>) {
+  return <div className={Rosie.classNames('rosie-grid-row', { selected: record.selected })}
+              onClick={onClick ? () => onClick(record) : undefined}>
     {columns.map((column, colIndex) =>
       <GridCell key={column.field} column={column} width={widths[colIndex]}
                 record={record} rowIndex={rowIndex} colIndex={colIndex} />)}

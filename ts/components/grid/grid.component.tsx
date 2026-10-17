@@ -7,8 +7,9 @@ import { GridColumnProps, GridProps } from './types';
 
 export function GridColumn(_: GridColumnProps): any { return null }
 
-export function Grid({ store, children, className, loading, skeletonRows = 5, empty }: Readonly<GridProps>) {
+export function Grid({ store, children, className, loading, skeletonRows = 5, empty, selectable, onSelectionChange }: Readonly<GridProps>) {
   const [records, setRecords] = useState<DataModel<any>[]>([]),
+        [, setSelected] = useState<DataModel<any> | null>(null),
         headerRef = useRef<HTMLDivElement>(null),
         bodyRef = useRef<HTMLDivElement>(null),
         columns = toColumns(children),
@@ -31,7 +32,14 @@ export function Grid({ store, children, className, loading, skeletonRows = 5, em
     return () => body.removeEventListener('scroll', followBodyScroll);
   }, []);
 
-  return <div className={Rosie.classNames('rosie-grid', className)}>
+  const select = (record: DataModel<any>) => {
+    records.forEach(other => { if (other !== record) other.unselect(); });
+    record.select();
+    setSelected(record);
+    onSelectionChange?.([record]);
+  };
+
+  return <div className={Rosie.classNames('rosie-grid', { 'is-selectable': selectable }, className)}>
     <GridHeader ref={headerRef} columns={columns} widths={widths} />
 
     <div className="rosie-grid-body" ref={bodyRef}>
@@ -44,7 +52,8 @@ export function Grid({ store, children, className, loading, skeletonRows = 5, em
         </div>)}
 
       {!loading && records.map((record, rowIndex) =>
-        <GridRow key={rowIndex} columns={columns} widths={widths} record={record} rowIndex={rowIndex} />)}
+        <GridRow key={rowIndex} columns={columns} widths={widths} record={record} rowIndex={rowIndex}
+                 onClick={selectable ? select : undefined} />)}
 
       {!loading && !records.length && <div className="rosie-grid-empty">
         <div className="rosie-empty-state">
