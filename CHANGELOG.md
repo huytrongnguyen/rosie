@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.8.2
+> 2026-10-27
+
+**Enhancements**
+
+- **`Grid` columns resize.** With `resizable` on the grid (or on one `GridColumn`), each header cell has a handle on its right edge; dragging it sets that column's width (at least 40 px) for the header and every row. `resizable` was already in the props but did nothing
+- **`Grid` cells show their whole text when cut.** A cell or header cell whose text ends in an ellipsis gets that text as its tooltip on hover; a cell that fits gets none
+
+**Fixes**
+
+- **`Grid` flex columns line up.** A `flex` column used `flex: 1 1 auto`, so each row sized it by that row's own content and the cells of the column moved from row to row. It now grows from its measured width (`flex: 1 0 <width>px`), the same in every row
+
 ## 0.8.1
 > 2026-10-17
 

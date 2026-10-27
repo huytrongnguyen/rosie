@@ -7,13 +7,14 @@ import { GridColumnProps, GridProps } from './types';
 
 export function GridColumn(_: GridColumnProps): any { return null }
 
-export function Grid({ store, children, className, loading, skeletonRows = 5, empty, selectable, onSelectionChange }: Readonly<GridProps>) {
+export function Grid({ store, children, className, loading, skeletonRows = 5, empty, selectable, resizable, onSelectionChange }: Readonly<GridProps>) {
   const [records, setRecords] = useState<DataModel<any>[]>([]),
         [, setSelected] = useState<DataModel<any> | null>(null),
+        [resized, setResized] = useState<Record<string, number>>({}),
         headerRef = useRef<HTMLDivElement>(null),
         bodyRef = useRef<HTMLDivElement>(null),
         columns = toColumns(children),
-        widths = columns.map(column => measureColumnWidth(column, records));
+        widths = columns.map(column => resized[column.field] ?? measureColumnWidth(column, records));
 
   useEffect(() => {
     const subscription = store.subscribe(value => setRecords(value ?? []));
@@ -40,7 +41,8 @@ export function Grid({ store, children, className, loading, skeletonRows = 5, em
   };
 
   return <div className={Rosie.classNames('rosie-grid', { 'is-selectable': selectable }, className)}>
-    <GridHeader ref={headerRef} columns={columns} widths={widths} />
+    <GridHeader ref={headerRef} columns={columns} widths={widths} resizable={resizable}
+                onResize={(field, width) => setResized(current => ({ ...current, [field]: width }))} />
 
     <div className="rosie-grid-body" ref={bodyRef}>
       {loading && Array.from({ length: skeletonRows }, (_, rowIndex) =>

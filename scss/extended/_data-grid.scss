@@ -28,6 +28,20 @@
   letter-spacing: .01em;
 
   .has-tooltip { text-decoration: underline dotted; text-underline-offset: .25em; }
+
+  .rosie-grid-cell { position: relative; }
+}
+
+.rosie-grid-resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: .375rem;
+  cursor: col-resize;
+  touch-action: none;
+
+  &:hover, &:active { background: var(--rosie-border-color); }
 }
 
 .rosie-grid-row {
